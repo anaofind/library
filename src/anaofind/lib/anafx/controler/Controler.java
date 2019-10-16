@@ -1,4 +1,4 @@
-package anaofind.lib.anafx.control;
+package anaofind.lib.anafx.controler;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,7 +23,7 @@ public abstract class Controler implements Initializable, Listener{
 	/**
 	 * methode permettant de preparer le controleur
 	 */
-	public abstract void Starting();
+	public abstract void starting();
 	
 	/**
 	 * methode permettant de recuperer les fps
@@ -47,7 +47,7 @@ public abstract class Controler implements Initializable, Listener{
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		Starting();
+		starting();
 		new Thread( () -> { 
 			try {
 				while (!isEndLoop()) {

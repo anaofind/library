@@ -80,7 +80,7 @@ public abstract class Client extends NetworkElement{
 
 
 		} catch (IOException e) {
-			ajouterMessageError(e.getMessage());
+			addMessageError(e.getMessage());
 			isActive = false;	
 		}
 
@@ -117,7 +117,7 @@ public abstract class Client extends NetworkElement{
 			finishing();
 			socketToServer.close();
 		} catch (IOException e) {
-			ajouterMessageError(e.getMessage());
+			addMessageError(e.getMessage());
 		}
 	}
 
@@ -179,16 +179,16 @@ public abstract class Client extends NetworkElement{
 				Query requete = Query.parseQuery(plainQuery);
 				processQuery(requete);	
 			} else {
-				ajouterMessageError("Communication server interrompt");
+				addMessageError("Communication server interrompt");
 				isActive = false;
 			}
 		} 
 		catch (IOException e) {
-			ajouterMessageError(e.getMessage());
+			addMessageError(e.getMessage());
 			isActive = false;
 		}
 		catch (Exception e) {
-			ajouterMessageError(e.getMessage());
+			addMessageError(e.getMessage());
 			isActive = false;
 		}
 	}
@@ -239,7 +239,7 @@ public abstract class Client extends NetworkElement{
 	 * methode permettant d'ajouter un message d'erreur au tampon
 	 * @param message le message
 	 */
-	public static void ajouterMessageError(String message){
+	public static void addMessageError(String message){
 		Client client = Network.getClient();
 		if (client != null) {
 			client.addMessage(CODE_ERROR, message);
@@ -250,7 +250,7 @@ public abstract class Client extends NetworkElement{
 	 * methode permettant d'ajouter un message de question au tampon
 	 * @param message le message de question
 	 */
-	public static void ajouterMessageQuestion(String message){
+	public static void addMessageQuestion(String message){
 		Client client = Network.getClient();
 		if (client != null) {
 			client.addMessage(CODE_QUESTION, message);
