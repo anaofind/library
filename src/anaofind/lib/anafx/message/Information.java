@@ -22,7 +22,7 @@ public class Information extends Message{
 	 * @return l'information
 	 */
 	public static Information get(String plainMessage) {
-		InfoMessage im = InfoMessage.parserMessage(plainMessage);
+		InfoMessage im = InfoMessage.parseMessage(plainMessage);
 		if (im != null) {
 			Information information = new Information();
 			information.title = im.getType();

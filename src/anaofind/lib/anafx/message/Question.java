@@ -23,7 +23,7 @@ public class Question extends Message {
 	 * @return la question
 	 */
 	public static Question get(String plainMessage) {
-		InfoMessage im = InfoMessage.parserMessage(plainMessage);
+		InfoMessage im = InfoMessage.parseMessage(plainMessage);
 		if (im != null) {
 			Question question = new Question();
 			question.title = im.getType();

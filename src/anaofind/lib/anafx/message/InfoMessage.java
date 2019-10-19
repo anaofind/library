@@ -46,7 +46,7 @@ public class InfoMessage {
 	 * @param plainMessage le message brut
 	 * @return le message parser
 	 */
-	public static InfoMessage parserMessage(String plainMessage) {
+	public static InfoMessage parseMessage(String plainMessage) {
 		String[] m = plainMessage.split(SEPARATOR);
 		if (m.length == 3) {
 			String auteur = m[0];

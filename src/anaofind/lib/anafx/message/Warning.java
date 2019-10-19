@@ -22,7 +22,7 @@ public class Warning extends Message{
 	 * @return l'alerte
 	 */
 	public static Warning get(String plainMessage) {
-		InfoMessage im = InfoMessage.parserMessage(plainMessage);
+		InfoMessage im = InfoMessage.parseMessage(plainMessage);
 		if (im != null) {
 			Warning alerte = new Warning();
 			alerte.title = im.getType();

@@ -23,7 +23,7 @@ public class Error extends Message{
 	 * @return l'erreur
 	 */
 	public static Error get(String plaintMessage) {
-		InfoMessage im = InfoMessage.parserMessage(plaintMessage);
+		InfoMessage im = InfoMessage.parseMessage(plaintMessage);
 		if (im != null) {
 			Error erreur = new Error();
 			erreur.title = im.getType();
