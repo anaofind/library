@@ -17,7 +17,7 @@ public abstract class ReaderFX {
 	 * @param args les arguments
 	 */
 	public void start(String[] args) {
-		RunnableFX.setRunnable(this);
+		RunnableFX.setReader(this);
 		RunnableFX.run(args);
 	}
 	

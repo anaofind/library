@@ -11,15 +11,15 @@ import javafx.stage.Stage;
 public class RunnableFX extends Application{
 
 	/**
-	 * le runnable fx
+	 * le reader
 	 */
-	private static ReaderFX runnable;
+	private static ReaderFX reader;
 	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		if (runnable != null) {
-			runnable.action();
+		if (reader != null) {
+			reader.action();
 		}
 	}
 	
@@ -32,10 +32,10 @@ public class RunnableFX extends Application{
 	}
 	
 	/**
-	 * setter runnable
-	 * @param r le runnable
+	 * setter reader
+	 * @param r le reader
 	 */
-	public static void setRunnable(ReaderFX r) {
-		runnable = r;
+	public static void setReader(ReaderFX r) {
+		reader = r;
 	}
 }
