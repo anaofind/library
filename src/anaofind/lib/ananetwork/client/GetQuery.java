@@ -16,8 +16,9 @@ public class GetQuery implements Runnable{
 	 */
 	@Override
 	public void run() {
-		while (Client.isActive()){
-			Network.getClient().processQuery();			
+		Client client = Network.getInstance().getClient();
+		while (client.isActive()){
+			client.processQuery();			
 		}
 	}
 

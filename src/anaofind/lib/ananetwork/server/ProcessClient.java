@@ -1,6 +1,7 @@
 package anaofind.lib.ananetwork.server;
 
 import java.net.*;
+import java.util.Objects;
 
 import anaofind.lib.ananetwork.Network;
 
@@ -30,6 +31,8 @@ public class ProcessClient implements Runnable{
 	 */
 	@Override
 	public void run() {
-		Network.getServer().processSocketClient(socketToClient);
+		Server server = Network.getInstance().getServer();
+		Objects.requireNonNull(server);
+		server.processSocketClient(socketToClient);
 	}
 }

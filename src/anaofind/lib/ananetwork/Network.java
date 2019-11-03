@@ -1,7 +1,7 @@
 package anaofind.lib.ananetwork;
 
-import anaofind.lib.analistener.Listenable;
-import anaofind.lib.analistener.Listener;
+import java.util.*;
+
 import anaofind.lib.ananetwork.client.Client;
 import anaofind.lib.ananetwork.server.Server;
 
@@ -10,7 +10,7 @@ import anaofind.lib.ananetwork.server.Server;
  * @author anaofind
  *
  */
-public class Network implements Listener {
+public class Network {
 
 	/**
 	 * singleton reseau
@@ -18,14 +18,9 @@ public class Network implements Listener {
 	private static Network network;
 	
 	/**
-	 * le serveur
+	 * map of network element
 	 */
-	private Server server;
-	
-	/**
-	 * le client
-	 */
-	private Client client;
+	private Map<String, NetworkElement> networkElements = new HashMap<String, NetworkElement>();
 	
 	/**
 	 * constructeur prive
@@ -33,12 +28,11 @@ public class Network implements Listener {
 	private Network() {
 	}
 	
-	
 	/**
 	 * getter du singleton 
 	 * @return le singleton
 	 */
-	public static Network getInstance() {
+	public static synchronized Network getInstance() {
 		if (network == null) {
 			network = new Network();
 		}
@@ -49,9 +43,9 @@ public class Network implements Listener {
 	 * getter du serveur
 	 * @return le serveur
 	 */
-	public static Server getServer() {
-		if (network != null) {
-			return network.server;	
+	public Server getServer() {
+		if (this.networkElements.containsKey("server")) {
+			return (Server) this.networkElements.get("server");
 		}
 		return null;
 	}
@@ -60,24 +54,20 @@ public class Network implements Listener {
 	 * getter du client
 	 * @return le client
 	 */
-	public static Client getClient() {
-		if (network != null) {
-			return network.client;	
+	public Client getClient() {
+		if (this.networkElements.containsKey("client")) {
+			return (Client) this.networkElements.get("client");
 		}
 		return null;
 	}
-
-
-	@Override
-	public void listen(Listenable listenable, int code) {
-		if (listenable instanceof Server && network.server == null) {
-			network.server = (Server)listenable;
-		} else {
-			if (listenable instanceof Client && network.client == null) {
-				network.client = (Client)listenable;
-			}
-		}
-		listenable.removeListener(this);
-	}	
+	
+	/**
+	 * add a network element 
+	 * @param networkElement the network element
+	 */
+	public void addNetworkElement(NetworkElement networkElement) {
+		Objects.requireNonNull(networkElement);
+		this.networkElements.put(networkElement.getRole(), networkElement);
+	}
 	
 }
