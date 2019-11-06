@@ -25,11 +25,18 @@ public class TestsJsonValueGetString {
 		object.add("o2", o2);
 		assertEquals("{\"o1\":{},\"o2\":{}}", object.getString());
 		
-		o1.add("v1", new JsonString("valeur 1"));
-		assertEquals("{\"o1\":{\"v1\":\"valeur 1\"},\"o2\":{}}", object.getString());
+		o1.add("string", new JsonString("s"));
+		assertEquals("{\"o1\":{\"string\":\"s\"},\"o2\":{}}", object.getString());
 		
-		o1.add("v2", new JsonInteger(2));
-		assertEquals("{\"o1\":{\"v1\":\"valeur 1\",\"v2\":2},\"o2\":{}}", object.getString());
+		o1.add("integer", new JsonInteger(2));
+		assertEquals("{\"o1\":{\"string\":\"s\",\"integer\":2},\"o2\":{}}", object.getString());
+		
+		o2.add("double", new JsonDouble(1.2));
+		assertEquals("{\"o1\":{\"string\":\"s\",\"integer\":2},\"o2\":{\"double\":1.2}}", object.getString());
+		
+		o2.add("boolean", new JsonBoolean(true));
+		assertEquals("{\"o1\":{\"string\":\"s\",\"integer\":2},\"o2\":{\"boolean\":true,\"double\":1.2}}", object.getString());
+		
 	}
 	
 	@Test
@@ -44,6 +51,9 @@ public class TestsJsonValueGetString {
 		JsonArray a2 = new JsonArray();
 		array = new JsonArray(a1, a2);
 		assertEquals("[[],[]]", array.getString());
+		
+		array = new JsonArray(new JsonString("s1"), new JsonString("s2"));
+		assertEquals("[\"s1\",\"s2\"]", array.getString());
 	}
 	
 	@Test
