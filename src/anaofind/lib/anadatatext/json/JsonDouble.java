@@ -1,4 +1,6 @@
-package anaofind.lib.anajson;
+package anaofind.lib.anadatatext.json;
+
+import anaofind.lib.anadatatext.ir.IRDouble;
 
 /**
  * json double
@@ -21,8 +23,13 @@ public class JsonDouble implements JsonValue{
 	}
 	
 	@Override
-	public String getString() {
+	public String toJson() {
 		return "" + this.value;
+	}
+
+	@Override
+	public String toIR() {
+		return new IRDouble(this.value).toIR();
 	}
 
 }

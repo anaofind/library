@@ -1,4 +1,4 @@
-package anaofind.lib.anajson;
+package anaofind.lib.anadatatext.json;
 
 
 /**
@@ -22,16 +22,26 @@ public class JsonArray implements JsonValue{
 	}
 	
 	@Override
-	public String getString() {
+	public String toJson() {
 		if (elements.length == 0) {
 			return "[]";
 		}
 		String stringElements = "";
 		for (JsonValue value: elements) {
-			stringElements += value.getString() + ",";
+			stringElements += value.toJson() + ",";
 		}
 		stringElements = stringElements.substring(0, stringElements.length()-1);
 		return "[" + stringElements + "]";
+	}
+
+	@Override
+	public String toIR() {
+		String ir = "(object:";
+		for (JsonValue value : this.elements) {
+			ir += value.toIR();
+		}
+		ir += ")";
+		return ir;
 	}
 	
 }

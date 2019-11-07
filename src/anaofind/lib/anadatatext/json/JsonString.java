@@ -1,6 +1,8 @@
-package anaofind.lib.anajson;
+package anaofind.lib.anadatatext.json;
 
 import java.util.Objects;
+
+import anaofind.lib.anadatatext.ir.IRString;
 
 /**
  * json string
@@ -23,8 +25,13 @@ public class JsonString implements JsonValue{
 	}
 	
 	@Override
-	public String getString() {
+	public String toJson() {
 		return "\"" + this.value + "\"";
+	}
+
+	@Override
+	public String toIR() {
+		return new IRString(this.value).toIR();
 	}
 
 }

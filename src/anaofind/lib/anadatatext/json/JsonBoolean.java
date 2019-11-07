@@ -1,4 +1,6 @@
-package anaofind.lib.anajson;
+package anaofind.lib.anadatatext.json;
+
+import anaofind.lib.anadatatext.ir.IRBoolean;
 
 /**
  * json boolean
@@ -21,8 +23,13 @@ public class JsonBoolean implements JsonValue{
 	}
 	
 	@Override
-	public String getString() {
+	public String toJson() {
 		return "" + value;
+	}
+
+	@Override
+	public String toIR() {
+		return new IRBoolean(this.value).toIR();
 	}
 
 

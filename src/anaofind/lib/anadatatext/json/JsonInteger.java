@@ -1,4 +1,6 @@
-package anaofind.lib.anajson;
+package anaofind.lib.anadatatext.json;
+
+import anaofind.lib.anadatatext.ir.IRInteger;
 
 /**
  * json numeric
@@ -21,8 +23,13 @@ public class JsonInteger implements JsonValue{
 	}
 	
 	@Override
-	public String getString() {
+	public String toJson() {
 		return "" + this.value;
+	}
+
+	@Override
+	public String toIR() {
+		return new IRInteger(this.value).toIR();
 	}
 
 }
