@@ -13,6 +13,6 @@ public interface JsonConverter extends IRConverter{
 	 * to json
 	 * @return the json equivalents
 	 */
-	public String toJson();
+	public String toTextJson();
 	
 }

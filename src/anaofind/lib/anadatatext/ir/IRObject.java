@@ -27,7 +27,7 @@ public class IRObject implements IRValue{
 	}
 	
 	@Override
-	public String toIR() {
+	public String toTextIR() {
 		return "(object:" + this.attributesToIR() + ")";
 	}
 	
@@ -38,7 +38,7 @@ public class IRObject implements IRValue{
 	private String attributesToIR() {
 		String attributesIR = "";
 		for (String attributeName: this.values.keySet()) {
-			attributesIR += "<" + attributeName + ">" + this.values.get(attributeName).toIR();
+			attributesIR += "<" + attributeName + ">" + this.values.get(attributeName).toTextIR();
 		}
 		return attributesIR;
 	}

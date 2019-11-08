@@ -10,7 +10,7 @@ import anaofind.lib.anadatext.data.DataValue;
 public class IRNull implements IRValue{
 
 	@Override
-	public String toIR() {
+	public String toTextIR() {
 		return "(null:)";
 	}
 

@@ -23,13 +23,13 @@ public class JsonBoolean implements JsonConverter{
 	}
 	
 	@Override
-	public String toJson() {
+	public String toTextJson() {
 		return "" + value;
 	}
 
 	@Override
-	public String toIR() {
-		return new IRBoolean(this.value).toIR();
+	public String toTextIR() {
+		return new IRBoolean(this.value).toTextIR();
 	}
 
 

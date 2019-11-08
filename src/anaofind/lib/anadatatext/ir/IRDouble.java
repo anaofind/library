@@ -20,7 +20,7 @@ public class IRDouble implements IRValue{
 	}
 	
 	@Override
-	public String toIR() {
+	public String toTextIR() {
 		return "(double:" + this.value+")";
 	}
 

@@ -37,7 +37,7 @@ public class JsonNumber implements JsonConverter{
 	}
 	
 	@Override
-	public String toJson() {
+	public String toTextJson() {
 		if (this.type.equals("integer")) {
 			return "" + (int) this.value;
 		}
@@ -45,12 +45,12 @@ public class JsonNumber implements JsonConverter{
 	}
 
 	@Override
-	public String toIR() {
+	public String toTextIR() {
 		if (this.type.equals("integer")) {
-			return new IRInteger((int)this.value).toIR();
+			return new IRInteger((int)this.value).toTextIR();
 		}
 		
-		return new IRDouble(this.value).toIR();
+		return new IRDouble(this.value).toTextIR();
 	}
 
 }

@@ -22,7 +22,7 @@ public class IRBoolean implements IRValue{
 	}
 	
 	@Override
-	public String toIR() {
+	public String toTextIR() {
 		return "(boolean:" + this.value + ")";
 	}
 

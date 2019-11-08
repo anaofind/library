@@ -209,7 +209,7 @@ public class IRCompilator extends DataCompilator{
 		IRCompilator comp = new IRCompilator("(object:<tableau>(array:(string:coucou dd)(double:5.0)(integer:10)(boolean:false)(null:))<valeur>(integer:3))");
 		IRValue ir = comp.value;
 		DataValue data = ir.toDataValue();
-		System.out.println(comp.value.toIR());
+		System.out.println(comp.value.toTextIR());
 		System.out.println(data.getContainsString());
 	}
 

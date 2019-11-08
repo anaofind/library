@@ -9,13 +9,13 @@ import anaofind.lib.anadatatext.ir.IRNull;
 public class JsonNull implements JsonConverter{
 
 	@Override
-	public String toIR() {
-		return "" + null;
+	public String toTextIR() {
+		return new IRNull().toTextIR();
 	}
-
+	
 	@Override
-	public String toJson() {
-		return new IRNull().toIR();
+	public String toTextJson() {
+		return "null";
 	}
 
 }

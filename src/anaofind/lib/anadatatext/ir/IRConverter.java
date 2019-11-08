@@ -11,7 +11,7 @@ public interface IRConverter {
 	 * to intermediate representation
 	 * @return
 	 */
-	public String toIR();
+	public String toTextIR();
 	
 	
 }

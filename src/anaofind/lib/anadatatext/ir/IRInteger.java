@@ -23,7 +23,7 @@ public class IRInteger implements IRValue{
 	}
 	
 	@Override
-	public String toIR() {
+	public String toTextIR() {
 		return "(integer:" + this.value + ")";
 	}
 

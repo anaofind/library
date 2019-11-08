@@ -23,7 +23,7 @@ public class IRString implements IRValue{
 	}
 	
 	@Override
-	public String toIR() {
+	public String toTextIR() {
 		return "(string:" + this.value + ")";
 	}
 

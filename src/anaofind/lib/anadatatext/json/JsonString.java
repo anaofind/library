@@ -25,13 +25,13 @@ public class JsonString implements JsonConverter{
 	}
 	
 	@Override
-	public String toJson() {
+	public String toTextJson() {
 		return "\"" + this.value + "\"";
 	}
 
 	@Override
-	public String toIR() {
-		return new IRString(this.value).toIR();
+	public String toTextIR() {
+		return new IRString(this.value).toTextIR();
 	}
 
 }

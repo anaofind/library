@@ -15,13 +15,13 @@ public class JsonObject implements JsonConverter{
 	private Map<String, JsonConverter> values = new HashMap<String, JsonConverter>();
 	
 	@Override
-	public String toJson() {
+	public String toTextJson() {
 		if (values.size() == 0) {
 			return "{}";
 		}
 		String stringElements = "";
 		for (String key: values.keySet()) {
-			stringElements += "\"" + key + "\"" + ":" + values.get(key).toJson() + ",";
+			stringElements += "\"" + key + "\"" + ":" + values.get(key).toTextJson() + ",";
 		}
 		stringElements = stringElements.substring(0, stringElements.length()-1);
 		return "{" + stringElements + "}";
@@ -45,10 +45,10 @@ public class JsonObject implements JsonConverter{
 	}
 
 	@Override
-	public String toIR() {
+	public String toTextIR() {
 		String ir = "(object:";
 		for (String attributeName : this.values.keySet()) {
-			ir += "<" + attributeName + ">" + this.values.get(attributeName).toIR();
+			ir += "<" + attributeName + ">" + this.values.get(attributeName).toTextIR();
 		}
 		ir += ")";
 		return ir;

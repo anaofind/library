@@ -22,23 +22,23 @@ public class JsonArray implements JsonConverter{
 	}
 	
 	@Override
-	public String toJson() {
+	public String toTextJson() {
 		if (elements.length == 0) {
 			return "[]";
 		}
 		String stringElements = "";
 		for (JsonConverter value: elements) {
-			stringElements += value.toJson() + ",";
+			stringElements += value.toTextJson() + ",";
 		}
 		stringElements = stringElements.substring(0, stringElements.length()-1);
 		return "[" + stringElements + "]";
 	}
 
 	@Override
-	public String toIR() {
+	public String toTextIR() {
 		String ir = "(object:";
 		for (JsonConverter value : this.elements) {
-			ir += value.toIR();
+			ir += value.toTextIR();
 		}
 		ir += ")";
 		return ir;

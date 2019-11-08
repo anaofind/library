@@ -22,7 +22,7 @@ public class IRArray implements IRValue{
 	}
 	
 	@Override
-	public String toIR() {
+	public String toTextIR() {
 		return "(array:" + this.valuesToIR() + ")";
 	}
 	
@@ -33,7 +33,7 @@ public class IRArray implements IRValue{
 	private String valuesToIR() {
 		String valuesIR = "";
 		for (IRConverter value : this.values) {
-			valuesIR += value.toIR();
+			valuesIR += value.toTextIR();
 		}
 		return valuesIR;
 	}
