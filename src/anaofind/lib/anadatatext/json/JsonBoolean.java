@@ -7,7 +7,7 @@ import anaofind.lib.anadatatext.ir.IRBoolean;
  * @author anaofind
  *
  */
-public class JsonBoolean implements JsonValue{
+public class JsonBoolean implements JsonConverter{
 
 	/**
 	 * the value

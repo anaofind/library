@@ -1,5 +1,7 @@
 package anaofind.lib.anadatatext.ir;
 
+import anaofind.lib.anadatext.data.*;
+
 /**
  * the ir value boolean
  * @author anaofind
@@ -22,6 +24,11 @@ public class IRBoolean implements IRValue{
 	@Override
 	public String toIR() {
 		return "(boolean:" + this.value + ")";
+	}
+
+	@Override
+	public DataValue toDataValue() {
+		return new DataBoolean(this.value);
 	}
 
 }

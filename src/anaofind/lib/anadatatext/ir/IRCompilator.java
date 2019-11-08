@@ -1,9 +1,10 @@
 package anaofind.lib.anadatatext.ir;
 
 import java.util.Objects;
-import java.util.*;
 
-import anaofind.lib.anadatatext.data.DataCompilator;
+import anaofind.lib.anadatext.data.*;
+
+import java.util.*;
 
 /**
  * compilator ir
@@ -149,14 +150,14 @@ public class IRCompilator extends DataCompilator{
 	 * @return the value array
 	 */
 	private IRValue readArray() {
-		List<IRValue> values = new ArrayList<IRValue>();
+		List<IRConverter> values = new ArrayList<IRConverter>();
 		while (! this.isEndRead()) {
 			this.readCharWithoutSpace();
 			switch (this.currentChar) {
 			case End.VALUE :
 				return new IRArray(values.toArray(new IRValue[values.size()]));
 			case Start.VALUE :
-				IRValue value = this.readIRValue();
+				IRConverter value = this.readIRValue();
 				Objects.requireNonNull(value);
 				values.add(value);
 			}
@@ -192,22 +193,24 @@ public class IRCompilator extends DataCompilator{
 		}
 		return null;
 	}
-
+	
+	/**
+	 * get data
+	 */
+	public DataValue getData() {
+		return this.value.toDataValue();
+	}
+	
 	/**
 	 * test main method
 	 * @param args the args
 	 */
 	public static void main(String[] args) {
-		IRValue ast1 = new IRArray(IRInteger.toArray(10,5,10,20,30));
-		IRValue ast2;
-		IRObject object = new IRObject();
-		object.addAttribute("ast1", new IRObject());
-		ast2 = object;
-		System.out.println(ast1.toIR());
-		System.out.println(ast2.toIR());
-
-		IRCompilator comp = new IRCompilator("(object:<tableau>(array:(string:10)(double:5.0)(integer:10)(boolean:false)(null:))<valeur>(integer:3))");
+		IRCompilator comp = new IRCompilator("(object:<tableau>(array:(string:coucou dd)(double:5.0)(integer:10)(boolean:false)(null:))<valeur>(integer:3))");
+		IRValue ir = comp.value;
+		DataValue data = ir.toDataValue();
 		System.out.println(comp.value.toIR());
+		System.out.println(data.getContainsString());
 	}
 
 }

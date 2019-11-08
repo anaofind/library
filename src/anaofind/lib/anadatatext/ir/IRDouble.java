@@ -1,5 +1,8 @@
 package anaofind.lib.anadatatext.ir;
 
+import anaofind.lib.anadatext.data.DataDouble;
+import anaofind.lib.anadatext.data.DataValue;
+
 /**
  * ir value double
  * @author anaofind
@@ -19,6 +22,11 @@ public class IRDouble implements IRValue{
 	@Override
 	public String toIR() {
 		return "(double:" + this.value+")";
+	}
+
+	@Override
+	public DataValue toDataValue() {
+		return new DataDouble(this.value);
 	}
 
 }

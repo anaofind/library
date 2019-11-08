@@ -7,12 +7,12 @@ import java.util.*;
  * @author anaofind
  *
  */
-public class JsonObject implements JsonValue{
+public class JsonObject implements JsonConverter{
 
 	/**
 	 * map of values
 	 */
-	private Map<String, JsonValue> values = new HashMap<String, JsonValue>();
+	private Map<String, JsonConverter> values = new HashMap<String, JsonConverter>();
 	
 	@Override
 	public String toJson() {
@@ -32,7 +32,7 @@ public class JsonObject implements JsonValue{
 	 * @param key the key
 	 * @param value the value
 	 */
-	public void add(String key, JsonValue value) {
+	public void add(String key, JsonConverter value) {
 		values.put(key, value);
 	}
 	

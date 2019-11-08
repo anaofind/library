@@ -1,4 +1,4 @@
-package anaofind.lib.anadatatext.data;
+package anaofind.lib.anadatext.data;
 
 import java.util.Objects;
 

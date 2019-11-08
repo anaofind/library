@@ -1,5 +1,8 @@
 package anaofind.lib.anadatatext.ir;
 
+import anaofind.lib.anadatext.data.DataInteger;
+import anaofind.lib.anadatext.data.DataValue;
+
 /**
  * ir value integer
  * @author anaofind
@@ -35,6 +38,11 @@ public class IRInteger implements IRValue{
 			array[i] = new IRInteger(values[i]);
 		}
 		return array;
+	}
+
+	@Override
+	public DataValue toDataValue() {
+		return new DataInteger(this.value);
 	}
 	
 }

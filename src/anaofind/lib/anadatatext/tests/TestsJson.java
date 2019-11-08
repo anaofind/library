@@ -29,10 +29,10 @@ public class TestsJson {
 		o1.add("string", new JsonString("s"));
 		assertEquals("{\"o1\":{\"string\":\"s\"},\"o2\":{}}", object.toJson());
 		
-		o1.add("integer", new JsonInteger(2));
+		o1.add("integer", new JsonNumber(2));
 		assertEquals("{\"o1\":{\"string\":\"s\",\"integer\":2},\"o2\":{}}", object.toJson());
 		
-		o2.add("double", new JsonDouble(1.2));
+		o2.add("double", new JsonNumber(1.2));
 		assertEquals("{\"o1\":{\"string\":\"s\",\"integer\":2},\"o2\":{\"double\":1.2}}", object.toJson());
 		
 		o2.add("boolean", new JsonBoolean(true));

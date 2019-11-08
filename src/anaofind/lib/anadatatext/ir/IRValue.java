@@ -1,17 +1,17 @@
 package anaofind.lib.anadatatext.ir;
 
-/**
- * the data value
- * @author anaofind
- *
- */
-public interface IRValue {
+import anaofind.lib.anadatext.data.DataValue;
 
-	/**
-	 * to intermediate representation
-	 * @return
-	 */
-	public String toIR();
+/**
+ * ir value 
+ * @author anaofind
+ */
+public interface IRValue extends IRConverter{
 	
+	/**
+	 * to data value
+	 * @return the data value equivalent
+	 */
+	public DataValue toDataValue();
 	
 }

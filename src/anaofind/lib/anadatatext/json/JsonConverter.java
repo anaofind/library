@@ -1,13 +1,13 @@
 package anaofind.lib.anadatatext.json;
 
-import anaofind.lib.anadatatext.ir.IRValue;
+import anaofind.lib.anadatatext.ir.IRConverter;
 
 /**
  * json value
  * @author anaofind
  *
  */
-public interface JsonValue extends IRValue{
+public interface JsonConverter extends IRConverter{
 
 	/**
 	 * to json

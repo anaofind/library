@@ -6,7 +6,7 @@ import anaofind.lib.anadatatext.ir.IRNull;
  * json value null
  * @author anaofind
  */
-public class JsonNull implements JsonValue{
+public class JsonNull implements JsonConverter{
 
 	@Override
 	public String toIR() {

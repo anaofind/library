@@ -6,18 +6,18 @@ package anaofind.lib.anadatatext.json;
  * @author anaofind
  *
  */
-public class JsonArray implements JsonValue{
+public class JsonArray implements JsonConverter{
 
 	/**
 	 * the json values
 	 */
-	private JsonValue[] elements;
+	private JsonConverter[] elements;
 	
 	/**
 	 * construct
 	 * @param jsonValues the array of json values
 	 */
-	public JsonArray(JsonValue...jsonValues) {
+	public JsonArray(JsonConverter...jsonValues) {
 		this.elements = jsonValues;
 	}
 	
@@ -27,7 +27,7 @@ public class JsonArray implements JsonValue{
 			return "[]";
 		}
 		String stringElements = "";
-		for (JsonValue value: elements) {
+		for (JsonConverter value: elements) {
 			stringElements += value.toJson() + ",";
 		}
 		stringElements = stringElements.substring(0, stringElements.length()-1);
@@ -37,7 +37,7 @@ public class JsonArray implements JsonValue{
 	@Override
 	public String toIR() {
 		String ir = "(object:";
-		for (JsonValue value : this.elements) {
+		for (JsonConverter value : this.elements) {
 			ir += value.toIR();
 		}
 		ir += ")";

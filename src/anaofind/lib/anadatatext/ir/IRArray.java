@@ -1,5 +1,7 @@
 package anaofind.lib.anadatatext.ir;
 
+import anaofind.lib.anadatext.data.*;
+
 /**
  * ir value array
  * @author anaofind
@@ -30,10 +32,19 @@ public class IRArray implements IRValue{
 	 */
 	private String valuesToIR() {
 		String valuesIR = "";
-		for (IRValue value : this.values) {
+		for (IRConverter value : this.values) {
 			valuesIR += value.toIR();
 		}
 		return valuesIR;
+	}
+
+	@Override
+	public DataValue toDataValue() {
+		DataValue[] datas = new DataValue[this.values.length];
+		for (int i = 0; i<datas.length; i++) {
+			datas[i] = this.values[i].toDataValue();
+		}
+		return new DataArray(datas);
 	}
 
 }

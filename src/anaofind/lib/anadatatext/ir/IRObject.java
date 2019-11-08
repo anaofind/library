@@ -2,6 +2,8 @@ package anaofind.lib.anadatatext.ir;
 
 import java.util.*;
 
+import anaofind.lib.anadatext.data.*;
+
 /**
  * ir value object
  * @author anaofind
@@ -39,6 +41,15 @@ public class IRObject implements IRValue{
 			attributesIR += "<" + attributeName + ">" + this.values.get(attributeName).toIR();
 		}
 		return attributesIR;
+	}
+
+	@Override
+	public DataValue toDataValue() {
+		DataObject object = new DataObject();
+		for (String attributeName : this.values.keySet()) {
+			object.add(attributeName, this.values.get(attributeName).toDataValue());
+		}
+		return object;
 	}
 	
 }

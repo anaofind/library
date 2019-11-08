@@ -8,7 +8,7 @@ import anaofind.lib.anadatatext.ir.IRString;
  * json string
  * @author anaofind
  */
-public class JsonString implements JsonValue{
+public class JsonString implements JsonConverter{
 
 	/**
 	 * the value
