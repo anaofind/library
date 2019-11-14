@@ -26,12 +26,12 @@ public class DataGettable implements DataValue{
 
 	@Override
 	public DataValue getData(int index) {
-		return this.getData().getData(index);
+		return this.data.getData().getData(index);
 	}
 
 	@Override
 	public DataValue getData() {
-		return this.getData();
+		return this.data.getData();
 	}
 
 	@Override
@@ -41,12 +41,12 @@ public class DataGettable implements DataValue{
 
 	@Override
 	public String getString(int index) {
-		return this.getString(index);
+		return this.data.getString(index);
 	}
 
 	@Override
 	public String getString() {
-		return this.getString();
+		return this.data.getString();
 	}
 
 	@Override
@@ -76,22 +76,22 @@ public class DataGettable implements DataValue{
 
 	@Override
 	public Double getDouble() {
-		return this.getDouble();
+		return this.data.getDouble();
 	}
 
 	@Override
 	public Boolean getBoolean(String attribute) {
-		return this.getBoolean(attribute);
+		return this.data.getBoolean(attribute);
 	}
 
 	@Override
 	public Boolean getBoolean(int index) {
-		return this.getBoolean(index);
+		return this.data.getBoolean(index);
 	}
 
 	@Override
 	public Boolean getBoolean() {
-		return this.getBoolean();
+		return this.data.getBoolean();
 	}
 
 	@Override
