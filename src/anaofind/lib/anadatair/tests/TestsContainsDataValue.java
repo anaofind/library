@@ -14,6 +14,119 @@ import anaofind.lib.anadatair.data.*;
 public class TestsContainsDataValue {
 	
 	@Test
+	public void testEquals() {
+		DataValue v0 = new DataSettable();
+		DataValue v1 = new DataSettable(10);
+		DataValue v2 = new DataSettable(10.1);
+		DataValue v3 = new DataSettable(true);
+		DataValue v4 = new DataSettable("coucou");
+		
+		assertTrue(v0.equals(v0));
+		assertFalse(v0.equals(v1));
+		assertFalse(v0.equals(v2));
+		assertFalse(v0.equals(v3));
+		assertFalse(v0.equals(v4));
+		
+		assertTrue(v1.equals(v1));
+		assertFalse(v1.equals(v0));
+		assertFalse(v1.equals(v2));
+		assertFalse(v1.equals(v3));
+		assertFalse(v1.equals(v4));
+		
+		assertTrue(v2.equals(v2));
+		assertFalse(v2.equals(v0));
+		assertFalse(v2.equals(v1));
+		assertFalse(v2.equals(v3));
+		assertFalse(v2.equals(v4));
+		
+		assertTrue(v3.equals(v3));
+		assertFalse(v3.equals(v0));
+		assertFalse(v3.equals(v1));
+		assertFalse(v3.equals(v2));
+		assertFalse(v3.equals(v4));
+		
+		assertTrue(v4.equals(v4));
+		assertFalse(v4.equals(v0));
+		assertFalse(v4.equals(v1));
+		assertFalse(v4.equals(v2));
+		assertFalse(v4.equals(v3));
+		
+		DataValue a1 = new DataSettable(v0, v1, v2);
+		DataValue a2 = new DataSettable(v0, v1, v2);
+		DataValue a3 = new DataSettable(v1, v0, v2);
+		DataValue a4 = new DataSettable(v2, v1, v0);
+		
+		assertTrue(a1.equals(a1));
+		assertTrue(a1.equals(a2));
+		assertFalse(a1.equals(a3));
+		assertFalse(a1.equals(a4));
+		
+		assertTrue(a2.equals(a2));
+		assertTrue(a2.equals(a1));
+		assertFalse(a2.equals(a3));
+		assertFalse(a2.equals(a4));
+		
+		assertTrue(a3.equals(a3));
+		assertFalse(a3.equals(a1));
+		assertFalse(a3.equals(a2));
+		assertFalse(a3.equals(a4));
+		
+		assertTrue(a4.equals(a4));
+		assertFalse(a4.equals(a1));
+		assertFalse(a4.equals(a2));
+		assertFalse(a4.equals(a3));
+		
+		DataSettable o1 = new DataSettable();
+		o1.addData("a1", v1);
+		o1.addData("a2", v2);
+		DataSettable o2 = new DataSettable();
+		o2.addData("a1", v2);
+		o2.addData("a2", v1);
+		DataSettable o3 = new DataSettable();
+		o3.addData("a1", v1);
+		o3.addData("a2", v3);
+		
+		assertTrue(o1.equals(o1));
+		assertTrue(o1.equals(o1.toGettable()));
+		assertTrue(o1.toGettable().equals(o1));
+		assertTrue(o1.toGettable().equals(o1.toGettable()));
+		assertFalse(o1.equals(o2));
+		assertFalse(o1.equals(o2.toGettable()));
+		assertFalse(o1.toGettable().equals(o2));
+		assertFalse(o1.toGettable().equals(o2.toGettable()));
+		assertFalse(o1.equals(o3));
+		assertFalse(o1.equals(o3.toGettable()));
+		assertFalse(o1.toGettable().equals(o3));
+		assertFalse(o1.toGettable().equals(o3.toGettable()));
+		
+		assertTrue(o2.equals(o2));
+		assertTrue(o2.equals(o2.toGettable()));
+		assertTrue(o2.toGettable().equals(o2));
+		assertTrue(o2.toGettable().equals(o2.toGettable()));
+		assertFalse(o2.equals(o1));
+		assertFalse(o2.equals(o1.toGettable()));
+		assertFalse(o2.toGettable().equals(o1));
+		assertFalse(o2.toGettable().equals(o1.toGettable()));
+		assertFalse(o2.equals(o3));
+		assertFalse(o2.equals(o3.toGettable()));
+		assertFalse(o2.toGettable().equals(o3));
+		assertFalse(o2.toGettable().equals(o3.toGettable()));
+		
+		assertTrue(o3.equals(o3));
+		assertTrue(o3.equals(o3.toGettable()));
+		assertTrue(o3.toGettable().equals(o3));
+		assertTrue(o3.toGettable().equals(o3.toGettable()));
+		assertFalse(o3.equals(o1));
+		assertFalse(o3.equals(o1.toGettable()));
+		assertFalse(o3.toGettable().equals(o1));
+		assertFalse(o3.toGettable().equals(o1.toGettable()));
+		assertFalse(o3.equals(o2));
+		assertFalse(o3.equals(o2.toGettable()));
+		assertFalse(o3.toGettable().equals(o2));
+		assertFalse(o3.toGettable().equals(o2.toGettable()));
+	}
+	
+	@Test
 	public void testBase() {
 		DataValue v0 = new DataSettable();
 		DataValue v1 = new DataSettable(10);

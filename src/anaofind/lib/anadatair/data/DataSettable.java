@@ -477,4 +477,91 @@ public class DataSettable implements DataValue{
 		s += "}";
 		return s;
 	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if (! (object instanceof DataValue)) {
+			return false;
+		}
+		if (! (object instanceof DataSettable)) {
+			DataValue data = (DataValue) object;
+			return data.equals(this);
+		}
+		DataSettable data = (DataSettable) object;
+		if (! data.getType().equals(this.getType())) {
+			return false;
+		}
+		if (data.size() != this.size()) {
+			return false;
+		}
+		if (data.index != data.index || data.attributes.size() != this.attributes.size()) {
+			return false;
+		}
+		for (String attribute : this.attributes) {
+			if (! data.attributes.contains(attribute)) {
+				return false;
+			}
+		}
+		for (int id : this.arrayData.keySet()) {
+			DataValue d = this.arrayData.get(id);
+			if (! (data.arrayData.containsKey(id) && data.arrayData.get(id).equals(d))) {
+				return false;
+			}
+		}
+		for (int ib : this.arrayBoolean.keySet()) {
+			boolean b = this.arrayBoolean.get(ib);
+			if (! (data.arrayBoolean.containsKey(ib) && data.arrayBoolean.get(ib).equals(b))) {
+				return false;
+			}
+		}
+		for (int ii : this.arrayInteger.keySet()) {
+			int i = this.arrayInteger.get(ii);
+			if (! (data.arrayInteger.containsKey(ii) && data.arrayInteger.get(ii).equals(i))) {
+				return false;
+			}
+		}
+		for (int id : this.arrayDouble.keySet()) {
+			double d = this.arrayDouble.get(id);
+			if (! (data.arrayDouble.containsKey(id) && data.arrayDouble.get(id).equals(d))) {
+				return false;
+			}
+		}
+		for (int is : this.arrayString.keySet()) {
+			String s = this.arrayString.get(is);
+			if (! (data.arrayString.containsKey(is) && data.arrayString.get(is).equals(s))) {
+				return false;
+			}
+		}
+		for (String ad : this.objectData.keySet()) {
+			DataValue d = this.objectData.get(ad);
+			if (! (data.objectData.containsKey(ad) && data.objectData.get(ad).equals(d))) {
+				return false;
+			}
+		}
+		for (String ab : this.objectBoolean.keySet()) {
+			boolean b = this.objectBoolean.get(ab);
+			if (! (data.objectBoolean.containsKey(ab) && data.objectBoolean.get(ab).equals(b))) {
+				return false;
+			}
+		}
+		for (String ai : this.objectInteger.keySet()) {
+			int i = this.objectInteger.get(ai);
+			if (! (data.objectInteger.containsKey(ai) && data.objectInteger.get(ai).equals(i))) {
+				return false;
+			}
+		}
+		for (String ad : this.objectDouble.keySet()) {
+			double d = this.objectDouble.get(ad);
+			if (! (data.objectDouble.containsKey(ad) && data.objectDouble.get(ad).equals(d))) {
+				return false;
+			}
+		}
+		for (String as : this.objectString.keySet()) {
+			String s = this.objectString.get(as);
+			if (! (data.objectString.containsKey(as) && data.objectString.get(as).equals(s))) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

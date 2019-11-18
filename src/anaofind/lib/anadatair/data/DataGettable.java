@@ -108,4 +108,18 @@ public class DataGettable implements DataValue{
 	public void optimize() {
 		this.data.optimize();
 	}
+	
+	@Override
+	public String toString() {
+		return this.data.toString();
+	}
+	
+	@Override
+	public boolean equals(Object ob) {
+		if (ob instanceof DataValue) {
+			DataValue dv = (DataValue) ob;
+			return (dv.equals(this.data));
+		}
+		return false;
+	}
 }
