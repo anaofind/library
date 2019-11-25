@@ -174,7 +174,7 @@ public class PrettyPrinter {
 	 */
 	public String getText() {
 		String text = "";
-		if (lines.size() > 0) {
+		if (lines.size() > 0 | !this.tamponLine.isEmpty()) {
 			for (String line : this.lines) {
 				text += line + this.endLineChar;
 			}
@@ -198,7 +198,7 @@ public class PrettyPrinter {
 	public static void main (String[] args) {
 		PrettyPrinter pp = new PrettyPrinter();
 		pp.addText(0, "coucou");
-		pp.addText(1, "comment çava ?", true);
+		pp.addText(1, "comment ï¿½ava ?", true);
 		pp.jumpLine(2);
 		pp.marginSizeBase ++;
 		pp.addText(0, "tres bien merci ;)");
