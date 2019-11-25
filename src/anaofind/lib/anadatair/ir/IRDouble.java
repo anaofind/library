@@ -1,13 +1,16 @@
 package anaofind.lib.anadatair.ir;
 
-import anaofind.lib.anadatair.data.*;
+import anaofind.lib.anadatair.visitor.VisitorIR;
 
 /**
  * ir value double
  * @author anaofind
  */
-public class IRDouble implements IRConverter{
+public class IRDouble implements IRValue{
 
+	/**
+	 * the value
+	 */
 	private double value;
 	
 	/**
@@ -18,16 +21,17 @@ public class IRDouble implements IRConverter{
 		this.value = value;
 	}
 	
-	@Override
-	public String toTextIR() {
-		return "(double:" + this.value+")";
+	/**
+	 * getter value
+	 * @return the value
+	 */
+	public double getValue() {
+		return this.value;
 	}
-
+	
 	@Override
-	public DataValue toDataValue() {
-		DataSettable data = new DataSettable();
-		data.addDouble(this.value);
-		return data.toGettable();
+	public void accept(VisitorIR visitor) {
+		visitor.visitDoubleIR(this);
 	}
 
 }

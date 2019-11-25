@@ -1,8 +1,9 @@
-package anaofind.lib.anadatair.ir;
+package anaofind.lib.anadatair.compilator;
 
 import java.util.Objects;
 
-import anaofind.lib.anadatair.data.*;
+import anaofind.lib.anadatair.ir.*;
+
 
 import java.util.*;
 
@@ -11,7 +12,7 @@ import java.util.*;
  * @author anaofind
  *
  */
-public class IRCompilator extends Compilator{
+public class CompilatorIR extends Compilator{
 
 	/**
 	 * private class represente the start syntaxe char
@@ -56,23 +57,31 @@ public class IRCompilator extends Compilator{
 	/**
 	 * the ir value
 	 */
-	private IRConverter value;
+	private IRValue value;
 
 	/**
 	 * construct
-	 * @param ir the ir text
+	 * @param textIR the ir text
 	 */
-	public IRCompilator(String ir) {
-		super(ir);
+	public CompilatorIR(String textIR) {
+		super(removeSpace(textIR));
 		this.value = this.readIRValue();
 		Objects.requireNonNull(this.value);
 	}
 
 	/**
+	 * get value compiled
+	 * @return the value compiled
+	 */
+	public IRValue getValue() {
+		return this.value;
+	}
+	
+	/**
 	 * read the next ir value
 	 * @return the ir value readed
 	 */
-	private IRConverter readIRValue() {
+	private IRValue readIRValue() {
 		while (! this.isEndRead()) {
 			if (this.currentChar == Start.VALUE) {
 				String type = this.readType();
@@ -110,7 +119,7 @@ public class IRCompilator extends Compilator{
 	 * read object
 	 * @return the object
 	 */
-	private IRConverter readObject() {
+	private IRValue readObject() {
 		IRObject object = new IRObject();
 		while (! this.isEndRead()) {
 			this.readCharWithoutSpace();
@@ -120,7 +129,7 @@ public class IRCompilator extends Compilator{
 			case Start.ATTRIBUTE :
 				String attribute = this.readAttribute();
 				Objects.requireNonNull(attribute);
-				IRConverter value = this.readIRValue();
+				IRValue value = this.readIRValue();
 				Objects.requireNonNull(value);
 				object.addAttribute(attribute, value);
 				break;
@@ -149,15 +158,15 @@ public class IRCompilator extends Compilator{
 	 * read value array
 	 * @return the value array
 	 */
-	private IRConverter readArray() {
-		List<IRConverter> values = new ArrayList<IRConverter>();
+	private IRValue readArray() {
+		List<IRValue> values = new ArrayList<IRValue>();
 		while (! this.isEndRead()) {
 			this.readCharWithoutSpace();
 			switch (this.currentChar) {
 			case End.VALUE :
-				return new IRArray(values.toArray(new IRConverter[values.size()]));
+				return new IRArray(values.toArray(new IRValue[values.size()]));
 			case Start.VALUE :
-				IRConverter value = this.readIRValue();
+				IRValue value = this.readIRValue();
 				Objects.requireNonNull(value);
 				values.add(value);
 			}
@@ -170,7 +179,7 @@ public class IRCompilator extends Compilator{
 	 * @param type the type of base value
 	 * @return the base value
 	 */
-	private IRConverter readBaseValue(String type) {
+	private IRValue readBaseValue(String type) {
 		String valueString = "";
 		this.readCharWithoutSpace();
 		while (! this.isEndRead()) {
@@ -194,13 +203,5 @@ public class IRCompilator extends Compilator{
 		return null;
 	}
 		
-	/**
-	 * test main method
-	 * @param args the args
-	 */
-	public static void main(String[] args) {
-		IRCompilator comp = new IRCompilator("(object:<tableau>(array:(string:coucou dd)(double:5.0)(integer:10)(boolean:false)(null:))<valeur>(integer:3))");
-		System.out.println(comp.value.toTextIR());
-	}
-
+	
 }

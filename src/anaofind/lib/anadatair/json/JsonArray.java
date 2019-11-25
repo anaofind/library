@@ -1,47 +1,43 @@
 package anaofind.lib.anadatair.json;
 
+import anaofind.lib.anadatair.visitor.VisitorJSON;
+
+import java.util.*;
 
 /**
  * json array
  * @author anaofind
  *
  */
-public class JsonArray implements JsonConverter{
+public class JsonArray implements JsonValue{
 
 	/**
 	 * the json values
 	 */
-	private JsonConverter[] elements;
+	private List<JsonValue> values = new ArrayList<JsonValue>();
 	
 	/**
 	 * construct
 	 * @param jsonValues the array of json values
 	 */
-	public JsonArray(JsonConverter...jsonValues) {
-		this.elements = jsonValues;
+	public JsonArray(JsonValue...jsonValues) {
+		for (JsonValue value : jsonValues) {
+			this.values.add(value);	
+		}
 	}
 	
-	@Override
-	public String toTextJson() {
-		if (elements.length == 0) {
-			return "[]";
-		}
-		String stringElements = "";
-		for (JsonConverter value: elements) {
-			stringElements += value.toTextJson() + ",";
-		}
-		stringElements = stringElements.substring(0, stringElements.length()-1);
-		return "[" + stringElements + "]";
+	/**
+	 * getter values clone
+	 * @return the values clone
+	 */
+	public List<JsonValue> getValues() {
+		return Collections.unmodifiableList(this.values);
 	}
 
 	@Override
-	public String toTextIR() {
-		String ir = "(array:";
-		for (JsonConverter value : this.elements) {
-			ir += value.toTextIR();
-		}
-		ir += ")";
-		return ir;
+	public void accept(VisitorJSON visitor) {
+		visitor.visitArrayJSON(this);
 	}
+	
 	
 }

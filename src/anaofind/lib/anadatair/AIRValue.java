@@ -1,10 +1,10 @@
-package anaofind.lib.anadatair.data;
+package anaofind.lib.anadatair;
 
 /**
- * data value
+ * air value
  * @author anaofind
  */
-public interface DataValue {
+public interface AIRValue {
 
 	/**
 	 * optimize
@@ -16,20 +16,20 @@ public interface DataValue {
 	 * @param attribute the attribute
  	 * @return the data
 	 */
-	public DataValue getData(String attribute);
+	public AIRValue getData(String attribute);
 	
 	/**
 	 * get data value
 	 * @param index the index
 	 * @return the data
 	 */
-	public DataValue getData(int index);
+	public AIRValue getData(int index);
 	
 	/**
 	 * get data
 	 * @return the data if only one data
 	 */
-	public DataValue getData();
+	public AIRValue getData();
 	
 	/**
 	 * get string value

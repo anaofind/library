@@ -1,36 +1,36 @@
-package anaofind.lib.anadatair.data;
+package anaofind.lib.anadatair;
 
 /**
- * data gettable only (not settable)
+ * anadatair value gettable (not settable)
  * @author anaofind
  */
-public class DataGettable implements DataValue{
+public class AIRGettable implements AIRValue{
 
 	/**
 	 * the settable data
 	 */
-	private DataSettable data;
+	private AIRSettable data;
 	
 	/**
 	 * construct 
 	 * @param data the settable data
 	 */
-	public DataGettable (DataSettable data) {
+	public AIRGettable (AIRSettable data) {
 		this.data = data;
 	}
 	
 	@Override
-	public DataValue getData(String attribute) {
+	public AIRValue getData(String attribute) {
 		return this.data.getData(attribute);
 	}
 
 	@Override
-	public DataValue getData(int index) {
+	public AIRValue getData(int index) {
 		return this.data.getData().getData(index);
 	}
 
 	@Override
-	public DataValue getData() {
+	public AIRValue getData() {
 		return this.data.getData();
 	}
 
@@ -116,8 +116,8 @@ public class DataGettable implements DataValue{
 	
 	@Override
 	public boolean equals(Object ob) {
-		if (ob instanceof DataValue) {
-			DataValue dv = (DataValue) ob;
+		if (ob instanceof AIRValue) {
+			AIRValue dv = (AIRValue) ob;
 			return (dv.equals(this.data));
 		}
 		return false;

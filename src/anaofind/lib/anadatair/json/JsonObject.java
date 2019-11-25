@@ -2,37 +2,26 @@ package anaofind.lib.anadatair.json;
 
 import java.util.*;
 
+import anaofind.lib.anadatair.visitor.VisitorJSON;
+
 /**
  * json object
  * @author anaofind
  *
  */
-public class JsonObject implements JsonConverter{
+public class JsonObject implements JsonValue{
 
 	/**
 	 * map of values
 	 */
-	private Map<String, JsonConverter> values = new HashMap<String, JsonConverter>();
+	private Map<String, JsonValue> values = new HashMap<String, JsonValue>();
 	
-	@Override
-	public String toTextJson() {
-		if (values.size() == 0) {
-			return "{}";
-		}
-		String stringElements = "";
-		for (String key: values.keySet()) {
-			stringElements += "\"" + key + "\"" + ":" + values.get(key).toTextJson() + ",";
-		}
-		stringElements = stringElements.substring(0, stringElements.length()-1);
-		return "{" + stringElements + "}";
-	}
-
 	/**
 	 * add value
 	 * @param key the key
 	 * @param value the value
 	 */
-	public void addAttribute(String key, JsonConverter value) {
+	public void addAttribute(String key, JsonValue value) {
 		values.put(key, value);
 	}
 	
@@ -43,14 +32,17 @@ public class JsonObject implements JsonConverter{
 	public void remove(String key) {
 		values.remove(key);
 	}
+	
+	/**
+	 * getter values
+	 * @return the values
+	 */
+	public Map<String, JsonValue> getValues() {
+		return Collections.unmodifiableMap(values);
+	}
 
 	@Override
-	public String toTextIR() {
-		String ir = "(object:";
-		for (String attributeName : this.values.keySet()) {
-			ir += "<" + attributeName + ">" + this.values.get(attributeName).toTextIR();
-		}
-		ir += ")";
-		return ir;
+	public void accept(VisitorJSON visitor) {
+		visitor.visitObjectJSON(this);
 	}
 }

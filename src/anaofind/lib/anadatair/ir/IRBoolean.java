@@ -1,12 +1,12 @@
 package anaofind.lib.anadatair.ir;
 
-import anaofind.lib.anadatair.data.*;
+import anaofind.lib.anadatair.visitor.VisitorIR;
 
 /**
  * the ir value boolean
  * @author anaofind
  */
-public class IRBoolean implements IRConverter{
+public class IRBoolean implements IRValue{
 
 	/**
 	 * the value
@@ -21,15 +21,16 @@ public class IRBoolean implements IRConverter{
 		this.value = value;
 	}
 	
-	@Override
-	public String toTextIR() {
-		return "(boolean:" + this.value + ")";
+	/**
+	 * getter value 
+	 * @return the value
+	 */
+	public boolean getValue() {
+		return this.value;
 	}
 
 	@Override
-	public DataValue toDataValue() {
-		DataSettable data = new DataSettable();
-		data.addBoolean(this.value);
-		return data.toGettable();
+	public void accept(VisitorIR visitor) {
+		visitor.visitBooleanIR(this);
 	}
 }

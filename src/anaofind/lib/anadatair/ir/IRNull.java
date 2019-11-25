@@ -1,21 +1,16 @@
 package anaofind.lib.anadatair.ir;
 
-import anaofind.lib.anadatair.data.*;
+import anaofind.lib.anadatair.visitor.VisitorIR;
 
 /**
  * ir value null
  * @author anaofind
  */
-public class IRNull implements IRConverter{
+public class IRNull implements IRValue{
 
 	@Override
-	public String toTextIR() {
-		return "(null:)";
-	}
-
-	@Override
-	public DataValue toDataValue() {
-		return new DataSettable().toGettable();
+	public void accept(VisitorIR visitor) {
+		visitor.visitNullIR(this);
 	}
 
 }

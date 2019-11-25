@@ -1,49 +1,42 @@
 package anaofind.lib.anadatair.ir;
 
-import anaofind.lib.anadatair.data.*;
+import anaofind.lib.anadatair.visitor.VisitorIR;
+
+import java.util.*;
 
 /**
  * ir value array
  * @author anaofind
  */
-public class IRArray implements IRConverter{
+public class IRArray implements IRValue{
 
 	/**
 	 * values
 	 */
-	private IRConverter[] values;
+	private List<IRValue> values = new ArrayList<IRValue>();
 	
 	/**
 	 * construct
 	 * @param irValues the values
 	 */
-	public IRArray(IRConverter...irValues) {
-		this.values = irValues;
-	}
-	
-	@Override
-	public String toTextIR() {
-		return "(array:" + this.valuesToIR() + ")";
+	public IRArray(IRValue...values) {
+		for (IRValue value : values) {
+			this.values.add(value);
+		}
 	}
 	
 	/**
-	 * get ir values
-	 * @return the ir values
+	 * getter values
+	 * @return the values
 	 */
-	private String valuesToIR() {
-		String valuesIR = "";
-		for (IRConverter value : this.values) {
-			valuesIR += value.toTextIR();
-		}
-		return valuesIR;
+	public List<IRValue> getValues() {
+		return Collections.unmodifiableList(this.values);
 	}
 
 	@Override
-	public DataValue toDataValue() {
-		DataSettable data = new DataSettable();
-		for (IRConverter value : this.values) {
-			data.addData(value.toDataValue());
-		}
-		return data.toGettable();
+	public void accept(VisitorIR visitorIR) {
+		visitorIR.visitArrayIR(this);
 	}
+	
+	
 }

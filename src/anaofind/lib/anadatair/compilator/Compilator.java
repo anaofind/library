@@ -1,4 +1,4 @@
-package anaofind.lib.anadatair.data;
+package anaofind.lib.anadatair.compilator;
 
 import java.util.Objects;
 
@@ -6,7 +6,7 @@ import java.util.Objects;
  * compilator data
  * @author anaofind
  */
-public abstract class Compilator {
+public class Compilator {
 
 	/**
 	 * the text data
@@ -39,7 +39,7 @@ public abstract class Compilator {
 	 * read the char
 	 * @return the char readed
 	 */
-	protected void readChar() {
+	public void readChar() {
 		if (! this.isEndRead()) {
 			this.currentChar = dataText.charAt(this.indexChar);
 			this.indexChar++;
@@ -49,7 +49,7 @@ public abstract class Compilator {
 	/**
 	 * read the car not space
 	 */
-	protected void readCharWithoutSpace() {
+	public void readCharWithoutSpace() {
 		if (! this.isEndRead()) {
 			this.readChar();
 			while (currentChar == ' ' || currentChar == '\t' || currentChar == '\n') {
@@ -62,7 +62,30 @@ public abstract class Compilator {
 	 * is end read the data
 	 * @return boolean : true if is end | false else
 	 */
-	protected boolean isEndRead() {
+	public boolean isEndRead() {
 		return (this.indexChar >= this.lengthDataText);
+	}
+	
+	/**
+	 * getter current char
+	 * @return the current char
+	 */
+	public char getCurrentChar() {
+		return this.currentChar;
+	}
+	
+	/**
+	 * remove space in text
+	 * @param textSpace the text with space
+	 * @return the text without space
+	 */
+	public static String removeSpace(String textSpace) {
+		String textWithoutSpace = "";
+		Compilator cmp = new Compilator(textSpace);
+		while (! cmp.isEndRead()) {
+			cmp.readCharWithoutSpace();
+			textWithoutSpace += cmp.currentChar;
+		}
+		return textWithoutSpace;
 	}
 }

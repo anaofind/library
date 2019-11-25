@@ -2,13 +2,13 @@ package anaofind.lib.anadatair.json;
 
 import java.util.Objects;
 
-import anaofind.lib.anadatair.ir.IRString;
+import anaofind.lib.anadatair.visitor.VisitorJSON;
 
 /**
  * json string
  * @author anaofind
  */
-public class JsonString implements JsonConverter{
+public class JsonString implements JsonValue{
 
 	/**
 	 * the value
@@ -24,14 +24,19 @@ public class JsonString implements JsonConverter{
 		this.value = value;
 	}
 	
-	@Override
-	public String toTextJson() {
-		return "\"" + this.value + "\"";
+	/**
+	 * getter value
+	 * @return the value
+	 */
+	public String getValue() {
+		return this.value;
 	}
 
 	@Override
-	public String toTextIR() {
-		return new IRString(this.value).toTextIR();
+	public void accept(VisitorJSON visitor) {
+		visitor.visitStringJSON(this);
 	}
-
+	
+	
+	
 }

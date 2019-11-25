@@ -1,13 +1,13 @@
 package anaofind.lib.anadatair.json;
 
-import anaofind.lib.anadatair.ir.IRBoolean;
+import anaofind.lib.anadatair.visitor.VisitorJSON;
 
 /**
  * json boolean
  * @author anaofind
  *
  */
-public class JsonBoolean implements JsonConverter{
+public class JsonBoolean implements JsonValue{
 
 	/**
 	 * the value
@@ -21,17 +21,19 @@ public class JsonBoolean implements JsonConverter{
 	public JsonBoolean (boolean value) {
 		this.value = value;
 	}
+
+	/**
+	 * getter value
+	 * @return the value
+	 */
+	public boolean getValue() {
+		return this.value;
+	}
+
+	@Override
+	public void accept(VisitorJSON visitor) {
+		visitor.visitBooleanJSON(this);
+	}
 	
-	@Override
-	public String toTextJson() {
-		return "" + value;
-	}
-
-	@Override
-	public String toTextIR() {
-		return new IRBoolean(this.value).toTextIR();
-	}
-
-
 	
 }

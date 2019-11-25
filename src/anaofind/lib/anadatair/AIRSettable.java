@@ -1,12 +1,12 @@
-package anaofind.lib.anadatair.data;
+package anaofind.lib.anadatair;
 
 import java.util.*;
 
 /**
- * data
+ * value anadataire settable
  * @author anaofind
  */
-public class DataSettable implements DataValue{
+public class AIRSettable implements AIRValue{
 
 	/**
 	 * the index of array
@@ -21,12 +21,12 @@ public class DataSettable implements DataValue{
 	/**
 	 * the object of object
 	 */
-	private Map<String, DataValue> objectData = new HashMap<String, DataValue>();
+	private Map<String, AIRValue> objectData = new HashMap<String, AIRValue>();
 
 	/**
 	 * the array of object
 	 */
-	private Map<Integer, DataValue> arrayData = new HashMap<Integer, DataValue>();
+	private Map<Integer, AIRValue> arrayData = new HashMap<Integer, AIRValue>();
 
 	/**
 	 * the array of string
@@ -71,14 +71,14 @@ public class DataSettable implements DataValue{
 	/**
 	 * construct
 	 */
-	public DataSettable() {
+	public AIRSettable() {
 	}
 	
 	/**
 	 * construct
 	 * @param booleans array of booleans
 	 */
-	public DataSettable(boolean...booleans) {
+	public AIRSettable(boolean...booleans) {
 		for (boolean bool : booleans) {
 			this.addBoolean(bool);
 		}
@@ -88,7 +88,7 @@ public class DataSettable implements DataValue{
 	 * construct
 	 * @param integers array of integers
 	 */
-	public DataSettable(int...integers) {
+	public AIRSettable(int...integers) {
 		for (int i : integers) {
 			this.addInteger(i);
 		}
@@ -98,7 +98,7 @@ public class DataSettable implements DataValue{
 	 * construct
 	 * @param doubles array of doubles
 	 */
-	public DataSettable(double...doubles) {
+	public AIRSettable(double...doubles) {
 		for (double d : doubles) {
 			this.addDouble(d);
 		}
@@ -108,7 +108,7 @@ public class DataSettable implements DataValue{
 	 * construct
 	 * @param strings array of strings
 	 */
-	public DataSettable(String...strings) {
+	public AIRSettable(String...strings) {
 		for (String s : strings) {
 			this.addString(s);
 		}
@@ -118,8 +118,8 @@ public class DataSettable implements DataValue{
 	 * construct
 	 * @param datas array of data value
 	 */
-	public DataSettable(DataValue...datas) {
-		for (DataValue data : datas) {
+	public AIRSettable(AIRValue...datas) {
+		for (AIRValue data : datas) {
 			this.addData(data);
 		}
 	}
@@ -128,14 +128,14 @@ public class DataSettable implements DataValue{
 	 * to gettable
 	 * @return the gettable equivalent
 	 */
-	public DataValue toGettable() {
-		return new DataGettable(this);
+	public AIRValue toGettable() {
+		return new AIRGettable(this);
 	}
 
 	@Override
 	public void optimize() {
 		for (int i : this.arrayData.keySet()) {
-			DataValue data = this.arrayData.get(i);
+			AIRValue data = this.arrayData.get(i);
 			data.optimize();
 			int size = data.size();
 			if (size == 1) {
@@ -162,7 +162,7 @@ public class DataSettable implements DataValue{
 			}
 		}
 		for (String attribute : this.objectData.keySet()) {
-			DataValue data = this.objectData.get(attribute);
+			AIRValue data = this.objectData.get(attribute);
 			data.optimize();
 			int size = data.size();
 			if (size == 1) {
@@ -195,7 +195,7 @@ public class DataSettable implements DataValue{
 	 * @param attribute the attribute
 	 * @param data the data
 	 */
-	public void addData(String attribute, DataValue data) {
+	public void addData(String attribute, AIRValue data) {
 		Objects.requireNonNull(attribute);
 		Objects.requireNonNull(data);
 		if (! this.attributes.contains(attribute)) {
@@ -209,7 +209,7 @@ public class DataSettable implements DataValue{
 	 * add data
 	 * @param data the data
 	 */
-	public void addData(DataValue data) {
+	public void addData(AIRValue data) {
 		Objects.requireNonNull(data);
 		this.arrayData.put(this.index, data);
 		this.optimize();
@@ -309,17 +309,17 @@ public class DataSettable implements DataValue{
 	}
 
 	@Override
-	public DataValue getData(String attribute) {
+	public AIRValue getData(String attribute) {
 		return this.objectData.get(attribute);
 	}
 
 	@Override
-	public DataValue getData(int index) {
+	public AIRValue getData(int index) {
 		return this.arrayData.get(index);
 	}
 
 	@Override
-	public DataValue getData() {
+	public AIRValue getData() {
 		if (this.size() == 1 && this.arrayData.size() == 1) {
 			return this.arrayData.get(0);
 		}
@@ -480,14 +480,14 @@ public class DataSettable implements DataValue{
 	
 	@Override
 	public boolean equals(Object object) {
-		if (! (object instanceof DataValue)) {
+		if (! (object instanceof AIRValue)) {
 			return false;
 		}
-		if (! (object instanceof DataSettable)) {
-			DataValue data = (DataValue) object;
+		if (! (object instanceof AIRSettable)) {
+			AIRValue data = (AIRValue) object;
 			return data.equals(this);
 		}
-		DataSettable data = (DataSettable) object;
+		AIRSettable data = (AIRSettable) object;
 		if (! data.getType().equals(this.getType())) {
 			return false;
 		}
@@ -503,7 +503,7 @@ public class DataSettable implements DataValue{
 			}
 		}
 		for (int id : this.arrayData.keySet()) {
-			DataValue d = this.arrayData.get(id);
+			AIRValue d = this.arrayData.get(id);
 			if (! (data.arrayData.containsKey(id) && data.arrayData.get(id).equals(d))) {
 				return false;
 			}
@@ -533,7 +533,7 @@ public class DataSettable implements DataValue{
 			}
 		}
 		for (String ad : this.objectData.keySet()) {
-			DataValue d = this.objectData.get(ad);
+			AIRValue d = this.objectData.get(ad);
 			if (! (data.objectData.containsKey(ad) && data.objectData.get(ad).equals(d))) {
 				return false;
 			}

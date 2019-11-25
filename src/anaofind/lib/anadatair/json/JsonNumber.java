@@ -1,13 +1,13 @@
 package anaofind.lib.anadatair.json;
 
-import anaofind.lib.anadatair.ir.*;
+import anaofind.lib.anadatair.visitor.VisitorJSON;
 
 /**
  * json numeric
  * @author anaofind
  *
  */
-public class JsonNumber implements JsonConverter{
+public class JsonNumber implements JsonValue{
 
 	/**
 	 * the value
@@ -36,21 +36,26 @@ public class JsonNumber implements JsonConverter{
 		this.type = "integer";
 	}
 	
-	@Override
-	public String toTextJson() {
-		if (this.type.equals("integer")) {
-			return "" + (int) this.value;
-		}
-		return "" + this.value;
+	/**
+	 * getter number type
+	 * @return the number type
+	 */
+	public String getType() {
+		return type;
+	}
+	
+	/**
+	 * getter value
+	 * @return the value (double)
+	 */
+	public double getValue() {
+		return this.value;
 	}
 
 	@Override
-	public String toTextIR() {
-		if (this.type.equals("integer")) {
-			return new IRInteger((int)this.value).toTextIR();
-		}
-		
-		return new IRDouble(this.value).toTextIR();
+	public void accept(VisitorJSON visitor) {
+		visitor.visitNumberJSON(this);
 	}
-
+	
+	
 }

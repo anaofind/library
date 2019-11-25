@@ -1,21 +1,16 @@
 package anaofind.lib.anadatair.json;
 
-import anaofind.lib.anadatair.ir.IRNull;
+import anaofind.lib.anadatair.visitor.VisitorJSON;
 
 /**
  * json value null
  * @author anaofind
  */
-public class JsonNull implements JsonConverter{
+public class JsonNull implements JsonValue{
 
 	@Override
-	public String toTextIR() {
-		return new IRNull().toTextIR();
-	}
-	
-	@Override
-	public String toTextJson() {
-		return "null";
+	public void accept(VisitorJSON visitor) {
+		visitor.visitNullJSON(this);
 	}
 
 }
