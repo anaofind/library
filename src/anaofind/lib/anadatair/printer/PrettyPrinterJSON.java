@@ -22,15 +22,17 @@ public class PrettyPrinterJSON extends PrettyPrinter implements VisitorJSON{
 	public void visitArrayJSON(JsonArray jsonArray) {
 		List<JsonValue> values = jsonArray.getValues();
 		if (values.size() > 0) {
-			this.addText(0, "[", true);
+			this.addText(0, "[ ");
+			this.jumpLine(1);
 			this.marginSizeBase ++;
-			for (int i = 0; i<values.size(); i++) {
-				values.get(i).accept(this);
-				if (i < values.size() - 1) {
-					this.addText(0, ",", true);
-				} else {
-					this.jumpLine(1);
+			int counterValue = values.size();
+			for (JsonValue value : values) {
+				value.accept(this);
+				counterValue --;
+				if (counterValue > 0) {
+					this.addText(0, ",");
 				}
+				this.jumpLine(1);
 			}
 			this.marginSizeBase --;
 			this.addText(0, "]");
@@ -43,18 +45,18 @@ public class PrettyPrinterJSON extends PrettyPrinter implements VisitorJSON{
 	public void visitObjectJSON(JsonObject jsonObject) {
 		Map<String, JsonValue> values = jsonObject.getValues();
 		if (values.size() > 0) {
-			this.addText(0, "{", true);
-			int nbAttributeReaded = 0;
+			this.addText(0, "{");
+			this.jumpLine(1);
 			this.marginSizeBase ++;
+			int counterAttribute = values.size();
 			for (String attribute : values.keySet()) {
 				this.addText(0, "\"" + attribute + "\" : ");
 				values.get(attribute).accept(this);
-				if (nbAttributeReaded < values.size() -1 ) {
-					this.addText(0, ",", true);
-				} else {
-					jumpLine(1);
+				counterAttribute --;
+				if (counterAttribute > 0) {
+					this.addText(0, ",");
 				}
-				nbAttributeReaded ++;
+				this.jumpLine(1);
 			}
 			this.marginSizeBase --;
 			this.addText(0, "}");

@@ -166,6 +166,8 @@ public class PrettyPrinter {
 	 */
 	public void clear() {
 		lines.clear();
+		this.tamponLine = "";
+		this.numLine = 0;
 	}
 	
 	/**

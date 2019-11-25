@@ -93,7 +93,7 @@ public class PrettyPrinterSQL extends PrettyPrinter implements VisitorSQL{
 	public static void main(String[] args) {
 		SQLWhere cond1 = new SQLWhere("age", ">", new SQLNumber(10));
 		SQLOrderBy cond2 = new SQLOrderBy("nom");
-		SQLSelect select = new SQLSelect("personne");
+		SQLSelect select = new SQLSelect("personne", "pays");
 		select.addColumns("personne", "age", "nom", "prenom");
 		select.addCondition(cond1);
 		select.addCondition(cond2);

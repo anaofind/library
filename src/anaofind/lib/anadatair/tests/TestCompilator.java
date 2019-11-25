@@ -2,9 +2,10 @@ package anaofind.lib.anadatair.tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+import org.junit.*;
 
 import anaofind.lib.anadatair.compilator.CompilatorIR;
+import anaofind.lib.anadatair.compilator.CompilatorJSON;
 import anaofind.lib.anadatair.ir.*;
 import anaofind.lib.anadatair.json.*;
 import anaofind.lib.anadatair.printer.*;
@@ -16,19 +17,33 @@ import anaofind.lib.anadatair.printer.*;
  */
 public class TestCompilator {
 
-	@Test
-	public void testIR() {
-		
-		PrettyPrinterIR pp1 = new PrettyPrinterIR();
-		
-		IRObject object = new IRObject();
-		object.addAttribute("Nom", new IRString("RAUZIER"));
-		object.addAttribute("Prenom", new IRString("LEO"));
-		object.addAttribute("Age", new IRInteger(21));
-		object.addAttribute("Sex", new IRString("HOMME"));
-		object.addAttribute("Pays", new IRString("FRANCE"));
-		object.addAttribute("Contrat", new IRBoolean(false));
-		object.addAttribute("V/N/D", new IRArray(
+	/**
+	 * ir object
+	 */
+	private IRObject objectIR;
+	
+	/**
+	 * json object
+	 */
+	private JsonObject objectJSON;
+
+	@Before
+	public void before() {
+		this.createData();
+	}
+	
+	/**
+	 * create datas
+	 */
+	private void createData() {
+		this.objectIR = new IRObject();
+		this.objectIR.addAttribute("Nom", new IRString("RAUZIER"));
+		this.objectIR.addAttribute("Prenom", new IRString("LEO"));
+		this.objectIR.addAttribute("Age", new IRInteger(21));
+		this.objectIR.addAttribute("Sex", new IRString("HOMME"));
+		this.objectIR.addAttribute("Pays", new IRString("FRANCE"));
+		this.objectIR.addAttribute("Contrat", new IRBoolean(false));
+		this.objectIR.addAttribute("V/N/D", new IRArray(
 				new IRArray(
 						new IRString("Victoire"), 
 						new IRString("Null"), 
@@ -40,32 +55,14 @@ public class TestCompilator {
 		)
 		);
 		
-		object.accept(pp1);
-		String ir1 = pp1.getText();
-		pp1.print();
-		pp1.clear();
-		//new CompilatorIR(ir1).getValue().accept(pp1);
-		
-		String ir2 = pp1.getText();
-		assertEquals(ir1, ir2);
-		
-		new IRInteger(10).accept(pp1);
-		pp1.print();
-		
-	}
-	
-	@Test
-	public void testJSON() {
-		PrettyPrinterJSON pp1 = new PrettyPrinterJSON();
-		
-		JsonObject object = new JsonObject();
-		object.addAttribute("Nom", new JsonString("RAUZIER"));
-		object.addAttribute("Prenom", new JsonString("LEO"));
-		object.addAttribute("Age", new JsonNumber(21));
-		object.addAttribute("Sex", new JsonString("HOMME"));
-		object.addAttribute("Pays", new JsonString("FRANCE"));
-		object.addAttribute("Contrat", new JsonBoolean(false));
-		object.addAttribute("V/N/D", new JsonArray(
+		this.objectJSON = new JsonObject();
+		this.objectJSON.addAttribute("Nom", new JsonString("RAUZIER"));
+		this.objectJSON.addAttribute("Prenom", new JsonString("LEO"));
+		this.objectJSON.addAttribute("Age", new JsonNumber(21));
+		this.objectJSON.addAttribute("Sex", new JsonString("HOMME"));
+		this.objectJSON.addAttribute("Pays", new JsonString("FRANCE"));
+		this.objectJSON.addAttribute("Contrat", new JsonBoolean(false));
+		this.objectJSON.addAttribute("V/N/D", new JsonArray(
 				new JsonArray(
 						new JsonString("Victoire"), 
 						new JsonString("Null"), 
@@ -77,15 +74,33 @@ public class TestCompilator {
 		)
 		);
 		
-		object.accept(pp1);
-		//String json1 = pp1.getText();
+	}
+	
+	@Test
+	public void testIR() {		
+		PrettyPrinterIR pp1 = new PrettyPrinterIR();
+		PrettyPrinterIR pp2 = new PrettyPrinterIR();
 		
-		//pp1.print();
-		pp1.clear();
-		//new CompilatorJSON(json1).getValue().accept(pp1);
+		this.objectIR.accept(pp1);
 		
-		//String ir2 = pp1.getText();
-		//assertEquals(ir1, ir2);
+		CompilatorIR cmp = new CompilatorIR(pp1.getText());	
+		cmp.getValue().accept(pp2);
+		
+		assertEquals(pp1.getText(), pp2.getText());
+		
+	}
+	
+	@Test
+	public void testJSON() {	
+		PrettyPrinterJSON pp1 = new PrettyPrinterJSON();
+		PrettyPrinterJSON pp2 = new PrettyPrinterJSON();
+		
+		this.objectJSON.accept(pp1);
+		
+		CompilatorJSON cmp = new CompilatorJSON(pp1.getText());
+		cmp.getValue().accept(pp2);
+		
+		assertEquals(pp1.getText(), pp2.getText());
 	}
 	
 	

@@ -8,6 +8,17 @@ import java.util.Objects;
  */
 public class Compilator {
 
+	protected class CompilatorException extends Exception {
+		/**
+		 * serial version
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public CompilatorException(String message) {
+			super(message + " -> char : \'" + currentChar + "\' [" + indexChar + "]");
+		}
+	}
+	
 	/**
 	 * the text data
 	 */
@@ -27,8 +38,8 @@ public class Compilator {
 	 * length of data text
 	 */
 	private int lengthDataText;
-	
-	
+		
+			
 	public Compilator(String dataText) {
 		Objects.requireNonNull(dataText);
 		this.dataText = dataText;
@@ -59,6 +70,14 @@ public class Compilator {
 	}
 	
 	/**
+	 * is space
+	 * @return boolean : true if char is space | false else
+	 */
+	public boolean isSpace() {
+		return (currentChar == ' ' || currentChar == '\t' || currentChar == '\n');
+	}
+	
+	/**
 	 * is end read the data
 	 * @return boolean : true if is end | false else
 	 */
@@ -73,7 +92,7 @@ public class Compilator {
 	public char getCurrentChar() {
 		return this.currentChar;
 	}
-	
+		
 	/**
 	 * remove space in text
 	 * @param textSpace the text with space
@@ -87,5 +106,14 @@ public class Compilator {
 			textWithoutSpace += cmp.currentChar;
 		}
 		return textWithoutSpace;
+	}
+	
+	/**
+	 * call exception
+	 * @param message the message
+	 * @throws CompilatorException 
+	 */
+	public void callException(String message) throws CompilatorException {
+		throw new CompilatorException(message);
 	}
 }

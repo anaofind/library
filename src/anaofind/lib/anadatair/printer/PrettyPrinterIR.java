@@ -27,9 +27,11 @@ public class PrettyPrinterIR extends PrettyPrinter implements VisitorIR{
 		List<IRValue> values = irArray.getValues();
 		if (values.size() > 0) {
 			this.addText(0, start);
+			this.jumpLine(1);
 			this.marginSizeBase ++;
 			for (IRValue value: values) {
 				value.accept(this);
+				this.jumpLine(1);
 			}
 			this.marginSizeBase--;
 			this.addText(0, end);
@@ -46,11 +48,13 @@ public class PrettyPrinterIR extends PrettyPrinter implements VisitorIR{
 		Map<String, IRValue> values = irObject.getValues();
 		if (values.size() > 0) {
 			this.addText(0, start);
+			this.jumpLine(1);
 			this.marginSizeBase ++;
 			for (String attribute: values.keySet()) {
 				IRValue value = values.get(attribute);
 				this.addText(0, "<" + attribute + "> "); 
 				value.accept(this);
+				this.jumpLine(1);
 			}
 			this.marginSizeBase --;
 			this.addText(0, end);
