@@ -135,12 +135,11 @@ public class TestCompilator {
 				"}\r\n" + 
 				"\r\n" + 
 				"";
+		
 		CompilatorJSON cmp = new CompilatorJSON(json1);
 		JsonValue value = cmp.getValue();
 		PrettyPrinterJSON pp = new PrettyPrinterJSON();
 		value.accept(pp);
-		System.out.println(Compilator.removeSpace(json1));
-		System.out.println(Compilator.removeSpace(pp.getText()));
 		assertEquals(Compilator.removeSpace(json1).length(), Compilator.removeSpace(pp.getText()).length());
 	}
 	

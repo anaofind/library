@@ -27,7 +27,7 @@ public class Compilator {
 	/**
 	 * the index char
 	 */
-	private int indexChar;
+	private int indexChar = -1;
 	
 	/**
 	 * the current char
@@ -51,9 +51,9 @@ public class Compilator {
 	 * @return the char readed
 	 */
 	public void readChar() {
+		this.indexChar++;
 		if (! this.isEndRead()) {
 			this.currentChar = dataText.charAt(this.indexChar);
-			this.indexChar++;
 		}
 	}
 	
