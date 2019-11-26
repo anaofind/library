@@ -15,7 +15,7 @@ public class Compilator {
 		private static final long serialVersionUID = 1L;
 
 		public CompilatorException(String message) {
-			super(message + " -> char : \'" + currentChar + "\' [" + indexChar + "]");
+			super(message + " -> char : \'" + currentChar + "\' [" + (indexChar-1) + "]");
 		}
 	}
 	
@@ -63,7 +63,7 @@ public class Compilator {
 	public void readCharWithoutSpace() {
 		if (! this.isEndRead()) {
 			this.readChar();
-			while (currentChar == ' ' || currentChar == '\t' || currentChar == '\n') {
+			while (this.isSpace()) {
 				this.readChar();
 			}
 		}
@@ -74,7 +74,7 @@ public class Compilator {
 	 * @return boolean : true if char is space | false else
 	 */
 	public boolean isSpace() {
-		return (currentChar == ' ' || currentChar == '\t' || currentChar == '\n');
+		return (currentChar == ' ' || currentChar == '\t' || currentChar == '\n' || currentChar == '\r');
 	}
 	
 	/**
