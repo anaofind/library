@@ -103,5 +103,38 @@ public class TestCompilator {
 		assertEquals(pp1.getText(), pp2.getText());
 	}
 	
+	@Test
+	public void testRealJSON() {
+		CompilatorJSON cmp = new CompilatorJSON("{\r\n" + 
+				"	\"segments\": [25,200,200,200,200,200], \r\n" + 
+				"	\"raceName\": \"Rappel-Allure\",\r\n" + 
+				"	\"startTime\": 1574521200,\r\n" + 
+				"	\"routeFile\": \"../simulation/config/ra.gpx\",\r\n" + 
+				"	\"teams\": [\r\n" + 
+				"		{\"bibNumber\":101, \"name\":\"Leo\", \"pace\": 203},\r\n" + 
+				"		{\"bibNumber\":102, \"name\":\"Remi\", \"pace\": 191},\r\n" + 
+				"		{\"bibNumber\":103, \"name\":\"Maxime\", \"pace\": 295}\r\n" + 
+				"	],\r\n" + 
+				"	\r\n" + 
+				"	\"api\": {\r\n" + 
+				"		\"baseUrl\": \"http://127.0.0.1/projets/uctl2_api/\",\r\n" + 
+				"		\"actions\": {\r\n" + 
+				"			\"setupRace\": \"setup/race\",\r\n" + 
+				"			\"updateRaceStatus\": \"update/race/status\",\r\n" + 
+				"            \"updateTeams\": \"update/race/teams\"\r\n" + 
+				"		}\r\n" + 
+				"	\r\n" + 
+				"	},\r\n" + 
+				"	\r\n" + 
+				"	\"raceFile\": \"../simulation/race.csv\",\r\n" + 
+				"	\"simPath\": \"C:/Users/anaofind/Desktop/projet java/projet/Etudes/UCTL2_Sim/build/libs/UCTL2.jar\",\r\n" + 
+				"	\"tickStep\": 4,\r\n" + 
+				"	\"fileUpdateRate\": 2\r\n" + 
+				"	\r\n" + 
+				"}\r\n" + 
+				"\r\n" + 
+				"");
+	}
+	
 	
 }

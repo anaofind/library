@@ -117,7 +117,7 @@ public class CompilatorJSON extends Compilator{
 		List<JsonValue> values = new ArrayList<JsonValue>();
 		this.readCharWithoutSpace();
 		boolean end = this.currentChar == ']';
-		while (! this.isEndRead() && !end) {
+		while (!this.isEndRead() && !end) {
 			JsonValue value = this.readJsonValue();
 			
 			if (value == null) {
@@ -167,8 +167,8 @@ public class CompilatorJSON extends Compilator{
 			return new JsonNull();
 		}
 		
-		this.callException("value not accepted");
 		System.out.println("NULL BASE");
+		this.callException("value not accepted");
 		return null;
 	}
 	
