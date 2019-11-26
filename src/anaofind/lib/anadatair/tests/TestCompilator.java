@@ -22,7 +22,7 @@ public class TestCompilator {
 	 * ir object
 	 */
 	private IRObject objectIR;
-	
+
 	/**
 	 * json object
 	 */
@@ -32,7 +32,7 @@ public class TestCompilator {
 	public void before() {
 		this.createData();
 	}
-	
+
 	/**
 	 * create datas
 	 */
@@ -49,13 +49,13 @@ public class TestCompilator {
 						new IRString("Victoire"), 
 						new IRString("Null"), 
 						new IRString("Defaite")
-				), 
+						), 
 				new IRInteger(10),
 				new IRInteger(5), 
 				new IRInteger(2)
-		)
-		);
-		
+				)
+				);
+
 		this.objectJSON = new JsonObject();
 		this.objectJSON.addAttribute("Nom", new JsonString("RAUZIER"));
 		this.objectJSON.addAttribute("Prenom", new JsonString("LEO"));
@@ -68,42 +68,42 @@ public class TestCompilator {
 						new JsonString("Victoire"), 
 						new JsonString("Null"), 
 						new JsonString("Defaite")
-				), 
+						), 
 				new JsonNumber(10),
 				new JsonNumber(5), 
 				new JsonNumber(2)
-		)
-		);
-		
+				)
+				);
+
 	}
-	
+
 	@Test
 	public void testIR() {		
 		PrettyPrinterIR pp1 = new PrettyPrinterIR();
 		PrettyPrinterIR pp2 = new PrettyPrinterIR();
-		
+
 		this.objectIR.accept(pp1);
-		
+
 		CompilatorIR cmp = new CompilatorIR(pp1.getText());	
 		cmp.getValue().accept(pp2);
-		
+
 		assertEquals(pp1.getText(), pp2.getText());
-		
+
 	}
-	
+
 	@Test
 	public void testJSON() {	
 		PrettyPrinterJSON pp1 = new PrettyPrinterJSON();
 		PrettyPrinterJSON pp2 = new PrettyPrinterJSON();
-		
+
 		this.objectJSON.accept(pp1);
-		
+
 		CompilatorJSON cmp = new CompilatorJSON(pp1.getText());
 		cmp.getValue().accept(pp2);
-		
+
 		assertEquals(pp1.getText(), pp2.getText());
 	}
-	
+
 	@Test
 	public void testRealJSON() {
 		String json1 = "{\r\n" + 
@@ -135,13 +135,13 @@ public class TestCompilator {
 				"}\r\n" + 
 				"\r\n" + 
 				"";
-		
+
 		CompilatorJSON cmp = new CompilatorJSON(json1);
 		JsonValue value = cmp.getValue();
 		PrettyPrinterJSON pp = new PrettyPrinterJSON();
 		value.accept(pp);
 		assertEquals(Compilator.removeSpace(json1).length(), Compilator.removeSpace(pp.getText()).length());
 	}
-	
-	
+
+
 }
