@@ -61,11 +61,9 @@ public class Compilator {
 	 * read the car not space
 	 */
 	public void readCharWithoutSpace() {
-		if (! this.isEndRead()) {
+		this.readChar();
+		while (! this.isEndRead() && this.isSpace()) {
 			this.readChar();
-			while (this.isSpace()) {
-				this.readChar();
-			}
 		}
 	}
 	
@@ -101,9 +99,10 @@ public class Compilator {
 	public static String removeSpace(String textSpace) {
 		String textWithoutSpace = "";
 		Compilator cmp = new Compilator(textSpace);
+		cmp.readCharWithoutSpace();
 		while (! cmp.isEndRead()) {
-			cmp.readCharWithoutSpace();
 			textWithoutSpace += cmp.currentChar;
+			cmp.readCharWithoutSpace();
 		}
 		return textWithoutSpace;
 	}

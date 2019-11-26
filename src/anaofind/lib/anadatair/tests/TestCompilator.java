@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
+import anaofind.lib.anadatair.compilator.Compilator;
 import anaofind.lib.anadatair.compilator.CompilatorIR;
 import anaofind.lib.anadatair.compilator.CompilatorJSON;
 import anaofind.lib.anadatair.ir.*;
@@ -105,7 +106,7 @@ public class TestCompilator {
 	
 	@Test
 	public void testRealJSON() {
-		CompilatorJSON cmp = new CompilatorJSON("{\r\n" + 
+		String json1 = "{\r\n" + 
 				"	\"segments\": [25,200,200,200,200,200], \r\n" + 
 				"	\"raceName\": \"Rappel-Allure\",\r\n" + 
 				"	\"startTime\": 1574521200,\r\n" + 
@@ -133,7 +134,14 @@ public class TestCompilator {
 				"	\r\n" + 
 				"}\r\n" + 
 				"\r\n" + 
-				"");
+				"";
+		CompilatorJSON cmp = new CompilatorJSON(json1);
+		JsonValue value = cmp.getValue();
+		PrettyPrinterJSON pp = new PrettyPrinterJSON();
+		value.accept(pp);
+		System.out.println(Compilator.removeSpace(json1));
+		System.out.println(Compilator.removeSpace(pp.getText()));
+		assertEquals(Compilator.removeSpace(json1).length(), Compilator.removeSpace(pp.getText()).length());
 	}
 	
 	

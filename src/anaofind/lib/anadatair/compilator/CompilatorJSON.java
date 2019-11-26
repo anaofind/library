@@ -50,7 +50,6 @@ public class CompilatorJSON extends Compilator{
 			this.readCharWithoutSpace();
 		}
 		while (! this.isEndRead()) {
-
 			switch (this.currentChar) {
 			case '{' :
 				return this.readJsonObject();
@@ -93,9 +92,8 @@ public class CompilatorJSON extends Compilator{
 			
 			object.addAttribute(attribute, value);
 			
-			if (this.currentChar != ',') {
-				end = true;
-			} else {
+			end = ! (this.currentChar == ',');
+			if (! end) {
 				this.readCharWithoutSpace();
 			}
 		}
@@ -126,10 +124,9 @@ public class CompilatorJSON extends Compilator{
 			
 			values.add(value);
 			
-			if (this.currentChar != ',') {
-				end = true;
-			} else {
-				this.readCharWithoutSpace();	
+			end = ! (this.currentChar == ',');
+			if (! end) {
+				this.readCharWithoutSpace();
 			}
 		}
 		
@@ -197,7 +194,7 @@ public class CompilatorJSON extends Compilator{
 	private String readValue() {
 		String string = "";
 		while (! this.isEndRead()) {
-			if (this.isSpace() | this.currentChar == ',') {
+			if (this.isSpace() || this.currentChar == ',' || this.currentChar == '}' || this.currentChar == ']') {
 				if (this.isSpace()) {
 					this.readCharWithoutSpace();
 				}
