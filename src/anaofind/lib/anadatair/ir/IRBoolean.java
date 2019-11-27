@@ -1,5 +1,7 @@
 package anaofind.lib.anadatair.ir;
 
+import anaofind.lib.anadatair.AIRSettable;
+import anaofind.lib.anadatair.AIRValue;
 import anaofind.lib.anadatair.visitor.VisitorIR;
 
 /**
@@ -32,5 +34,12 @@ public class IRBoolean implements IRValue{
 	@Override
 	public void accept(VisitorIR visitor) {
 		visitor.visitBooleanIR(this);
+	}
+
+	@Override
+	public AIRValue toAIR() {
+		AIRSettable air = new AIRSettable();
+		air.addBoolean(this.value);
+		return air.toGettable();
 	}
 }

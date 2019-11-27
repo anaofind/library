@@ -1,5 +1,7 @@
 package anaofind.lib.anadatair.ir;
 
+import anaofind.lib.anadatair.AIRSettable;
+import anaofind.lib.anadatair.AIRValue;
 import anaofind.lib.anadatair.visitor.VisitorIR;
 
 /**
@@ -32,6 +34,13 @@ public class IRDouble implements IRValue{
 	@Override
 	public void accept(VisitorIR visitor) {
 		visitor.visitDoubleIR(this);
+	}
+
+	@Override
+	public AIRValue toAIR() {
+		AIRSettable air = new AIRSettable();
+		air.addDouble(this.value);
+		return air.toGettable();
 	}
 
 }
