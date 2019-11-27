@@ -12,6 +12,36 @@ public interface AIRValue {
 	public void optimize();
 	
 	/**
+	 * constains attribute
+	 * @param attribute the attribute
+	 * @return boolean : true if contains attribute | false else
+	 */
+	public boolean contains(String attribute);
+		
+	/**
+	 * contains index
+	 * @param index the index
+	 * @return boolean : true if contains index | false else
+	 */
+	public boolean contains(int index);
+	
+	/**
+	 * contains
+	 * @param attribute the attribute
+	 * @param type the type
+	 * @return boolean : true if contains | false else
+	 */
+	public boolean contains(String attribute, String type);
+	
+	/**
+	 * contains
+	 * @param index the index
+	 * @param type the type
+	 * @return boolean : true if contains | false else
+	 */
+	public boolean contains(int index, String type);
+	
+	/**
 	 * get data value
 	 * @param attribute the attribute
  	 * @return the data

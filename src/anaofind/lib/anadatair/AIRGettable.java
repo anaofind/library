@@ -122,4 +122,24 @@ public class AIRGettable implements AIRValue{
 		}
 		return false;
 	}
+
+	@Override
+	public boolean contains(String attribute) {
+		return this.data.contains(attribute);
+	}
+
+	@Override
+	public boolean contains(int index) {
+		return this.data.contains(index);
+	}
+
+	@Override
+	public boolean contains(String attribute, String type) {
+		return this.data.contains(attribute, type);
+	}
+
+	@Override
+	public boolean contains(int index, String type) {
+		return this.data.contains(index, type);
+	}
 }

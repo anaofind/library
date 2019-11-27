@@ -11,7 +11,7 @@ public class AIRSettable implements AIRValue{
 	/**
 	 * the index of array
 	 */
-	private int index = 0;
+	private int	index = 0;
 	
 	/**
 	 * all attributes used
@@ -67,62 +67,6 @@ public class AIRSettable implements AIRValue{
 	 * the array of boolean
 	 */
 	private Map<Integer, Boolean> arrayBoolean = new HashMap<Integer, Boolean>();
-
-	/**
-	 * construct
-	 */
-	public AIRSettable() {
-	}
-	
-	/**
-	 * construct
-	 * @param booleans array of booleans
-	 */
-	public AIRSettable(boolean...booleans) {
-		for (boolean bool : booleans) {
-			this.addBoolean(bool);
-		}
-	}
-	
-	/**
-	 * construct
-	 * @param integers array of integers
-	 */
-	public AIRSettable(int...integers) {
-		for (int i : integers) {
-			this.addInteger(i);
-		}
-	}
-	
-	/**
-	 * construct
-	 * @param doubles array of doubles
-	 */
-	public AIRSettable(double...doubles) {
-		for (double d : doubles) {
-			this.addDouble(d);
-		}
-	}
-
-	/**
-	 * construct
-	 * @param strings array of strings
-	 */
-	public AIRSettable(String...strings) {
-		for (String s : strings) {
-			this.addString(s);
-		}
-	}
-	
-	/**
-	 * construct
-	 * @param datas array of data value
-	 */
-	public AIRSettable(AIRValue...datas) {
-		for (AIRValue data : datas) {
-			this.addData(data);
-		}
-	}
 	
 	/**
 	 * to gettable
@@ -563,5 +507,59 @@ public class AIRSettable implements AIRValue{
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public boolean contains(String attribute) {
+		return attributes.contains(attribute);
+	}
+
+	@Override
+	public boolean contains(int index) {
+		return index >= 0 && index < this.index; 
+	}
+
+	@Override
+	public boolean contains(String attribute, String type) {		
+		if (this.contains(attribute)) {
+			switch (type) {
+			case "string" : 
+				return this.objectString.containsKey(attribute);
+			case "integer" : 
+				return this.objectInteger.containsKey(attribute);
+			case "double" :
+				return this.objectDouble.containsKey(attribute);
+			case "boolean" :
+				return this.objectBoolean.containsKey(attribute);
+			case "null" :
+				return true;
+			}
+			if (this.objectData.containsKey(attribute)) {
+				return type.equals(this.objectData.get(attribute).getType());
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean contains(int index, String type) {
+		if (this.contains(index)) {
+			switch (type) {
+			case "string" : 
+				return this.arrayString.containsKey(index);
+			case "integer" : 
+				return this.arrayInteger.containsKey(index);
+			case "double" :
+				return this.arrayDouble.containsKey(index);
+			case "boolean" :
+				return this.arrayBoolean.containsKey(index);
+			case "null" :
+				return true;
+			}
+			if (this.arrayData.containsKey(index)) {
+				return type.equals(this.arrayData.get(index).getType());
+			}
+		}
+		return false;
 	}
 }
