@@ -26,7 +26,7 @@ public class AIRGettable implements AIRValue{
 
 	@Override
 	public AIRValue getData(int index) {
-		return this.data.getData().getData(index);
+		return this.data.getData(index);
 	}
 
 	@Override
