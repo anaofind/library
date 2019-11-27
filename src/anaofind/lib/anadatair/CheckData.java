@@ -1,4 +1,4 @@
-package anaofind.lib.anaofile.parser;
+package anaofind.lib.anadatair;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,20 +13,33 @@ import java.util.Date;
 public class CheckData {
 
 	/**
+	 * regex integer
+	 */
+	private static final String REGEX_INTEGER = "^(-?\\d+|\\d+\\.\\d+E\\d+)$" ;
+	
+	/**
+	 * regex double
+	 */
+	private static final String REGEX_DOUBLE = "^-?\\d+\\.?\\d*E?-?\\d*$";
+	
+	/**
+	 * regex boolean
+	 */
+	private static final String REGEX_BOOLEAN = "^(?:0|1|false|true|False|True)$";
+	
+	/**
+	 * regex date
+	 */
+	private static final String REGEX_DATE = "^[0-9]{4}-[0-9]{2}-[0-9]{2}Z$";
+	
+	
+	/**
 	 * methode permettant de savoir si une donnée est un double
 	 * @param data la donnée
 	 * @return boolean indiquant si la donnée est un double ou non
 	 */
 	public static boolean isDouble(String data){
-		try { 
-	        Double.parseDouble(data); 
-	    } catch (NumberFormatException e) { 
-	        return false; 
-	    } catch (NullPointerException e) {
-	        return false;
-	    }
-
-	    return true;
+		return data.matches(REGEX_DOUBLE);
 	}
 	
 	/**
@@ -35,32 +48,25 @@ public class CheckData {
 	 * @return boolean indiquant si la donnée est un entier ou non
 	 */
 	public static boolean isInteger(String data){
-		try { 
-	        Integer.parseInt(data); 
-	    } catch (NumberFormatException e) { 
-	        return false; 
-	    } catch (NullPointerException e) {
-	        return false;
-	    }
-
-	    return true;
+		return data.matches(REGEX_INTEGER);
 	}
 	
 	/**
 	 * methode permettant de savoir si une donnée est une date
 	 * @param data la donnée
-	 * @param format le format de ma date
 	 * @return boolean
 	 */
-	public static boolean isDate(String data, String format) {
-		DateFormat df = new SimpleDateFormat(format);
-		Date date = null;
-		try {
-			date = df.parse(data);
-		} catch (ParseException e) {
-			return false;
-		}
-		return date != null;
+	public static boolean isDate(String data) {
+		return data.matches(REGEX_DATE);
+	}
+	
+	/**
+	 * is boolean
+	 * @param data the data
+	 * @return boolean : true if data is boolean | false else
+	 */
+	public static boolean isBoolean(String data) {
+		return data.matches(REGEX_BOOLEAN);
 	}
 	
 	/**
