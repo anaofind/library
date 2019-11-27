@@ -14,8 +14,12 @@ public class Compilator {
 		 */
 		private static final long serialVersionUID = 1L;
 
+		/**
+		 * construct
+		 * @param message the message
+		 */
 		public CompilatorException(String message) {
-			super(message + " -> char : \'" + currentChar + "\' [" + (indexChar-1) + "]");
+			super(message + " -> char : \'" + currentChar + "\' [" + indexLine + "," + indexColumn + "]");
 		}
 	}
 	
@@ -28,6 +32,16 @@ public class Compilator {
 	 * the index char
 	 */
 	private int indexChar = -1;
+	
+	/**
+	 * the index line
+	 */
+	private int indexLine = 0;
+	
+	/**
+	 * the index column
+	 */
+	private int indexColumn = -1;
 	
 	/**
 	 * the current char
@@ -53,6 +67,11 @@ public class Compilator {
 	public void readChar() {
 		this.indexChar++;
 		if (! this.isEndRead()) {
+			this.indexColumn++;
+			if (this.currentChar == '\n') {
+				this.indexColumn = 0;
+				this.indexLine ++;
+			}
 			this.currentChar = dataText.charAt(this.indexChar);
 		}
 	}
