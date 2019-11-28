@@ -1,9 +1,9 @@
-package anaofind.lib.anadatair.reader;
+package anaofind.lib.anadatair.compilator;
 
 import java.util.Objects;
 
 import anaofind.lib.anadatair.ir.*;
-
+import anaofind.lib.anadatair.reader.ReaderText;
 
 import java.util.*;
 
