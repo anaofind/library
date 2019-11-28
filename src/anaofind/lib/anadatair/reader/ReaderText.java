@@ -51,8 +51,13 @@ public class ReaderText implements Reader{
 	
 	@Override
 	public void readChar() {
-		this.indexChar++;
+		this.indexChar ++;
 		if (! this.isEndReading()) {
+			this.indexColumn ++;
+			if (this.currentChar == '\n') {
+				this.indexChar = 0;
+				this.indexColumn ++;
+			}
 			this.currentChar = this.text.charAt(this.indexChar);
 		}
 	}
