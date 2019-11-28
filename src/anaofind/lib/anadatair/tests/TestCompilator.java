@@ -4,12 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-import anaofind.lib.anadatair.compilator.Compilator;
-import anaofind.lib.anadatair.compilator.CompilatorIR;
-import anaofind.lib.anadatair.compilator.CompilatorJSON;
 import anaofind.lib.anadatair.ir.*;
 import anaofind.lib.anadatair.json.*;
 import anaofind.lib.anadatair.printer.*;
+import anaofind.lib.anadatair.reader.Compilator;
+import anaofind.lib.anadatair.reader.CompilatorIR;
+import anaofind.lib.anadatair.reader.CompilatorJSON;
 
 /**
  * test converter
