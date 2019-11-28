@@ -52,7 +52,7 @@ public class ReaderFile implements Reader{
 			if (! file.exists()) {
 				throw new Exception("file not found : " + file.getPath());
 			}
-			if (file.canRead()) {
+			if (! file.canRead()) {
 				throw new Exception("file can not be readed : " + file.getPath());
 			}
 			this.reader = new BufferedReader(new FileReader(file));
@@ -120,4 +120,13 @@ public class ReaderFile implements Reader{
 		return lineColumn;
 	}
 
+	public static void main(String[] args) {
+		File f = new File("testReaderFile");
+		Reader r = new ReaderFile(f);
+		while (! r.isEndReading()) {
+			r.readChar();
+			System.out.print(r.currentChar());
+		}
+	}
+	
 }
