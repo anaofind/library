@@ -50,4 +50,16 @@ public interface Reader {
 	 */
 	public boolean isEndReading();
 	
+	/**
+	 * get progress reading
+	 * @return the progress reading
+	 */
+	public double getProgressReading();
+	
+	/**
+	 * get index line and column
+	 * @return array int [line,column]
+	 */
+	public int[] getIndexLineColumn();
+	
 }
