@@ -7,9 +7,9 @@ import org.junit.*;
 import anaofind.lib.anadatair.ir.*;
 import anaofind.lib.anadatair.json.*;
 import anaofind.lib.anadatair.printer.*;
-import anaofind.lib.anadatair.reader.Compilator;
 import anaofind.lib.anadatair.reader.CompilatorIR;
 import anaofind.lib.anadatair.reader.CompilatorJSON;
+import anaofind.lib.anadatair.reader.ReaderText;
 
 /**
  * test converter
@@ -140,7 +140,7 @@ public class TestCompilator {
 		JsonValue value = cmp.getValue();
 		PrettyPrinterJSON pp = new PrettyPrinterJSON();
 		value.accept(pp);
-		assertEquals(Compilator.removeSpace(json1).length(), Compilator.removeSpace(pp.getText()).length());
+		assertEquals(ReaderText.removeSpace(json1).length(), ReaderText.removeSpace(pp.getText()).length());
 	}
 
 

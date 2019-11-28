@@ -49,8 +49,8 @@ public class CompilatorJSON extends Compilator{
 		if (this.isSpace()) {
 			this.readCharWithoutSpace();
 		}
-		while (! this.isEndRead()) {
-			switch (this.currentChar) {
+		while (! this.isEndReading()) {
+			switch (this.currentChar()) {
 			case '{' :
 				return this.readJsonObject();
 			case '[' :
@@ -70,16 +70,16 @@ public class CompilatorJSON extends Compilator{
 	private JsonObject readJsonObject() throws CompilatorException{
 		JsonObject object = new JsonObject();
 		this.readCharWithoutSpace();
-		boolean end = this.currentChar == '}';
-		while (! this.isEndRead() && !end) {			
-			if (this.currentChar != '\"') {
+		boolean end = this.currentChar() == '}';
+		while (! this.isEndReading() && !end) {			
+			if (this.currentChar() != '\"') {
 				this.callException("char must be \'\"\'");
 				return null;
 			}
 			
 			String attribute = this.readString();
 			
-			if (this.currentChar != ':') {
+			if (this.currentChar() != ':') {
 				this.callException("char must be \':\'");
 				return null;
 			}
@@ -92,13 +92,13 @@ public class CompilatorJSON extends Compilator{
 			
 			object.addAttribute(attribute, value);
 			
-			end = ! (this.currentChar == ',');
+			end = ! (this.currentChar() == ',');
 			if (! end) {
 				this.readCharWithoutSpace();
 			}
 		}
 		
-		if (this.currentChar != '}') {
+		if (this.currentChar() != '}') {
 			this.callException("char must be \'}\'");
 		}
 		this.readCharWithoutSpace();
@@ -114,8 +114,8 @@ public class CompilatorJSON extends Compilator{
 	private JsonArray readJsonArray() throws CompilatorException {
 		List<JsonValue> values = new ArrayList<JsonValue>();
 		this.readCharWithoutSpace();
-		boolean end = this.currentChar == ']';
-		while (!this.isEndRead() && !end) {
+		boolean end = this.currentChar() == ']';
+		while (!this.isEndReading() && !end) {
 			JsonValue value = this.readJsonValue();
 			
 			if (value == null) {
@@ -124,13 +124,13 @@ public class CompilatorJSON extends Compilator{
 			
 			values.add(value);
 			
-			end = ! (this.currentChar == ',');
+			end = ! (this.currentChar() == ',');
 			if (! end) {
 				this.readCharWithoutSpace();
 			}
 		}
 		
-		if (this.currentChar != ']') {
+		if (this.currentChar() != ']') {
 			this.callException("char must be \']\'");
 		}
 		
@@ -145,7 +145,7 @@ public class CompilatorJSON extends Compilator{
 	 */
 	private JsonValue readJsonBase() throws CompilatorException {
 		
-		if (this.currentChar == '\"') {
+		if (this.currentChar() == '\"') {
 			return new JsonString(this.readString());
 		}
 		
@@ -175,13 +175,13 @@ public class CompilatorJSON extends Compilator{
 	 */
 	private String readString() {
 		String string = "";
-		while (! this.isEndRead()) {
+		while (! this.isEndReading()) {
 			this.readChar();
-			if (this.currentChar == '\"') {
+			if (this.currentChar() == '\"') {
 				this.readCharWithoutSpace();
 				return string;
 			}
-			string += this.currentChar;
+			string += this.currentChar();
 		}
 		System.out.println("NULL STRING");
 		return null;
@@ -193,14 +193,14 @@ public class CompilatorJSON extends Compilator{
 	 */
 	private String readValue() {
 		String string = "";
-		while (! this.isEndRead()) {
-			if (this.isSpace() || this.currentChar == ',' || this.currentChar == '}' || this.currentChar == ']') {
+		while (! this.isEndReading()) {
+			if (this.isSpace() || this.currentChar() == ',' || this.currentChar() == '}' || this.currentChar() == ']') {
 				if (this.isSpace()) {
 					this.readCharWithoutSpace();
 				}
 				return string;
 			}
-			string += this.currentChar;
+			string += this.currentChar();
 			this.readChar();
 		}
 		System.out.println("NULL VALUE");

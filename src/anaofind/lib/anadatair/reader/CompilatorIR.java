@@ -64,7 +64,7 @@ public class CompilatorIR extends Compilator{
 	 * @param textIR the ir text
 	 */
 	public CompilatorIR(String textIR) {
-		super(removeSpace(textIR));
+		super(ReaderText.removeSpace(textIR));
 		this.value = this.readIRValue();
 		Objects.requireNonNull(this.value);
 	}
@@ -82,8 +82,8 @@ public class CompilatorIR extends Compilator{
 	 * @return the ir value readed
 	 */
 	private IRValue readIRValue() {
-		while (! this.isEndRead()) {
-			if (this.currentChar == Start.VALUE) {
+		while (! this.isEndReading()) {
+			if (this.currentChar() == Start.VALUE) {
 				String type = this.readType();
 				switch (type) {
 				case TYPE.OBJECT :
@@ -105,12 +105,12 @@ public class CompilatorIR extends Compilator{
 	 */
 	private String readType() {
 		String type = "";
-		while (! this.isEndRead()) {
+		while (! this.isEndReading()) {
 			this.readCharWithoutSpace();
-			if (this.currentChar == End.TYPE) {
+			if (this.currentChar() == End.TYPE) {
 				return type;
 			}
-			type += this.currentChar;
+			type += this.currentChar();
 		}
 		return null;
 	}
@@ -121,9 +121,9 @@ public class CompilatorIR extends Compilator{
 	 */
 	private IRValue readObject() {
 		IRObject object = new IRObject();
-		while (! this.isEndRead()) {
+		while (! this.isEndReading()) {
 			this.readCharWithoutSpace();
-			switch (this.currentChar) {
+			switch (this.currentChar()) {
 			case End.VALUE :
 				return object;
 			case Start.ATTRIBUTE :
@@ -144,12 +144,12 @@ public class CompilatorIR extends Compilator{
 	 */
 	private String readAttribute() {
 		String attribute = "";
-		while (! this.isEndRead()) {
+		while (! this.isEndReading()) {
 			this.readChar();
-			if (this.currentChar == End.ATTRIBUTE) {
+			if (this.currentChar() == End.ATTRIBUTE) {
 				return attribute;
 			}
-			attribute += this.currentChar;
+			attribute += this.currentChar();
 		}
 		return null;
 	}
@@ -160,9 +160,9 @@ public class CompilatorIR extends Compilator{
 	 */
 	private IRValue readArray() {
 		List<IRValue> values = new ArrayList<IRValue>();
-		while (! this.isEndRead()) {
+		while (! this.isEndReading()) {
 			this.readCharWithoutSpace();
-			switch (this.currentChar) {
+			switch (this.currentChar()) {
 			case End.VALUE :
 				return new IRArray(values.toArray(new IRValue[values.size()]));
 			case Start.VALUE :
@@ -182,8 +182,8 @@ public class CompilatorIR extends Compilator{
 	private IRValue readBaseValue(String type) {
 		String valueString = "";
 		this.readCharWithoutSpace();
-		while (! this.isEndRead()) {
-			if (this.currentChar == End.VALUE) {
+		while (! this.isEndReading()) {
+			if (this.currentChar() == End.VALUE) {
 				switch (type) {
 				case TYPE.BOOLEAN :
 					return new IRBoolean(Boolean.parseBoolean(valueString));
@@ -197,7 +197,7 @@ public class CompilatorIR extends Compilator{
 					return new IRNull();
 				}
 			}
-			valueString += this.currentChar;
+			valueString += this.currentChar();
 			this.readChar();
 		}
 		return null;

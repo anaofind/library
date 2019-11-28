@@ -1,14 +1,19 @@
 package anaofind.lib.anadatair.reader;
 
+import java.io.File;
 import java.util.Objects;
 
 /**
  * compilator data
  * @author anaofind
  */
-public class Compilator {
+public class Compilator implements Reader{
 
-	protected class CompilatorException extends Exception {
+	/**
+	 * exception compilator
+	 * @author lrauzier
+	 */
+	public class CompilatorException extends Exception {
 		/**
 		 * serial version
 		 */
@@ -19,111 +24,30 @@ public class Compilator {
 		 * @param message the message
 		 */
 		public CompilatorException(String message) {
-			super(message + " -> char : \'" + currentChar + "\' [" + indexLine + "," + indexColumn + "]");
+			super(message + " -> char : \'" + reader.currentChar() + "\' [" + reader.getIndexLineColumn()[0] + "," + reader.getIndexLineColumn()[1] + "]");
 		}
 	}
 	
 	/**
-	 * the text data
+	 * the reader
 	 */
-	private String dataText;
-	
-	/**
-	 * the index char
-	 */
-	private int indexChar = -1;
-	
-	/**
-	 * the index line
-	 */
-	private int indexLine = 0;
-	
-	/**
-	 * the index column
-	 */
-	private int indexColumn = -1;
-	
-	/**
-	 * the current char
-	 */
-	protected char currentChar = ' ';
-
-	/**
-	 * length of data text
-	 */
-	private int lengthDataText;
-		
+	private Reader reader;
 			
+	/**
+	 * construct 
+	 * @param dataText the data text
+	 */
 	public Compilator(String dataText) {
 		Objects.requireNonNull(dataText);
-		this.dataText = dataText;
-		this.lengthDataText = dataText.length();
+		this.reader = new ReaderText(dataText);
 	}
 	
 	/**
-	 * read the char
-	 * @return the char readed
+	 * construct
+	 * @param file the file
 	 */
-	public void readChar() {
-		this.indexChar++;
-		if (! this.isEndRead()) {
-			this.indexColumn++;
-			if (this.currentChar == '\n') {
-				this.indexColumn = 0;
-				this.indexLine ++;
-			}
-			this.currentChar = dataText.charAt(this.indexChar);
-		}
-	}
-	
-	/**
-	 * read the car not space
-	 */
-	public void readCharWithoutSpace() {
-		this.readChar();
-		while (! this.isEndRead() && this.isSpace()) {
-			this.readChar();
-		}
-	}
-	
-	/**
-	 * is space
-	 * @return boolean : true if char is space | false else
-	 */
-	public boolean isSpace() {
-		return (currentChar == ' ' || currentChar == '\t' || currentChar == '\n' || currentChar == '\r');
-	}
-	
-	/**
-	 * is end read the data
-	 * @return boolean : true if is end | false else
-	 */
-	public boolean isEndRead() {
-		return (this.indexChar >= this.lengthDataText);
-	}
-	
-	/**
-	 * getter current char
-	 * @return the current char
-	 */
-	public char getCurrentChar() {
-		return this.currentChar;
-	}
-		
-	/**
-	 * remove space in text
-	 * @param textSpace the text with space
-	 * @return the text without space
-	 */
-	public static String removeSpace(String textSpace) {
-		String textWithoutSpace = "";
-		Compilator cmp = new Compilator(textSpace);
-		cmp.readCharWithoutSpace();
-		while (! cmp.isEndRead()) {
-			textWithoutSpace += cmp.currentChar;
-			cmp.readCharWithoutSpace();
-		}
-		return textWithoutSpace;
+	public Compilator(File file) {
+		Objects.requireNonNull(file);
 	}
 	
 	/**
@@ -133,5 +57,45 @@ public class Compilator {
 	 */
 	public void callException(String message) throws CompilatorException {
 		throw new CompilatorException(message);
+	}
+
+	@Override
+	public void readChar() {
+		this.reader.readChar();
+	}
+
+	@Override
+	public void readCharWithoutSpace() {
+		this.reader.readCharWithoutSpace();
+	}
+
+	@Override
+	public char currentChar() {
+		return this.reader.currentChar();
+	}
+
+	@Override
+	public int length() {
+		return this.reader.length();
+	}
+
+	@Override
+	public boolean isStartReading() {
+		return this.reader.isStartReading();
+	}
+
+	@Override
+	public boolean isEndReading() {
+		return this.reader.isEndReading();
+	}
+
+	@Override
+	public double getProgressReading() {
+		return this.reader.getProgressReading();
+	}
+
+	@Override
+	public int[] getIndexLineColumn() {
+		return this.reader.getIndexLineColumn();	
 	}
 }

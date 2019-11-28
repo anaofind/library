@@ -35,7 +35,7 @@ public interface Reader {
 	 */
 	default boolean isSpace() {
 		char c = this.currentChar();
-		return (c == '\n' | c == ' ' | c == '\r');
+		return (c == '\n' | c == ' ' | c == '\r' | c == '\t');
 	}
 	
 	/**
