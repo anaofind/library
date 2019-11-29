@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import anaofind.lib.anadatair.json.*;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -23,6 +24,20 @@ public class CompilatorJSON extends Compilator{
 	 * @param json the json text
 	 */
 	public CompilatorJSON(String json) {
+		super(json);
+		try {
+			this.value = this.readJsonValue();
+		} catch (CompilatorException e) {
+			e.printStackTrace();
+		}
+		Objects.requireNonNull(this.value);
+	}
+	
+	/**
+	 * construct
+	 * @param json the json file
+	 */
+	public CompilatorJSON(File json) {
 		super(json);
 		try {
 			this.value = this.readJsonValue();

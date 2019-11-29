@@ -1,6 +1,5 @@
 package anaofind.lib.anadatair.reader;
 
-import java.io.File;
 import java.util.Objects;
 
 /**
