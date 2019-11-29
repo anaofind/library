@@ -1,5 +1,6 @@
 package anaofind.lib.anadatair.reader;
 
+import java.io.File;
 import java.util.Objects;
 
 /**
@@ -92,7 +93,7 @@ public class ReaderText implements Reader{
 
 	@Override
 	public double getProgressReading() {
-		return this.indexChar / this.lengthText;
+		return ((double)this.indexChar / (double)this.lengthText);
 	}
 
 	@Override
@@ -101,5 +102,14 @@ public class ReaderText implements Reader{
 		lineColumn[0] = this.indexLine;
 		lineColumn[1] = this.indexColumn;
 		return lineColumn;
+	}
+	
+	public static void main(String[] args) {
+		String t = "coucou çava \n super ça marche !";
+		Reader r = new ReaderText(t);
+		while (! r.isEndReading()) {
+			r.readChar();
+			System.out.println(r.getProgressReading()*100);
+		}
 	}
 }

@@ -109,7 +109,7 @@ public class ReaderFile implements Reader{
 
 	@Override
 	public double getProgressReading() {
-		return (this.indexChar / this.lengthFile);
+		return ((double)this.indexChar / (double)this.lengthFile);
 	}
 
 	@Override
@@ -121,11 +121,11 @@ public class ReaderFile implements Reader{
 	}
 
 	public static void main(String[] args) {
-		File f = new File("testReaderFile");
+		File f = new File("testReaderFile.txt");
 		Reader r = new ReaderFile(f);
 		while (! r.isEndReading()) {
 			r.readChar();
-			System.out.print(r.currentChar());
+			System.out.println(r.getProgressReading()*100);
 		}
 	}
 	
