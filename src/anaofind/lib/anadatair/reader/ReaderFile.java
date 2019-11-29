@@ -118,15 +118,5 @@ public class ReaderFile implements Reader{
 		lineColumn[0] = this.indexLine;
 		lineColumn[1] = this.indexColumn;
 		return lineColumn;
-	}
-
-	public static void main(String[] args) {
-		File f = new File("testReaderFile.txt");
-		Reader r = new ReaderFile(f);
-		while (! r.isEndReading()) {
-			r.readChar();
-			System.out.println(r.getProgressReading()*100);
-		}
-	}
-	
+	}	
 }

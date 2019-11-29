@@ -3,8 +3,7 @@ package anaofind.lib.anadatair.compilator;
 import java.io.File;
 import java.util.Objects;
 
-import anaofind.lib.anadatair.reader.Reader;
-import anaofind.lib.anadatair.reader.ReaderText;
+import anaofind.lib.anadatair.reader.*;
 
 /**
  * compilator data
@@ -51,6 +50,7 @@ public class Compilator implements Reader{
 	 */
 	public Compilator(File file) {
 		Objects.requireNonNull(file);
+		this.reader = new ReaderFile(file);
 	}
 	
 	/**

@@ -102,13 +102,4 @@ public class ReaderText implements Reader{
 		lineColumn[1] = this.indexColumn;
 		return lineColumn;
 	}
-	
-	public static void main(String[] args) {
-		String t = "coucou çava \n super ça marche !";
-		Reader r = new ReaderText(t);
-		while (! r.isEndReading()) {
-			r.readChar();
-			System.out.println(r.getProgressReading()*100);
-		}
-	}
 }
