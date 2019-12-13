@@ -3,7 +3,6 @@ package anaofind.lib.anadatair.compilator;
 import java.util.Objects;
 
 import anaofind.lib.anadatair.ir.*;
-import anaofind.lib.anadatair.reader.*;
 
 import java.io.File;
 import java.util.*;
@@ -66,7 +65,7 @@ public class CompilatorIR extends Compilator{
 	 * @param textIR the ir text
 	 */
 	public CompilatorIR(String textIR) {
-		super(UtilReader.removeSpace(textIR));
+		super(textIR);
 		this.value = this.readIRValue();
 		Objects.requireNonNull(this.value);
 	}
