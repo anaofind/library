@@ -24,6 +24,14 @@ public class ReaderFile extends ReaderImpl{
 
 	/**
 	 * construct
+	 * @param pathFile the path of file
+	 */
+	public ReaderFile(String pathFile) {
+		this(new File(pathFile));
+	}
+	
+	/**
+	 * construct
 	 * @param file the file to read
 	 */
 	public ReaderFile(File file) {
