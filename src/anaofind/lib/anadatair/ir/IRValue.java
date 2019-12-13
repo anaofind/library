@@ -1,6 +1,6 @@
 package anaofind.lib.anadatair.ir;
 
-import anaofind.lib.anadatair.AIRValue;
+import anaofind.lib.anadatair.Anadatair;
 import anaofind.lib.anadatair.visitor.VisitorIR;
 
 /**
@@ -19,6 +19,6 @@ public interface IRValue {
 	 * to air value
 	 * @return the air value equivalent
 	 */
-	public AIRValue toAIR();
+	public Anadatair toAnadatair();
 	
 }

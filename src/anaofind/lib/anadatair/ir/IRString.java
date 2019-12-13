@@ -36,8 +36,8 @@ public class IRString implements IRValue{
 	}
 
 	@Override
-	public AIRValue toAIR() {
-		AIRSettable air = new AIRSettable();
+	public Anadatair toAnadatair() {
+		AnadatairSettable air = new AnadatairSettable();
 		air.addString(this.value);
 		return air.toGettable();
 	}

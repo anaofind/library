@@ -5,6 +5,7 @@ import java.util.Objects;
 import anaofind.lib.anadatair.ir.*;
 import anaofind.lib.anadatair.reader.*;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -18,6 +19,7 @@ public class CompilatorIR extends Compilator{
 	 * private class represente the start syntaxe char
 	 */
 	private class Start {
+		
 		/**
 		 *start char
 		 */
@@ -65,6 +67,16 @@ public class CompilatorIR extends Compilator{
 	 */
 	public CompilatorIR(String textIR) {
 		super(UtilReader.removeSpace(textIR));
+		this.value = this.readIRValue();
+		Objects.requireNonNull(this.value);
+	}
+	
+	/**
+	 * construct
+	 * @param fileIR the ir file
+	 */
+	public CompilatorIR(File fileIR) {
+		super(fileIR);
 		this.value = this.readIRValue();
 		Objects.requireNonNull(this.value);
 	}

@@ -6,7 +6,7 @@ import java.util.Objects;
 import anaofind.lib.anadatair.reader.*;
 
 /**
- * compilator data
+ * parser data
  * @author anaofind
  */
 public class Compilator implements Reader{
@@ -26,7 +26,7 @@ public class Compilator implements Reader{
 		 * @param message the message
 		 */
 		public CompilatorException(String message) {
-			super(message + " -> char : \'" + reader.currentChar() + "\' [" + reader.getIndexLineColumn()[0] + "," + reader.getIndexLineColumn()[1] + "]");
+			super(message + " -> char : \'" + reader.currentChar() + "\' [" + reader.indexLine() + "," + reader.indexColumn() + "]");
 		}
 	}
 	
@@ -34,14 +34,13 @@ public class Compilator implements Reader{
 	 * the reader
 	 */
 	private Reader reader;
-			
+	
 	/**
 	 * construct 
 	 * @param dataText the data text
 	 */
 	public Compilator(String dataText) {
-		Objects.requireNonNull(dataText);
-		this.reader = new ReaderText(dataText);
+		this(new ReaderText(dataText));
 	}
 	
 	/**
@@ -49,8 +48,16 @@ public class Compilator implements Reader{
 	 * @param file the file
 	 */
 	public Compilator(File file) {
-		Objects.requireNonNull(file);
-		this.reader = new ReaderFile(file);
+		this(new ReaderFile(file));
+	}
+	
+	/**
+	 * construct 
+	 * @param reader the reader
+	 */
+	public Compilator(Reader reader) {
+		Objects.requireNonNull(reader);
+		this.reader = reader;
 	}
 	
 	/**
@@ -68,37 +75,47 @@ public class Compilator implements Reader{
 	}
 
 	@Override
-	public void readCharWithoutSpace() {
-		this.reader.readCharWithoutSpace();
+	public void readWord() {
+		this.reader.readWord();
 	}
 
 	@Override
+	public void readLine() {
+		this.reader.readLine();
+	}
+	
+	@Override
 	public char currentChar() {
 		return this.reader.currentChar();
+	}
+	
+	@Override
+	public String currentWord() {
+		return this.reader.currentWord();
+	}
+	
+	@Override
+	public String currentLine() {
+		return this.reader.currentLine();
 	}
 
 	@Override
 	public int length() {
 		return this.reader.length();
 	}
-
+	
 	@Override
-	public boolean isStartReading() {
-		return this.reader.isStartReading();
+	public int indexChar() {
+		return this.reader.indexChar();
 	}
 
 	@Override
-	public boolean isEndReading() {
-		return this.reader.isEndReading();
+	public int indexLine() {
+		return this.reader.indexLine();
 	}
 
 	@Override
-	public double getProgressReading() {
-		return this.reader.getProgressReading();
-	}
-
-	@Override
-	public int[] getIndexLineColumn() {
-		return this.reader.getIndexLineColumn();	
+	public int indexColumn() {
+		return this.reader.indexColumn();
 	}
 }

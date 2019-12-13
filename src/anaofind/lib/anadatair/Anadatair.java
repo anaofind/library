@@ -4,7 +4,7 @@ package anaofind.lib.anadatair;
  * air value
  * @author anaofind
  */
-public interface AIRValue {
+public interface Anadatair {
 
 	/**
 	 * optimize
@@ -46,20 +46,20 @@ public interface AIRValue {
 	 * @param attribute the attribute
  	 * @return the data
 	 */
-	public AIRValue getData(String attribute);
+	public Anadatair getData(String attribute);
 	
 	/**
 	 * get data value
 	 * @param index the index
 	 * @return the data
 	 */
-	public AIRValue getData(int index);
+	public Anadatair getData(int index);
 	
 	/**
 	 * get data
 	 * @return the data if only one data
 	 */
-	public AIRValue getData();
+	public Anadatair getData();
 	
 	/**
 	 * get string value

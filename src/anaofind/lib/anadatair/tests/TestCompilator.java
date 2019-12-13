@@ -101,6 +101,8 @@ public class TestCompilator {
 		CompilatorJSON cmp = new CompilatorJSON(pp1.getText());
 		cmp.getValue().accept(pp2);
 
+		pp1.print();
+		pp2.print();
 		assertEquals(pp1.getText(), pp2.getText());
 	}
 

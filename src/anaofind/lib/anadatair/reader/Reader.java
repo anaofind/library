@@ -15,19 +15,64 @@ public interface Reader {
 	/**
 	 * read char without space
 	 */
-	public void readCharWithoutSpace();
+	default void readCharWithoutSpace() {
+		this.readChar();
+		while (! this.isEndReading() && this.isSpace()) {
+			this.readChar();
+		}
+	}
+	
+	/**
+	 * read the next word
+	 */
+	public void readWord();
+	
+	/**
+	 * read the next line
+	 */
+	public void readLine();
 	
 	/**
 	 * get the current char readed
 	 * @return the current char readed
 	 */
 	public char currentChar();
-
+	
+	/**
+	 * get the current word readed
+	 * @return the current word readed
+	 */
+	public String currentWord();
+	
+	/**
+	 * get the current line readed
+	 * @return the current line readed
+	 */
+	public String currentLine();
+		
 	/**
 	 * get length data text
 	 * @return the length of data text
 	 */
 	public int length();
+	
+	/**
+	 * get index char reading
+	 * @return the index char reading
+	 */
+	public int indexChar();
+	
+	/**
+	 * get index line
+	 * @return the index line
+	 */
+	public int indexLine();
+	
+	/**
+	 * get index column
+	 * @return the index column
+	 */
+	public int indexColumn();
 	
 	/**
 	 * current char is space
@@ -42,24 +87,23 @@ public interface Reader {
 	 * is start reading
 	 * @return true if is start reading | false else
 	 */
-	public boolean isStartReading();
+	default boolean isStartReading() {
+		return (this.indexChar() > -1);
+	}
 	
 	/**
 	 * is end reading
 	 * @return true if is end reading | false else
 	 */
-	public boolean isEndReading();
+	default boolean isEndReading() {
+		return (this.indexChar() >= this.length());
+	}
 	
 	/**
 	 * get progress reading
 	 * @return the progress reading
 	 */
-	public double getProgressReading();
-	
-	/**
-	 * get index line and column
-	 * @return array int [line,column]
-	 */
-	public int[] getIndexLineColumn();
-	
+	default double getProgressReading() {
+		return ((double)this.indexChar() / (double)this.length());
+	}	
 }

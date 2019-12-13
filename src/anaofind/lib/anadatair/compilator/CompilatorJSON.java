@@ -21,10 +21,10 @@ public class CompilatorJSON extends Compilator{
 
 	/**
 	 * construct
-	 * @param json the json text
+	 * @param jsonText the json text
 	 */
-	public CompilatorJSON(String json) {
-		super(json);
+	public CompilatorJSON(String jsonText) {
+		super(jsonText);
 		try {
 			this.value = this.readJsonValue();
 		} catch (CompilatorException e) {
@@ -32,13 +32,13 @@ public class CompilatorJSON extends Compilator{
 		}
 		Objects.requireNonNull(this.value);
 	}
-	
+
 	/**
 	 * construct
-	 * @param json the json file
+	 * @param jsonFile the json file
 	 */
-	public CompilatorJSON(File json) {
-		super(json);
+	public CompilatorJSON(File jsonFile) {
+		super(jsonFile);
 		try {
 			this.value = this.readJsonValue();
 		} catch (CompilatorException e) {

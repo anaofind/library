@@ -4,33 +4,33 @@ package anaofind.lib.anadatair;
  * anadatair value gettable (not settable)
  * @author anaofind
  */
-public class AIRGettable implements AIRValue{
+public class AnadatairGettable implements Anadatair{
 
 	/**
 	 * the settable data
 	 */
-	private AIRSettable data;
+	private AnadatairSettable data;
 	
 	/**
 	 * construct 
 	 * @param data the settable data
 	 */
-	public AIRGettable (AIRSettable data) {
+	public AnadatairGettable (AnadatairSettable data) {
 		this.data = data;
 	}
 	
 	@Override
-	public AIRValue getData(String attribute) {
+	public Anadatair getData(String attribute) {
 		return this.data.getData(attribute);
 	}
 
 	@Override
-	public AIRValue getData(int index) {
+	public Anadatair getData(int index) {
 		return this.data.getData(index);
 	}
 
 	@Override
-	public AIRValue getData() {
+	public Anadatair getData() {
 		return this.data.getData();
 	}
 
@@ -116,8 +116,8 @@ public class AIRGettable implements AIRValue{
 	
 	@Override
 	public boolean equals(Object ob) {
-		if (ob instanceof AIRValue) {
-			AIRValue dv = (AIRValue) ob;
+		if (ob instanceof Anadatair) {
+			Anadatair dv = (Anadatair) ob;
 			return (dv.equals(this.data));
 		}
 		return false;

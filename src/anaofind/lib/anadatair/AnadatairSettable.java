@@ -6,7 +6,7 @@ import java.util.*;
  * value anadataire settable
  * @author anaofind
  */
-public class AIRSettable implements AIRValue{
+public class AnadatairSettable implements Anadatair{
 
 	/**
 	 * the index of array
@@ -21,12 +21,12 @@ public class AIRSettable implements AIRValue{
 	/**
 	 * the object of object
 	 */
-	private Map<String, AIRValue> objectData = new HashMap<String, AIRValue>();
+	private Map<String, Anadatair> objectData = new HashMap<String, Anadatair>();
 
 	/**
 	 * the array of object
 	 */
-	private Map<Integer, AIRValue> arrayData = new HashMap<Integer, AIRValue>();
+	private Map<Integer, Anadatair> arrayData = new HashMap<Integer, Anadatair>();
 
 	/**
 	 * the array of string
@@ -72,14 +72,14 @@ public class AIRSettable implements AIRValue{
 	 * to gettable
 	 * @return the gettable equivalent
 	 */
-	public AIRValue toGettable() {
-		return new AIRGettable(this);
+	public Anadatair toGettable() {
+		return new AnadatairGettable(this);
 	}
 
 	@Override
 	public void optimize() {
 		for (int i : this.arrayData.keySet()) {
-			AIRValue data = this.arrayData.get(i);
+			Anadatair data = this.arrayData.get(i);
 			data.optimize();
 			int size = data.size();
 			if (size == 1) {
@@ -106,7 +106,7 @@ public class AIRSettable implements AIRValue{
 			}
 		}
 		for (String attribute : this.objectData.keySet()) {
-			AIRValue data = this.objectData.get(attribute);
+			Anadatair data = this.objectData.get(attribute);
 			data.optimize();
 			int size = data.size();
 			if (size == 1) {
@@ -139,7 +139,7 @@ public class AIRSettable implements AIRValue{
 	 * @param attribute the attribute
 	 * @param data the data
 	 */
-	public void addData(String attribute, AIRValue data) {
+	public void addData(String attribute, Anadatair data) {
 		Objects.requireNonNull(attribute);
 		Objects.requireNonNull(data);
 		if (! this.attributes.contains(attribute)) {
@@ -153,7 +153,7 @@ public class AIRSettable implements AIRValue{
 	 * add data
 	 * @param data the data
 	 */
-	public void addData(AIRValue data) {
+	public void addData(Anadatair data) {
 		Objects.requireNonNull(data);
 		this.arrayData.put(this.index, data);
 		this.optimize();
@@ -253,17 +253,17 @@ public class AIRSettable implements AIRValue{
 	}
 
 	@Override
-	public AIRValue getData(String attribute) {
+	public Anadatair getData(String attribute) {
 		return this.objectData.get(attribute);
 	}
 
 	@Override
-	public AIRValue getData(int index) {
+	public Anadatair getData(int index) {
 		return this.arrayData.get(index);
 	}
 
 	@Override
-	public AIRValue getData() {
+	public Anadatair getData() {
 		if (this.size() == 1 && this.arrayData.size() == 1) {
 			return this.arrayData.get(0);
 		}
@@ -424,14 +424,14 @@ public class AIRSettable implements AIRValue{
 	
 	@Override
 	public boolean equals(Object object) {
-		if (! (object instanceof AIRValue)) {
+		if (! (object instanceof Anadatair)) {
 			return false;
 		}
-		if (! (object instanceof AIRSettable)) {
-			AIRValue data = (AIRValue) object;
+		if (! (object instanceof AnadatairSettable)) {
+			Anadatair data = (Anadatair) object;
 			return data.equals(this);
 		}
-		AIRSettable data = (AIRSettable) object;
+		AnadatairSettable data = (AnadatairSettable) object;
 		if (! data.getType().equals(this.getType())) {
 			return false;
 		}
@@ -447,7 +447,7 @@ public class AIRSettable implements AIRValue{
 			}
 		}
 		for (int id : this.arrayData.keySet()) {
-			AIRValue d = this.arrayData.get(id);
+			Anadatair d = this.arrayData.get(id);
 			if (! (data.arrayData.containsKey(id) && data.arrayData.get(id).equals(d))) {
 				return false;
 			}
@@ -477,7 +477,7 @@ public class AIRSettable implements AIRValue{
 			}
 		}
 		for (String ad : this.objectData.keySet()) {
-			AIRValue d = this.objectData.get(ad);
+			Anadatair d = this.objectData.get(ad);
 			if (! (data.objectData.containsKey(ad) && data.objectData.get(ad).equals(d))) {
 				return false;
 			}

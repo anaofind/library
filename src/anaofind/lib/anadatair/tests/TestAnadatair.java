@@ -7,7 +7,7 @@ import anaofind.lib.anadatair.*;
 import anaofind.lib.anadatair.ir.*;
 
 
-public class TestAIR {
+public class TestAnadatair {
 	/**
 	 * ir object
 	 */
@@ -45,7 +45,7 @@ public class TestAIR {
 	
 	@Test
 	public void testContain() {
-		AIRValue air = this.objectIR.toAIR();
+		Anadatair air = this.objectIR.toAnadatair();
 		
 		assertTrue(air.contains("Nom", "string"));
 		assertTrue(air.contains("Prenom", "string"));
@@ -64,13 +64,13 @@ public class TestAIR {
 		assertFalse(air.contains(2, "integer"));
 		assertFalse(air.contains(3, "integer"));
 		
-		AIRValue vnd = air.getData("V/N/D");
+		Anadatair vnd = air.getData("V/N/D");
 		assertTrue(vnd.contains(0, "array"));
 		assertTrue(vnd.contains(1, "integer"));
 		assertTrue(vnd.contains(2, "integer"));
 		assertTrue(vnd.contains(3, "integer"));
 		
-		AIRValue stringVND = vnd.getData(0);
+		Anadatair stringVND = vnd.getData(0);
 		assertTrue(stringVND.contains(0, "string"));
 		assertTrue(stringVND.contains(1, "string"));
 		assertTrue(stringVND.contains(2, "string"));
@@ -79,7 +79,7 @@ public class TestAIR {
 
 	@Test
 	public void testValue() {
-		AIRValue air = this.objectIR.toAIR();
+		Anadatair air = this.objectIR.toAnadatair();
 		
 		assertEquals("RAUZIER", air.getString("Nom"));
 		assertEquals("LEO", air.getString("Prenom"));
@@ -88,12 +88,12 @@ public class TestAIR {
 		assertEquals("FRANCE", air.getString("Pays"));
 		assertEquals(new Boolean(false), air.getBoolean("Contrat"));
 		
-		AIRValue vnd = air.getData("V/N/D");
+		Anadatair vnd = air.getData("V/N/D");
 		assertEquals(new Integer(10), vnd.getInteger(1));
 		assertEquals(new Integer(5), vnd.getInteger(2));
 		assertEquals(new Integer(2), vnd.getInteger(3));
 		
-		AIRValue stringVND = vnd.getData(0);
+		Anadatair stringVND = vnd.getData(0);
 		assertEquals("Victoire", stringVND.getString(0));
 		assertEquals("Null", stringVND.getString(1));
 		assertEquals("Defaite", stringVND.getString(2));

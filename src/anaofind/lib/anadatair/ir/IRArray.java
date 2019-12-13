@@ -1,7 +1,7 @@
 package anaofind.lib.anadatair.ir;
 
-import anaofind.lib.anadatair.AIRSettable;
-import anaofind.lib.anadatair.AIRValue;
+import anaofind.lib.anadatair.AnadatairSettable;
+import anaofind.lib.anadatair.Anadatair;
 import anaofind.lib.anadatair.visitor.VisitorIR;
 
 import java.util.*;
@@ -41,10 +41,10 @@ public class IRArray implements IRValue{
 	}
 
 	@Override
-	public AIRValue toAIR() {
-		AIRSettable air = new AIRSettable();
+	public Anadatair toAnadatair() {
+		AnadatairSettable air = new AnadatairSettable();
 		for (IRValue value : this.values) {
-			air.addData(value.toAIR());
+			air.addData(value.toAnadatair());
 		}
 		return air.toGettable();
 	}
