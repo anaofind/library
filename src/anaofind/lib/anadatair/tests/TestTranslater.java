@@ -7,7 +7,7 @@ import org.junit.*;
 import anaofind.lib.anadatair.ir.*;
 import anaofind.lib.anadatair.json.*;
 import anaofind.lib.anadatair.printer.*;
-import anaofind.lib.anadatair.translater.*;
+import anaofind.lib.anadatair.translator.*;
 
 
 /**
@@ -83,7 +83,7 @@ public class TestTranslater {
 		
 		this.objectJSON.accept(pp1);
 		
-		TranslaterIRToJSON tsl = new TranslaterIRToJSON(this.objectIR);
+		TranslatorIrJson tsl = new TranslatorIrJson(this.objectIR);
 		tsl.getValue().accept(pp2);
 		
 		assertEquals(pp1.getText(), pp2.getText());
@@ -96,7 +96,7 @@ public class TestTranslater {
 		
 		this.objectIR.accept(pp1);
 		
-		TranslaterJSONToIR tsl = new TranslaterJSONToIR(this.objectJSON);
+		TranslatorJsonIr tsl = new TranslatorJsonIr(this.objectJSON);
 		tsl.getValue().accept(pp2);
 		
 		assertEquals(pp1.getText(), pp2.getText());

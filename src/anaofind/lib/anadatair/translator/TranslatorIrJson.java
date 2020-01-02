@@ -1,4 +1,4 @@
-package anaofind.lib.anadatair.translater;
+package anaofind.lib.anadatair.translator;
 
 import java.util.Objects;
 
@@ -12,7 +12,7 @@ import java.util.*;
  * translater ir to json
  * @author anaofind
  */
-public class TranslaterIRToJSON implements VisitorIR{
+public class TranslatorIrJson implements VisitorIR{
 
 	/**
 	 * the json value
@@ -23,7 +23,7 @@ public class TranslaterIRToJSON implements VisitorIR{
 	 * construct
 	 * @param valueIR the value ir
 	 */
-	public TranslaterIRToJSON(IRValue valueIR) {
+	public TranslatorIrJson(IRValue valueIR) {
 		Objects.requireNonNull(valueIR);
 		valueIR.accept(this);
 		Objects.requireNonNull(this.value);
@@ -43,7 +43,7 @@ public class TranslaterIRToJSON implements VisitorIR{
 	 * @return the equivalent json value
 	 */
 	private JsonValue translateValue(IRValue valueIR) {
-		TranslaterIRToJSON translater = new TranslaterIRToJSON(valueIR);
+		TranslatorIrJson translater = new TranslatorIrJson(valueIR);
 		return translater.getValue();
 	}
 	

@@ -3,58 +3,36 @@ package anaofind.lib.anadatair.sql;
 import anaofind.lib.anadatair.visitor.VisitorSQL;
 
 /**
- * sql value number
- * @author lrauzier
+ * sql valuable number
+ * @author anaofind
  */
-public class SQLNumber implements SQLValue{
+public class SQLNumber implements SQLValuable{
 
 	/**
-	 * the value
+	 * the number value
 	 */
-	private double value;
+	private double number;
 	
 	/**
-	 * the type
+	 * construct 
+	 * @param number the number value
 	 */
-	private String type;
-	
-	/**
-	 * construct
-	 * @param value the value double
-	 */
-	public SQLNumber(double value) {
-		this.type = "double";
-		this.value = value;
-	}
-	
-	/**
-	 * construct
-	 * @param value the value integer
-	 */
-	public SQLNumber(int value) {
-		this.type = "integer";
-		this.value = value;
-	}
-	
-	/**
-	 * getter value
-	 * @return the value
-	 */
-	public double getValue() {
-		return this.value;
-	}
-	
-	/**
-	 * getter type
-	 * @return the type
-	 */
-	public String getType() {
-		return this.type;
+	public SQLNumber(double number) {
+		this.number = number;
 	}
 	
 	@Override
 	public void accept(VisitorSQL visitor) {
-		visitor.visitNumberSQL(this);
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * getter number
+	 * @return the number
+	 */
+	public double getNumber() {
+		return number;
 	}
 
 }

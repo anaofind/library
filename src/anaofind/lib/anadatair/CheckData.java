@@ -15,7 +15,7 @@ public class CheckData {
 	/**
 	 * regex double
 	 */
-	private static final String REGEX_DOUBLE = "^-?\\d+\\.?\\d*E?-?\\d*$";
+	private static final String REGEX_DOUBLE = "^(-?\\d*\\.?\\d*E?-?\\d*)$";
 	
 	/**
 	 * regex boolean
@@ -33,8 +33,13 @@ public class CheckData {
 	 * @param data la donnée
 	 * @return boolean indiquant si la donnée est un double ou non
 	 */
-	public static boolean isDouble(String data){
-		return data.matches(REGEX_DOUBLE);
+	public static boolean isDouble(String...datas){
+		for (String data : datas) {
+			if (! data.matches(REGEX_DOUBLE)) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
@@ -42,8 +47,13 @@ public class CheckData {
 	 * @param data la donnée
 	 * @return boolean indiquant si la donnée est un entier ou non
 	 */
-	public static boolean isInteger(String data){
-		return data.matches(REGEX_INTEGER);
+	public static boolean isInteger(String...datas){
+		for (String data : datas) {
+			if (! data.matches(REGEX_INTEGER)) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
@@ -51,8 +61,13 @@ public class CheckData {
 	 * @param data la donnée
 	 * @return boolean
 	 */
-	public static boolean isDate(String data) {
-		return data.matches(REGEX_DATE);
+	public static boolean isDate(String...datas) {
+		for (String data : datas) {
+			if (! data.matches(REGEX_DATE)) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
@@ -60,8 +75,13 @@ public class CheckData {
 	 * @param data the data
 	 * @return boolean : true if data is boolean | false else
 	 */
-	public static boolean isBoolean(String data) {
-		return data.matches(REGEX_BOOLEAN);
+	public static boolean isBoolean(String...datas) {
+		for (String data : datas) {
+			if (! data.matches(REGEX_BOOLEAN)) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**

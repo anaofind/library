@@ -3,7 +3,7 @@ package anaofind.lib.anadatair.sql;
 import anaofind.lib.anadatair.visitor.VisitorSQL;
 
 /**
- * sql value
+ * the sql value
  * @author anaofind
  */
 public interface SQLValue {
