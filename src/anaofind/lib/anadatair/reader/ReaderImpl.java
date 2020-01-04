@@ -9,22 +9,22 @@ public abstract class ReaderImpl implements Reader{
 	/**
 	 * the index char
 	 */
-	private int indexChar = -1;
+	private long indexChar = -1;
 	
 	/**
 	 * the index line
 	 */
-	private int indexLine = 0;
+	private long indexLine = 0;
 	
 	/**
 	 * the index column
 	 */
-	private int indexColumn = -1;
+	private long indexColumn = -1;
 	
 	/**
 	 * length of data text
 	 */
-	private int lengthText;
+	private long lengthText;
 	
 	/**
 	 * the current char
@@ -99,22 +99,22 @@ public abstract class ReaderImpl implements Reader{
 	}
 
 	@Override
-	public int indexChar() {
+	public long indexChar() {
 		return this.indexChar;
 	}
 
 	@Override
-	public int indexLine() {
+	public long indexLine() {
 		return this.indexLine;
 	}
 
 	@Override
-	public int indexColumn() {
+	public long indexColumn() {
 		return this.indexColumn;
 	}
 	
 	@Override
-	public int length() {
+	public long length() {
 		return this.lengthText;
 	}
 }

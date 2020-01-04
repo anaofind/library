@@ -100,22 +100,22 @@ public class Compilator implements Reader{
 	}
 
 	@Override
-	public int length() {
+	public long length() {
 		return this.reader.length();
 	}
 	
 	@Override
-	public int indexChar() {
+	public long indexChar() {
 		return this.reader.indexChar();
 	}
 
 	@Override
-	public int indexLine() {
+	public long indexLine() {
 		return this.reader.indexLine();
 	}
 
 	@Override
-	public int indexColumn() {
+	public long indexColumn() {
 		return this.reader.indexColumn();
 	}
 }

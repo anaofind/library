@@ -20,7 +20,7 @@ public class ReaderFile extends ReaderImpl{
 	/**
 	 * the length file
 	 */
-	private int lengthFile;
+	private long lengthFile;
 
 	/**
 	 * construct
@@ -44,14 +44,14 @@ public class ReaderFile extends ReaderImpl{
 				throw new Exception("file can not be readed : " + file.getPath());
 			}
 			this.reader = new BufferedReader(new FileReader(file));
-			this.lengthFile = (int)file.length();
+			this.lengthFile = file.length();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	@Override
-	public int length() {
+	public long length() {
 		return this.lengthFile;
 	}
 

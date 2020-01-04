@@ -119,7 +119,7 @@ public abstract class Parser{
 	 * get length of file
 	 * @return the length of file
 	 */
-	public int getFileLength() {
+	public long getFileLength() {
 		return this.reader.length();
 	}
 	

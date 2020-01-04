@@ -17,7 +17,7 @@ public class ReaderText extends ReaderImpl{
 	/**
 	 * the length text
 	 */
-	private int lengthText;
+	private long lengthText;
 		
 	/**
 	 * construct
@@ -30,13 +30,13 @@ public class ReaderText extends ReaderImpl{
 	}
 	
 	@Override
-	public int length() {
+	public long length() {
 		return this.lengthText;
 	}
 
 	@Override
 	public char nextChar() {
-		return this.text.charAt(this.indexChar());
+		return this.text.charAt((int)this.indexChar());
 	}
 	
 	public static void main (String[] args) {

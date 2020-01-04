@@ -54,25 +54,25 @@ public interface Reader {
 	 * get length data text
 	 * @return the length of data text
 	 */
-	public int length();
+	public long length();
 	
 	/**
 	 * get index char reading
 	 * @return the index char reading
 	 */
-	public int indexChar();
+	public long indexChar();
 	
 	/**
 	 * get index line
 	 * @return the index line
 	 */
-	public int indexLine();
+	public long indexLine();
 	
 	/**
 	 * get index column
 	 * @return the index column
 	 */
-	public int indexColumn();
+	public long indexColumn();
 	
 	/**
 	 * current char is space
