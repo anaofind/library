@@ -86,20 +86,20 @@ public interface Anadatair {
 	 * @param attribute the attribute
 	 * @return the integer
 	 */
-	public Integer getInteger(String attribute);
+	public Long getInteger(String attribute);
 	
 	/**
 	 * get integer value 
 	 * @param index the index
 	 * @return the integer
 	 */
-	public Integer getInteger(int index);
+	public Long getInteger(int index);
 
 	/**
 	 * get integer
 	 * @return the integer if only one integer
 	 */
-	public Integer getInteger();
+	public Long getInteger();
 
 	/**
 	 * get double value

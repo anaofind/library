@@ -50,17 +50,17 @@ public class AnadatairGettable implements Anadatair{
 	}
 
 	@Override
-	public Integer getInteger(String attribute) {
+	public Long getInteger(String attribute) {
 		return this.data.getInteger(attribute);
 	}
 
 	@Override
-	public Integer getInteger(int index) {
+	public Long getInteger(int index) {
 		return this.data.getInteger(index);
 	}
 
 	@Override
-	public Integer getInteger() {
+	public Long getInteger() {
 		return this.data.getInteger();
 	}
 

@@ -41,12 +41,12 @@ public class AnadatairSettable implements Anadatair{
 	/**
 	 * the object of integer
 	 */
-	private Map<String, Integer> objectInteger = new HashMap<String, Integer>(); 
+	private Map<String, Long> objectInteger = new HashMap<String, Long>(); 
 
 	/**
 	 * the array of integer
 	 */
-	private Map<Integer, Integer> arrayInteger = new HashMap<Integer, Integer>();
+	private Map<Integer, Long> arrayInteger = new HashMap<Integer, Long>();
 
 	/**
 	 * the object of double
@@ -189,7 +189,7 @@ public class AnadatairSettable implements Anadatair{
 	 * @param attribute the attribute
 	 * @param value the value
 	 */
-	public void addInteger(String attribute, int value) {
+	public void addInteger(String attribute, long value) {
 		Objects.requireNonNull(attribute);
 		if (! this.attributes.contains(attribute)) {
 			this.objectInteger.put(attribute, value);
@@ -202,7 +202,7 @@ public class AnadatairSettable implements Anadatair{
 	 * add integer
 	 * @param data the string
 	 */
-	public void addInteger(int value) {
+	public void addInteger(long value) {
 		this.arrayInteger.put(this.index, value);
 		this.arrayDouble.put(this.index, (double)value);
 		this.index++;
@@ -289,17 +289,17 @@ public class AnadatairSettable implements Anadatair{
 	}
 
 	@Override
-	public Integer getInteger(String attribute) {
+	public Long getInteger(String attribute) {
 		return this.objectInteger.get(attribute);
 	}
 
 	@Override
-	public Integer getInteger(int index) {
+	public Long getInteger(int index) {
 		return this.arrayInteger.get(index);
 	}
 
 	@Override
-	public Integer getInteger() {
+	public Long getInteger() {
 		if (this.size() == 1 && this.arrayInteger.size() == 1) {
 			return this.arrayInteger.get(0);
 		}
@@ -459,7 +459,7 @@ public class AnadatairSettable implements Anadatair{
 			}
 		}
 		for (int ii : this.arrayInteger.keySet()) {
-			int i = this.arrayInteger.get(ii);
+			long i = this.arrayInteger.get(ii);
 			if (! (data.arrayInteger.containsKey(ii) && data.arrayInteger.get(ii).equals(i))) {
 				return false;
 			}
@@ -489,7 +489,7 @@ public class AnadatairSettable implements Anadatair{
 			}
 		}
 		for (String ai : this.objectInteger.keySet()) {
-			int i = this.objectInteger.get(ai);
+			long i = this.objectInteger.get(ai);
 			if (! (data.objectInteger.containsKey(ai) && data.objectInteger.get(ai).equals(i))) {
 				return false;
 			}

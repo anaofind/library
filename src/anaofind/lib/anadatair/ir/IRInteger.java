@@ -13,13 +13,21 @@ public class IRInteger implements IRValue{
 	/**
 	 * the value
 	 */
-	private int value;
+	private long value;
 	
 	/**
 	 * construct
-	 * @param value the value
+	 * @param value the integer value
 	 */
 	public IRInteger(int value) {
+		this.value = value;
+	}
+	
+	/**
+	 * construct
+	 * @param value the long value
+	 */
+	public IRInteger(long value) {
 		this.value = value;
 	}
 	
@@ -27,7 +35,7 @@ public class IRInteger implements IRValue{
 	 * getter value
 	 * @return the value
 	 */
-	public int getValue() {
+	public long getValue() {
 		return this.value;
 	}
 		

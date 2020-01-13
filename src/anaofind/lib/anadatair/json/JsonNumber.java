@@ -36,6 +36,11 @@ public class JsonNumber implements JsonValue{
 		this.type = "integer";
 	}
 	
+	public JsonNumber(long value) {
+		this.value = value;
+		this.type = "integer";
+	}
+	
 	/**
 	 * getter number type
 	 * @return the number type
