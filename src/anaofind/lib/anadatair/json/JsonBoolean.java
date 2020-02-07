@@ -34,6 +34,11 @@ public class JsonBoolean implements JsonValue{
 	public void accept(VisitorJSON visitor) {
 		visitor.visitBooleanJSON(this);
 	}
+
+	@Override
+	public String toString() {
+		return "" + this.value;
+	}
 	
 	
 }

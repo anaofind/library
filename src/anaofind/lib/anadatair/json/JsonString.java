@@ -36,6 +36,11 @@ public class JsonString implements JsonValue{
 	public void accept(VisitorJSON visitor) {
 		visitor.visitStringJSON(this);
 	}
+
+	@Override
+	public String toString() {
+		return String.format("\"%s\"", this.value);
+	}
 	
 	
 	

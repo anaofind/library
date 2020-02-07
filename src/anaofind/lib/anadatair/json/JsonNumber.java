@@ -61,6 +61,15 @@ public class JsonNumber implements JsonValue{
 	public void accept(VisitorJSON visitor) {
 		visitor.visitNumberJSON(this);
 	}
+
+	@Override
+	public String toString() {
+		if (type.equals("integer")) {
+			return "" + (int)value;	
+		}
+		return "" + value;
+ 	}
+	
 	
 	
 }

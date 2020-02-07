@@ -13,4 +13,11 @@ public class JsonNull implements JsonValue{
 		visitor.visitNullJSON(this);
 	}
 
+	@Override
+	public String toString() {
+		return "null";
+	}
+
+	
+	
 }

@@ -38,6 +38,18 @@ public class JsonArray implements JsonValue{
 	public void accept(VisitorJSON visitor) {
 		visitor.visitArrayJSON(this);
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		String array = "[";
+		int size = this.values.size();
+		for (int i = 0 ; i<size; i++) {
+			array += this.values.get(i).toString();
+			if (i<size-1) {
+				array += ",";
+			}
+		}
+		array += "]";
+		return array;
+	}
 }

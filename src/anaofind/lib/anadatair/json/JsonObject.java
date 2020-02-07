@@ -45,4 +45,22 @@ public class JsonObject implements JsonValue{
 	public void accept(VisitorJSON visitor) {
 		visitor.visitObjectJSON(this);
 	}
+
+	@Override
+	public String toString() {
+		String object = "{";
+		int size = this.values.size();
+		int i = 0;
+		for (String key : this.values.keySet()) {
+			object += String.format("\"%s\":%s", key, this.values.get(key).toString());
+			if (i<size-1) {
+				object += ",";
+			}
+			i++;
+		}
+		object += "}";
+		return object;
+	}
+	
+	
 }
