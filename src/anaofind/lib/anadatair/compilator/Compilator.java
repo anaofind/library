@@ -26,7 +26,7 @@ public class Compilator implements Reader{
 		 * @param message the message
 		 */
 		public CompilatorException(String message) {
-			super(message + " -> char : \'" + reader.currentChar() + "\' [" + reader.indexLine() + "," + reader.indexColumn() + "]");
+			super(String.format("%s -> line : \'%s\' [%d]", message, reader.currentLine(), reader.indexColumn()));
 		}
 	}
 	
