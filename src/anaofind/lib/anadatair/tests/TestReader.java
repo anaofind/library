@@ -12,10 +12,19 @@ public class TestReader {
 
 	@Test
 	public void readerLine() {
-		Reader r = new ReaderFile("C:\\Users\\anaofind\\Desktop\\Etudes\\cours\\Master\\M1\\BDD\\TP\\trip_data_1.csv");
-		r.readChar();
-		System.out.println(r.length());
-		
+		// on charge le fichier
+		Reader r = new ReaderFile("C:\\Users\\leo_r\\Desktop\\tps\\tips.txt");
+		// on lit la premiere ligne
+		r.readLine();
+		// tant que le fichier n'a pas été lu entirement
+		while (! r.isEndReading()) {
+			// on affiche la ligne courrante
+			System.out.println(r.currentLine());
+			// on lit la ligne suivante
+			r.readLine();
+		}
+		// on affiche la derniere ligne
+		System.out.println(r.currentLine());
 	}
 	
 }
