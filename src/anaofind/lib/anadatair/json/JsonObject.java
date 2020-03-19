@@ -2,7 +2,8 @@ package anaofind.lib.anadatair.json;
 
 import java.util.*;
 
-import anaofind.lib.anadatair.visitor.VisitorJSON;
+import anaofind.lib.anadatair.Anadatair;
+import anaofind.lib.anadatair.AnadatairSettable;
 
 /**
  * json object
@@ -42,11 +43,6 @@ public class JsonObject implements JsonValue{
 	}
 
 	@Override
-	public void accept(VisitorJSON visitor) {
-		visitor.visitObjectJSON(this);
-	}
-
-	@Override
 	public String toString() {
 		String object = "{";
 		int size = this.values.size();
@@ -60,6 +56,15 @@ public class JsonObject implements JsonValue{
 		}
 		object += "}";
 		return object;
+	}
+
+	@Override
+	public Anadatair toAnadatair() {
+		AnadatairSettable air = new AnadatairSettable();
+		for (String attribute : this.values.keySet()) {
+			air.addData(attribute, this.values.get(attribute).toAnadatair());
+		}
+		return air.toGettable();
 	}
 	
 	

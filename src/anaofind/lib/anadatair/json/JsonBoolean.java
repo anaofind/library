@@ -1,6 +1,7 @@
 package anaofind.lib.anadatair.json;
 
-import anaofind.lib.anadatair.visitor.VisitorJSON;
+import anaofind.lib.anadatair.Anadatair;
+import anaofind.lib.anadatair.AnadatairSettable;
 
 /**
  * json boolean
@@ -31,13 +32,15 @@ public class JsonBoolean implements JsonValue{
 	}
 
 	@Override
-	public void accept(VisitorJSON visitor) {
-		visitor.visitBooleanJSON(this);
+	public String toString() {
+		return "" + this.value;
 	}
 
 	@Override
-	public String toString() {
-		return "" + this.value;
+	public Anadatair toAnadatair() {
+		AnadatairSettable air = new AnadatairSettable();
+		air.addBoolean(this.value);
+		return air.toGettable();
 	}
 	
 	

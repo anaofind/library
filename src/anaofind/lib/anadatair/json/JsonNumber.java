@@ -1,6 +1,7 @@
 package anaofind.lib.anadatair.json;
 
-import anaofind.lib.anadatair.visitor.VisitorJSON;
+import anaofind.lib.anadatair.Anadatair;
+import anaofind.lib.anadatair.AnadatairSettable;
 
 /**
  * json numeric
@@ -58,17 +59,23 @@ public class JsonNumber implements JsonValue{
 	}
 
 	@Override
-	public void accept(VisitorJSON visitor) {
-		visitor.visitNumberJSON(this);
-	}
-
-	@Override
 	public String toString() {
 		if (type.equals("integer")) {
 			return "" + (int)value;	
 		}
 		return "" + value;
  	}
+
+	@Override
+	public Anadatair toAnadatair() {
+		AnadatairSettable air = new AnadatairSettable();
+		if (this.type.equals("integer")) {
+			air.addInteger((int)this.value);
+		} else {
+			air.addDouble(this.value);	
+		}
+		return air.toGettable();
+	}
 	
 	
 	

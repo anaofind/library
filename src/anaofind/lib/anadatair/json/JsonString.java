@@ -2,7 +2,8 @@ package anaofind.lib.anadatair.json;
 
 import java.util.Objects;
 
-import anaofind.lib.anadatair.visitor.VisitorJSON;
+import anaofind.lib.anadatair.Anadatair;
+import anaofind.lib.anadatair.AnadatairSettable;
 
 /**
  * json string
@@ -14,7 +15,7 @@ public class JsonString implements JsonValue{
 	 * the value
 	 */
 	private String value;
-	
+
 	/**
 	 * construct
 	 * @param value the value
@@ -23,7 +24,7 @@ public class JsonString implements JsonValue{
 		Objects.requireNonNull(value);
 		this.value = value;
 	}
-	
+
 	/**
 	 * getter value
 	 * @return the value
@@ -33,15 +34,17 @@ public class JsonString implements JsonValue{
 	}
 
 	@Override
-	public void accept(VisitorJSON visitor) {
-		visitor.visitStringJSON(this);
-	}
-
-	@Override
 	public String toString() {
 		return String.format("\"%s\"", this.value);
 	}
-	
-	
-	
+
+	@Override
+	public Anadatair toAnadatair() {
+		AnadatairSettable air = new AnadatairSettable();
+		air.addString(this.value);
+		return air.toGettable();
+	}
+
+
+
 }

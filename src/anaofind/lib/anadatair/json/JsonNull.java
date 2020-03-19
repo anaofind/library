@@ -1,6 +1,7 @@
 package anaofind.lib.anadatair.json;
 
-import anaofind.lib.anadatair.visitor.VisitorJSON;
+import anaofind.lib.anadatair.Anadatair;
+import anaofind.lib.anadatair.AnadatairSettable;
 
 /**
  * json value null
@@ -9,13 +10,14 @@ import anaofind.lib.anadatair.visitor.VisitorJSON;
 public class JsonNull implements JsonValue{
 
 	@Override
-	public void accept(VisitorJSON visitor) {
-		visitor.visitNullJSON(this);
+	public String toString() {
+		return "null";
 	}
 
 	@Override
-	public String toString() {
-		return "null";
+	public Anadatair toAnadatair() {
+		AnadatairSettable air = new AnadatairSettable();
+		return air.toGettable();
 	}
 
 	
