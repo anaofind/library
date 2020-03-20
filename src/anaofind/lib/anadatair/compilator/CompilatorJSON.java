@@ -22,28 +22,22 @@ public class CompilatorJSON extends Compilator{
 	/**
 	 * construct
 	 * @param jsonText the json text
+	 * @throws CompilatorException 
 	 */
-	public CompilatorJSON(String jsonText) {
+	public CompilatorJSON(String jsonText) throws CompilatorException {
 		super(jsonText);
-		try {
-			this.value = this.readJsonValue();
-		} catch (CompilatorException e) {
-			e.printStackTrace();
-		}
+		this.value = this.readJsonValue();
 		Objects.requireNonNull(this.value);
 	}
 
 	/**
 	 * construct
 	 * @param jsonFile the json file
+	 * @throws CompilatorException 
 	 */
-	public CompilatorJSON(File jsonFile) {
+	public CompilatorJSON(File jsonFile) throws CompilatorException {
 		super(jsonFile);
-		try {
-			this.value = this.readJsonValue();
-		} catch (CompilatorException e) {
-			e.printStackTrace();
-		}
+		this.value = this.readJsonValue();
 		Objects.requireNonNull(this.value);
 	}
 

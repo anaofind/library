@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
+import anaofind.lib.anadatair.compilator.Compilator.CompilatorException;
 import anaofind.lib.anadatair.compilator.CompilatorJSON;
 import anaofind.lib.anadatair.json.*;
 import anaofind.lib.anadatair.reader.UtilReader;
@@ -51,13 +52,13 @@ public class TestCompilator {
 	}
 
 	@Test
-	public void testJSON() {	
+	public void testJSON() throws CompilatorException {	
 		CompilatorJSON cmp = new CompilatorJSON(this.objectJSON.toString());
 		assertEquals(this.objectJSON.toString(), cmp.getValue().toString());
 	}
 
 	@Test
-	public void testRealJSON() {
+	public void testRealJSON() throws CompilatorException {
 		String json1 = "{  \r\n" + 
 				"\r\n" + 
 				"\r\n" + 
