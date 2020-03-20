@@ -40,9 +40,12 @@ public abstract class AnaClient implements NetworkElement{
 			while (starting) {
 				try {
 					String message = UtilNetwork.readMessage(socket);
-					processMessage(socket, message);
+					if (! message.equals("PING")) {
+						processMessage(socket, message);	
+					}
 				} catch (IOException e) {
 					close();
+					connexionBroken();
 				}	
 			}
 		}
@@ -66,22 +69,37 @@ public abstract class AnaClient implements NetworkElement{
 				this.starting = true;
 				new Thread(new GetMessage()).start();			
 			} catch (UnknownHostException e) {
-				e.printStackTrace();
+				this.hostNotFound();
 			} catch (IOException e) {
-				e.printStackTrace();
+				this.cannotConnect();
 			}
-		} else {
-			System.out.println("ALREADY START");
 		}
 	}
 
 	@Override
 	public void close() {
-		this.starting = false;
 		try {
-			this.socket.close();
+			this.starting = false;
+			if (this.socket != null) {
+				this.socket.close();	
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}	
+	}
+	
+	/**
+	 * action where connexion broken
+	 */
+	public abstract void connexionBroken();
+	
+	/**
+	 * action where host not found
+	 */
+	public abstract void hostNotFound();
+	
+	/**
+	 * action when cannot connect
+	 */
+	public abstract void cannotConnect();
 }

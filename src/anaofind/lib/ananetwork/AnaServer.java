@@ -44,7 +44,7 @@ public abstract class AnaServer implements NetworkElement{
 	/**
 	 * the list of client
 	 */
-	protected List<Socket> listClient  = new ArrayList<Socket>(); 
+	private List<Socket> listClient  = new ArrayList<Socket>(); 
 
 	/**
 	 * the socket server
@@ -91,7 +91,6 @@ public abstract class AnaServer implements NetworkElement{
 				} 
 				catch (java.io.InterruptedIOException e ){
 					if (! this.starting) {
-						this.close();
 						for (Socket client : this.listClient) {
 							this.disconnect(client);
 						}
@@ -104,7 +103,6 @@ public abstract class AnaServer implements NetworkElement{
 				finally {
 					this.checkClients();
 					this.actionLoop();
-					System.out.println("NB CLIENT : " + this.listClient.size());
 				}
 			}	
 		} else {
@@ -117,6 +115,20 @@ public abstract class AnaServer implements NetworkElement{
 		this.starting = false;
 	}
 
+	/**
+	 * check the good connexion of clients. if connexion not good, 
+	 * we remove the client
+	 */
+	private void checkClients() {
+		for (Socket client : this.listClient) {
+			try {
+				UtilNetwork.sendMessage(client, "PING");
+			} catch (IOException e) {
+				this.disconnect(client);
+			}
+		}
+	}
+	
 	/**
 	 * disconnect a client
 	 * @param client the socket of client
@@ -152,17 +164,10 @@ public abstract class AnaServer implements NetworkElement{
 	}
 
 	/**
-	 * check the good connexion of clients. if connexion not good, 
-	 * we remove the client
+	 * get clients
+	 * @return the list of client (unmodifiable)
 	 */
-	public void checkClients() {
-		for (Socket client : this.listClient) {
-			try {
-				UtilNetwork.sendMessage(client, "PING");
-			} catch (IOException e) {
-				this.disconnect(client);
-			}
-		}
+	public List<Socket> clients() {
+		return Collections.unmodifiableList(this.listClient);
 	}
-
 }
