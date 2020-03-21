@@ -233,6 +233,18 @@ public abstract class AnaServer implements NetworkElement{
 	}
 
 	/**
+	 * send message
+	 * @param client the client
+	 * @param message the message to send
+	 * @throws IOException 
+	 */
+	public void sendMessage(Socket client, String message) throws IOException {
+		if (this.starting) {
+			UtilNetwork.sendMessage(client, message);
+		}
+	}
+	
+	/**
 	 * get clients
 	 * @return the list of client (unmodifiable)
 	 */
