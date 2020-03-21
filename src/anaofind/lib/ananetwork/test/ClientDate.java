@@ -22,15 +22,9 @@ public class ClientDate extends AnaClient{
 		}
 	}
 	
-	public static void main(String[] args) {
-		AnaClient client = new ClientDate();
-		client.start();
-	}
-
 	@Override
 	public void connexionBroken() {
 		System.out.println("CONNEXION BROKEN");
-		this.start();
 	}
 
 	@Override
@@ -44,5 +38,9 @@ public class ClientDate extends AnaClient{
 		this.start();
 	}
 	
+	public static void main(String[] args) {
+		AnaClient client = new ClientDate();
+		client.start();
+	}
 }
 

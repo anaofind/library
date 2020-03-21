@@ -5,17 +5,17 @@ import java.net.Socket;
 import java.util.Date;
 
 import anaofind.lib.ananetwork.AnaServer;
-import anaofind.lib.ananetwork.UtilNetwork;
+import anaofind.lib.ananetwork.util.UtilNetwork;
 
 public class ServerDate extends AnaServer{
-	
+
 	public ServerDate() {
-		super(8888, 5000);
+		super();
 	}
-	
+
 	@Override
 	public void processMessage(Socket socket, String message) {
-		
+		System.out.println(message);
 	}
 
 	@Override
@@ -30,11 +30,15 @@ public class ServerDate extends AnaServer{
 		}
 	}
 
-	
 	public static void main(String[] args) {
 		AnaServer server = new ServerDate();
-		server.start();
+		server.startThread();
+		try {
+			Thread.sleep(5000);
+			server.close();
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
-	
-	
 }

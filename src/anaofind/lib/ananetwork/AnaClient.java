@@ -3,6 +3,8 @@ package anaofind.lib.ananetwork;
 import java.io.IOException;
 import java.net.*;
 
+import anaofind.lib.ananetwork.util.UtilNetwork;
+
 /**
  * ana client
  * @author anaofind
@@ -38,12 +40,12 @@ public abstract class AnaClient implements NetworkElement{
 		@Override
 		public void run() {
 			while (starting) {
-				try {
-					String message = UtilNetwork.readMessage(socket);
+				String message = UtilNetwork.readMessage(socket);
+				if (message != null) {
 					if (! message.equals("PING")) {
 						processMessage(socket, message);	
-					}
-				} catch (IOException e) {
+					}	
+				} else {
 					close();
 					connexionBroken();
 				}	
@@ -95,8 +97,8 @@ public abstract class AnaClient implements NetworkElement{
 
 	@Override
 	public void close() {
+		this.starting = false;
 		try {
-			this.starting = false;
 			if (this.socket != null) {
 				this.socket.close();	
 			}

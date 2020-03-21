@@ -1,4 +1,4 @@
-package anaofind.lib.ananetwork;
+package anaofind.lib.ananetwork.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,8 +37,8 @@ public class UtilNetwork {
 		OutputStream out = socket.getOutputStream();
 		return new PrintWriter(new OutputStreamWriter(out));
 	}
-	
-	
+
+
 	/**
 	 * send message 
 	 * @param socket the destinatory of message
@@ -49,15 +49,24 @@ public class UtilNetwork {
 		printer.println(message);
 		printer.flush();
 	}
-	
-	
+
+
 	/**
 	 * read message 
 	 * @param socket the author of message
 	 * @param message the message to sen
 	 */
-	public static String readMessage(Socket socket) throws IOException{
-		BufferedReader reader = createReader(socket);
-		return reader.readLine();
+	public static String readMessage(Socket socket){
+		while (socket != null && ! socket.isClosed()) {
+			try {
+				BufferedReader reader = createReader(socket);
+				return reader.readLine();
+			} 
+			catch (java.io.InterruptedIOException e){}
+			catch (IOException e) {
+				return null;
+			}	
+		}
+		return null;
 	}
 }
