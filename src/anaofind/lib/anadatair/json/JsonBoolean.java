@@ -1,7 +1,7 @@
 package anaofind.lib.anadatair.json;
 
 import anaofind.lib.anadatair.Anadatair;
-import anaofind.lib.anadatair.AnadatairSettable;
+import anaofind.lib.anadatair.AnadatairBoolean;
 
 /**
  * json boolean
@@ -38,9 +38,7 @@ public class JsonBoolean implements JsonValue{
 
 	@Override
 	public Anadatair toAnadatair() {
-		AnadatairSettable air = new AnadatairSettable();
-		air.addBoolean(this.value);
-		return air.toGettable();
+		return new AnadatairBoolean(this.value);
 	}
 	
 	

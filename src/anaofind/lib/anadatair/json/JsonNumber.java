@@ -1,7 +1,9 @@
 package anaofind.lib.anadatair.json;
 
 import anaofind.lib.anadatair.Anadatair;
-import anaofind.lib.anadatair.AnadatairSettable;
+import anaofind.lib.anadatair.AnadatairDouble;
+import anaofind.lib.anadatair.AnadatairInteger;
+import anaofind.lib.anadatair.util.TypeResolver;
 
 /**
  * json numeric
@@ -18,7 +20,7 @@ public class JsonNumber implements JsonValue{
 	/**
 	 * the type used
 	 */
-	private String type = "double";
+	private String type = TypeResolver.DOUBLE;
 	
 	/**
 	 * construct
@@ -34,12 +36,12 @@ public class JsonNumber implements JsonValue{
 	 */
 	public JsonNumber(int value) {
 		this.value = value;
-		this.type = "integer";
+		this.type = TypeResolver.INT;
 	}
 	
 	public JsonNumber(long value) {
 		this.value = value;
-		this.type = "integer";
+		this.type = TypeResolver.INT;
 	}
 	
 	/**
@@ -60,7 +62,7 @@ public class JsonNumber implements JsonValue{
 
 	@Override
 	public String toString() {
-		if (type.equals("integer")) {
+		if (type.equals(TypeResolver.INT)) {
 			return "" + (int)value;	
 		}
 		return "" + value;
@@ -68,13 +70,10 @@ public class JsonNumber implements JsonValue{
 
 	@Override
 	public Anadatair toAnadatair() {
-		AnadatairSettable air = new AnadatairSettable();
-		if (this.type.equals("integer")) {
-			air.addInteger((int)this.value);
-		} else {
-			air.addDouble(this.value);	
+		if (this.type.equals(TypeResolver.INT)) {
+			return new AnadatairInteger((int)this.value);
 		}
-		return air.toGettable();
+		return new AnadatairDouble(this.value);
 	}
 	
 	

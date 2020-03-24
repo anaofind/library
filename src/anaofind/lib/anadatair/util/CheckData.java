@@ -1,4 +1,4 @@
-package anaofind.lib.anadatair;
+package anaofind.lib.anadatair.util;
 
 /**
  * classe permettant de faire toute sorte de vérification sur une donnée

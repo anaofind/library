@@ -3,7 +3,7 @@ package anaofind.lib.anadatair.json;
 import java.util.Objects;
 
 import anaofind.lib.anadatair.Anadatair;
-import anaofind.lib.anadatair.AnadatairSettable;
+import anaofind.lib.anadatair.AnadatairString;
 
 /**
  * json string
@@ -40,9 +40,7 @@ public class JsonString implements JsonValue{
 
 	@Override
 	public Anadatair toAnadatair() {
-		AnadatairSettable air = new AnadatairSettable();
-		air.addString(this.value);
-		return air.toGettable();
+		return new AnadatairString(this.getValue());
 	}
 
 

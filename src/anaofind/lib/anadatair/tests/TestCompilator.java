@@ -59,34 +59,7 @@ public class TestCompilator {
 
 	@Test
 	public void testRealJSON() throws CompilatorException {
-		String json1 = "{  \r\n" + 
-				"\r\n" + 
-				"\r\n" + 
-				"	\"array\" : [\r\n" + 
-				"		1,\r\n" + 
-				"		false,\r\n" + 
-				"		null,\r\n" + 
-				"		0.25,\r\n" + 
-				"		\"haha\"\r\n" + 
-				"	],\r\n" + 
-				"	\"object\" : {\r\n" + 
-				"\r\n" + 
-				"		\"a1\" : 50,\r\n" + 
-				"		\"a2\" : true,\r\n" + 
-				"		\"a3\"  : \"lol\",\r\n" + 
-				"		\"a4\" : null,\r\n" + 
-				"		\"a5\" : 15.22,\r\n" + 
-				"		\"a6\" : [null,  10, 12 , 15]\r\n" + 
-				"		\r\n" + 
-				"\r\n" + 
-				"	}\r\n" + 
-				"\r\n" + 
-				"\r\n" + 
-				"\r\n" + 
-				"\r\n" + 
-				"\r\n" + 
-				"\r\n" + 
-				"}";
+		String json1 = "{\"code\":4,\"receiver\":\"server\",\"sender\":\"anaofind\",\"content\":{\"password\":\"fqd\",\"version\":\"1.0.0\"}}";
 
 		CompilatorJSON cmp = new CompilatorJSON(json1);
 		System.out.println(UtilReader.removeSpace(json1.toString()));

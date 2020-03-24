@@ -3,7 +3,7 @@ package anaofind.lib.anadatair.json;
 import java.util.*;
 
 import anaofind.lib.anadatair.Anadatair;
-import anaofind.lib.anadatair.AnadatairSettable;
+import anaofind.lib.anadatair.AnadatairObject;
 
 /**
  * json object
@@ -60,11 +60,11 @@ public class JsonObject implements JsonValue{
 
 	@Override
 	public Anadatair toAnadatair() {
-		AnadatairSettable air = new AnadatairSettable();
+		AnadatairObject air = new AnadatairObject();
 		for (String attribute : this.values.keySet()) {
-			air.addData(attribute, this.values.get(attribute).toAnadatair());
+			air.add(attribute, this.values.get(attribute).toAnadatair());
 		}
-		return air.toGettable();
+		return air;
 	}
 	
 	
