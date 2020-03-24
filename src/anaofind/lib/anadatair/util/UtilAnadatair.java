@@ -51,7 +51,7 @@ public class UtilAnadatair {
 		if (value.getClass().equals(String.class))  {
 			return new AnadatairString((String) value);
 		}
-		if (value.getClass().equals(Anadatair.class))  {
+		if (value instanceof Anadatair)  {
 			return (Anadatair) value;
 		}
 		return null;
