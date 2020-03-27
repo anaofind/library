@@ -2,6 +2,8 @@ package anaofind.lib.anadatair.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.*;
+
 import org.junit.jupiter.api.Test;
 import anaofind.lib.anadatair.*;
 import anaofind.lib.anadatair.compilator.Compilator.CompilatorException;
@@ -64,13 +66,26 @@ public class TestAnadatair {
 	
 	@Test
 	public void TestEncode() throws CompilatorException {
-		assertTrue(UtilAnadatair.encode(null).equals(new AnadatairNull()));
 		assertTrue(UtilAnadatair.encode(1).equals(new AnadatairInteger(1)));
 		assertTrue(UtilAnadatair.encode(1).equals(new AnadatairDouble(1)));
 		assertTrue(UtilAnadatair.encode(35.4).equals(new AnadatairDouble(35.4)));
 		assertTrue(UtilAnadatair.encode(true).equals(new AnadatairBoolean(true)));
 		assertTrue(UtilAnadatair.encode(false).equals(new AnadatairBoolean(false)));
 		assertTrue(UtilAnadatair.encode("coucou").equals(new AnadatairString("coucou")));
+		
+		List<Object> list = new ArrayList<Object>();
+		list.add("coucou");
+		list.add("sava");
+		list.add(10);
+		Anadatair testArray = UtilAnadatair.encode(list);
+		System.out.println(testArray.toJson());
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("a1", "coucou");
+		map.put("a2", 10);
+		map.put("a3", false);
+		Anadatair testObject = UtilAnadatair.encode(map);
+		System.out.println(testObject.toJson());
 	}
 	
 }
