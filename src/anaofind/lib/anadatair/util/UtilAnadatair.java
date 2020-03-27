@@ -16,9 +16,15 @@ public class UtilAnadatair {
 	 * @return the anadatair equivalent
 	 * @throws CompilatorException 
 	 */
-	public static Anadatair jsonDecode(String json) throws CompilatorException {
-		CompilatorJSON cmp = new CompilatorJSON(json);
-		return cmp.getValue().toAnadatair();
+	public static Anadatair jsonDecode(String json) {
+		CompilatorJSON cmp;
+		try {
+			cmp = new CompilatorJSON(json);
+			return cmp.getValue().toAnadatair();
+		} catch (CompilatorException e) {
+			System.out.println("ERROR JSON DECODE");
+		}
+		return new AnadatairNull();
 	}
 	
 	/**
@@ -35,7 +41,10 @@ public class UtilAnadatair {
 	 * @param value the object to decode
 	 * @return
 	 */
-	public static Anadatair decode(Object value) {
+	public static Anadatair encode(Object value) {
+		if (value == null) {
+			return new AnadatairNull();
+		}
 		if (value.getClass().equals(Integer.class))  {
 			return new AnadatairInteger((Integer) value);
 		}
