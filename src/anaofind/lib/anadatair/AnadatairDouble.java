@@ -55,4 +55,9 @@ public class AnadatairDouble extends AnadatairPrimitive{
 	public JsonValue toJson() {
 		return new JsonNumber(this.value);
 	}
+
+	@Override
+	public boolean equals(Anadatair other) {
+		return (other.getType().equals(TypeResolver.DOUBLE) || other.getType().equals(TypeResolver.INT))  && other.getDouble() == value;
+	}
 }

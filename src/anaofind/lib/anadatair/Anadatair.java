@@ -170,6 +170,12 @@ public interface Anadatair {
 	public String getType();
 
 	/**
+	 * equals method
+	 * @param other the other anadatair
+	 */
+	public boolean equals(Anadatair other);
+	
+	/**
 	 * to json
 	 * @return the json value equivalent
 	 */

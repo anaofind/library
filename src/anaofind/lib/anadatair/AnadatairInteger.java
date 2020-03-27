@@ -67,4 +67,9 @@ public class AnadatairInteger extends AnadatairPrimitive{
 	public JsonValue toJson() {
 		return new JsonNumber(this.value);
 	}
+
+	@Override
+	public boolean equals(Anadatair other) {
+		return other.getType().equals(TypeResolver.INT) || other.getType().equals(TypeResolver.DOUBLE) && other.getDouble() == value;
+	}
 }

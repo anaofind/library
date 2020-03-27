@@ -2,6 +2,7 @@ package anaofind.lib.anadatair;
 
 import anaofind.lib.anadatair.json.JsonString;
 import anaofind.lib.anadatair.json.JsonValue;
+import anaofind.lib.anadatair.util.TypeResolver;
 
 /**
  * anadatair string type
@@ -49,12 +50,17 @@ public class AnadatairString extends AnadatairPrimitive{
 
 	@Override
 	public String getType() {
-		return "string";
+		return TypeResolver.STRING;
 	}
 
 	@Override
 	public JsonValue toJson() {
 		return new JsonString(this.value);
+	}
+
+	@Override
+	public boolean equals(Anadatair other) {
+		return other.getType().equals(TypeResolver.STRING) && other.getString().equals(value);
 	}
 
 

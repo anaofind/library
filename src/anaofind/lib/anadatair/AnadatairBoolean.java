@@ -57,4 +57,9 @@ public class AnadatairBoolean extends AnadatairPrimitive{
 		return new JsonBoolean(this.value);
 	}
 
+	@Override
+	public boolean equals(Anadatair other) {
+		return other.getType().equals(TypeResolver.BOOLEAN) && other.getBoolean().equals(value);
+	}
+
 }

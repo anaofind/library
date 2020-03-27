@@ -25,7 +25,7 @@ public class AnadatairObject implements Anadatair{
 	 * @param data the data
 	 */
 	public void add(String attribute, Object object) {
-		Anadatair data = UtilAnadatair.decode(object);
+		Anadatair data = UtilAnadatair.encode(object);
 		if (data != null) {
 			this.values.put(attribute, data);
 		}
@@ -113,6 +113,19 @@ public class AnadatairObject implements Anadatair{
 			jsonObject.addAttribute(attribute, this.getData(attribute).toJson());
 		}
 		return jsonObject;
+	}
+
+	@Override
+	public boolean equals(Anadatair other) {
+		if (other.size() == this.size() && other.getType().equals(TypeResolver.OBJECT)) {
+			for (String attribute : this.values.keySet()) {
+				if (!other.contains(attribute) || !other.getData(attribute).equals(this.values.get(attribute))) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
  
 }

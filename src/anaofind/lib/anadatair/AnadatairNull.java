@@ -36,4 +36,9 @@ public class AnadatairNull extends AnadatairPrimitive {
 		return new JsonNull();
 	}
 
+	@Override
+	public boolean equals(Anadatair other) {
+		return other.getType().equals(TypeResolver.NULL);
+	}
+
 }

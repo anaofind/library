@@ -32,7 +32,7 @@ public class AnadatairArray implements Anadatair{
 	 */
 	public void add(Object...values) {
 		for (Object value : values) {
-			Anadatair data = UtilAnadatair.decode(value);
+			Anadatair data = UtilAnadatair.encode(value);
 			if (data != null) {
 				this.values.add(data);
 			}
@@ -121,5 +121,18 @@ public class AnadatairArray implements Anadatair{
 			jsonArray[i] = this.values.get(i).toJson();
 		}
 		return new JsonArray(jsonArray);
+	}
+
+	@Override
+	public boolean equals(Anadatair other) {
+		if (this.size() == other.size() && other.getType().equals(TypeResolver.ARRAY)) {
+			for (int i = 0; i<this.values.size(); i++) {
+				if (!other.contains(i) || !this.values.get(i).equals(other.getData(i))) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 }
