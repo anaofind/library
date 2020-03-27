@@ -1,5 +1,7 @@
 package anaofind.lib.anadatair.util;
 
+import java.util.*;
+
 import anaofind.lib.anadatair.*;
 import anaofind.lib.anadatair.compilator.*;
 import anaofind.lib.anadatair.compilator.Compilator.CompilatorException;
@@ -39,7 +41,7 @@ public class UtilAnadatair {
 	/**
 	 * decode object to anadatair
 	 * @param value the object to decode
-	 * @return
+	 * @return anadatair equivalent
 	 */
 	public static Anadatair encode(Object value) {
 		if (value == null) {
@@ -63,6 +65,54 @@ public class UtilAnadatair {
 		if (value instanceof Anadatair)  {
 			return (Anadatair) value;
 		}
-		return null;
+		return new AnadatairNull();
+	}
+	
+	/**
+	 * decode collection of objects to anadatair
+	 * @param values the collection of objects
+	 * @return anadatair equivalent
+	 */
+	public static Anadatair encode(Collection<Object> values) {
+		if (values == null) {
+			return new AnadatairNull();
+		}
+		AnadatairArray array = new AnadatairArray();
+		for (Object object : values) {
+			array.add(object);
+		}
+		return array;
+	}
+	
+	/**
+	 * decode array of objects to anadatair
+	 * @param values the array of objects
+	 * @return anadatair equivalent
+	 */
+	public static Anadatair encode(Object...values) {
+		if (values == null) {
+			return new AnadatairNull();
+		}
+		AnadatairArray array = new AnadatairArray();
+		for (Object object : values) {
+			array.add(object);
+		}
+		return array;
+	}
+
+	/**
+	 * decode array of objects to anadatair
+	 * @param values the array of objects
+	 * @return anadatair equivalent
+	 */
+	public static Anadatair encode(Map<String, Object> values) {
+		if (values == null) {
+			return new AnadatairNull();
+		}
+		AnadatairObject object = new AnadatairObject();
+		for (String attribute : values.keySet()) {
+			object.add(attribute, values.get(attribute));
+		}
+		return object;
 	}
 }
