@@ -20,25 +20,13 @@ public class ServerDate extends AnaServer{
 
 	@Override
 	public void actionLoop() {
-		System.out.println("NB CLIENT : " + this.clients().size());
+		System.out.println("NB CLIENT : " + this.clients().length);
 		for (Socket client : this.clients()) {
 			try {
 				UtilNetwork.sendMessage(client, new Date().toString());
 			} catch (IOException e) {
 				System.out.println("ERROR");
 			}
-		}
-	}
-
-	public static void main(String[] args) {
-		AnaServer server = new ServerDate();
-		server.startThread();
-		try {
-			Thread.sleep(5000);
-			server.close();
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 	}
 }

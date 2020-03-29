@@ -46,9 +46,11 @@ public abstract class AnaClient implements NetworkElement{
 						processMessage(socket, message);	
 					}	
 				} else {
-					close();
-					connexionBroken();
-				}	
+					if (starting) {
+						close();
+						connexionBroken();	
+					}
+				}
 			}
 		}
 	}
@@ -88,13 +90,22 @@ public abstract class AnaClient implements NetworkElement{
 				this.starting = true;
 				new Thread(new GetMessage()).start();			
 			} catch (UnknownHostException e) {
+				this.close();
 				this.hostNotFound();
 			} catch (IOException e) {
+				this.close();
 				this.cannotConnect();
 			}
 		}
 	}
 
+	/**
+	 * start client in thread
+	 */
+	public void startThread() {
+		new Thread(( () -> start() )).start();	
+	}
+	
 	@Override
 	public void close() {
 		this.starting = false;
@@ -112,7 +123,7 @@ public abstract class AnaClient implements NetworkElement{
 	 * @param message the message to send
 	 * @throws IOException 
 	 */
-	public void sendMessage(String message) throws IOException {
+	public synchronized void sendMessage(String message) throws IOException {
 		if (this.starting) {
 			UtilNetwork.sendMessage(this.socket, message);
 		}

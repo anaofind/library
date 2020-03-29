@@ -24,23 +24,19 @@ public class ClientDate extends AnaClient{
 	
 	@Override
 	public void connexionBroken() {
-		System.out.println("CONNEXION BROKEN");
+		//System.out.println("CONNEXION BROKEN");
+		this.start();
 	}
 
 	@Override
 	public void hostNotFound() {
-		System.out.println("HOST NOT FOUND");
+		//System.out.println("HOST NOT FOUND");
 	}
 
 	@Override
 	public void cannotConnect() {
-		System.out.println("TRY TO CONNECT");
-		this.start();
-	}
-	
-	public static void main(String[] args) {
-		AnaClient client = new ClientDate();
-		client.start();
+		//System.out.println("TRY TO CONNECT");
+		// this.start();
 	}
 }
 

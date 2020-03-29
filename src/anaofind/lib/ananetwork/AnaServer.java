@@ -134,13 +134,12 @@ public abstract class AnaServer implements NetworkElement{
 				// if server close : disconnect all clients
 				if (! this.starting) {
 					System.out.println("CLOSE");
-					for (Socket client : this.listClient) {
+					for (Socket client : this.clients()) {
 						this.disconnect(client);
 					}
 				}
 				// remove and disconnect client with problem connexion
 				this.checkClients();
-				this.removeClientsDisconnected();
 				this.actionLoop();
 			}
 			// close service of management threads
@@ -179,7 +178,7 @@ public abstract class AnaServer implements NetworkElement{
 	 * we remove the client
 	 */
 	private void checkClients() {
-		for (Socket client : this.listClient) {
+		for (Socket client : this.clients()) {
 			try {
 				UtilNetwork.sendMessage(client, "PING");
 			} catch (IOException e) {
@@ -189,27 +188,15 @@ public abstract class AnaServer implements NetworkElement{
 	}
 
 	/**
-	 * remove all clients disconnected
-	 */
-	private void removeClientsDisconnected() {
-		List<Socket> clientsRemoved = new ArrayList<Socket>();
-		for (Socket client : this.listClient) {
-			if (client.isClosed()) {
-				clientsRemoved.add(client);
-			}
-		}
-		this.listClient.removeAll(clientsRemoved);
-	}
-
-	/**
 	 * disconnect a client
 	 * @param client the socket of client
 	 */
 	public void disconnect(Socket client) {
 		try {
-			if (! client.isClosed()) {
+			if (client != null && ! client.isClosed()) {
 				client.close();	
 			}
+			this.listClient.remove(client);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -248,7 +235,7 @@ public abstract class AnaServer implements NetworkElement{
 	 * get clients
 	 * @return the list of client (unmodifiable)
 	 */
-	public List<Socket> clients() {
-		return Collections.unmodifiableList(this.listClient);
+	public Socket[] clients() {
+		return this.listClient.toArray(new Socket[this.listClient.size()]);
 	}
 }
