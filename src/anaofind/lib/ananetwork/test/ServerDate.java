@@ -15,7 +15,7 @@ public class ServerDate extends AnaServer{
 
 	@Override
 	public void processMessage(Socket socket, String message) {
-		System.out.println(message);
+		System.out.println(String.format("MESSAGE : %s", message));
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class ServerDate extends AnaServer{
 			try {
 				UtilNetwork.sendMessage(client, new Date().toString());
 			} catch (IOException e) {
-				System.out.println("ERROR");
+				System.err.println("SERVER : " + e.getMessage());
 			}
 		}
 	}

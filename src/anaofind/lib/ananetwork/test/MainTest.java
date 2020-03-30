@@ -1,6 +1,5 @@
 package anaofind.lib.ananetwork.test;
 
-import anaofind.lib.ananetwork.AnaClient;
 import anaofind.lib.ananetwork.AnaServer;
 
 /**
@@ -13,9 +12,8 @@ public class MainTest {
 	public static void main(String[] args) {
 		try {
 			AnaServer server = new ServerDate();
-			AnaClient client1 = new ClientDate();
-			AnaClient client2 = new ClientDate();
-			client1.bind("127.0.0.1", 8888);
+			ClientDate client1 = new ClientDate();
+			ClientDate client2 = new ClientDate();
 			
 			
 			
@@ -24,7 +22,7 @@ public class MainTest {
 			client1.startThread();
 			Thread.sleep(5000);
 			server.close();
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			
 			server.startThread();
 			
@@ -32,20 +30,20 @@ public class MainTest {
 			client2.startThread();
 			Thread.sleep(5000);
 			server.close();
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			
 			System.out.println("\n... STATE 3 ... \n");
 			server.startThread();
 			Thread.sleep(5000);
 			server.close();
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			
 			System.out.println("\n... STATE 4 ... \n");
 			server.startThread();
 			Thread.sleep(5000);
 			server.close();
 			client1.close();
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 			
 			System.out.println("\n... STATE 5 ... \n");
 			server.startThread();
