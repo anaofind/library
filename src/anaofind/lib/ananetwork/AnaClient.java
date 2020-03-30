@@ -33,12 +33,18 @@ public abstract class AnaClient implements NetworkElement{
 	private boolean starting = false;
 
 	/**
+	 * boolean indicate if client is already work in thread
+	 */
+	private boolean workedThread = false;
+
+	/**
 	 * class to get message in threading
 	 * @author anaofind
 	 */
 	private class GetMessage implements Runnable {
 		@Override
 		public void run() {
+			workedThread = true;
 			while (starting) {
 				String message = UtilNetwork.readMessage(socket);
 				if (message != null) {
@@ -52,6 +58,7 @@ public abstract class AnaClient implements NetworkElement{
 					}
 				}
 			}
+			workedThread = false;
 		}
 	}
 
@@ -61,7 +68,7 @@ public abstract class AnaClient implements NetworkElement{
 	public AnaClient() {
 		this("127.0.0.1", 8888);
 	}
-	
+
 	/**
 	 * choice address of server and port of server
 	 * @param addressServer the address of server
@@ -71,7 +78,7 @@ public abstract class AnaClient implements NetworkElement{
 		this.addressServer = addressServer;
 		this.portServer = portServer;
 	}
-	
+
 	/**
 	 * construct
 	 * @param addressServer the address of server
@@ -88,7 +95,9 @@ public abstract class AnaClient implements NetworkElement{
 			try {
 				this.socket = new Socket(addressServer, portServer);
 				this.starting = true;
-				new Thread(new GetMessage()).start();			
+				if (! this.workedThread) {
+					new Thread(new GetMessage()).start();	
+				}			
 			} catch (UnknownHostException e) {
 				this.close();
 				this.hostNotFound();
@@ -105,7 +114,7 @@ public abstract class AnaClient implements NetworkElement{
 	public void startThread() {
 		new Thread(( () -> start() )).start();	
 	}
-	
+
 	@Override
 	public void close() {
 		this.starting = false;
@@ -117,33 +126,33 @@ public abstract class AnaClient implements NetworkElement{
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * send message
 	 * @param message the message to send
 	 * @throws IOException 
 	 */
-	public synchronized void sendMessage(String message) throws IOException {
+	public void sendMessage(String message) throws IOException {
 		if (this.starting) {
 			UtilNetwork.sendMessage(this.socket, message);
 		}
 	}
-	
+
 	/**
 	 * action where connexion broken
 	 */
 	public abstract void connexionBroken();
-	
+
 	/**
 	 * action where host not found
 	 */
 	public abstract void hostNotFound();
-	
+
 	/**
 	 * action when cannot connect
 	 */
 	public abstract void cannotConnect();
-	
+
 	/**
 	 * get address of server
 	 * @return the address of server
@@ -159,6 +168,6 @@ public abstract class AnaClient implements NetworkElement{
 	public int portServer() {
 		return portServer;
 	}
-	
-	
+
+
 }

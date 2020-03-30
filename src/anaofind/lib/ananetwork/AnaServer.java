@@ -117,7 +117,11 @@ public abstract class AnaServer implements NetworkElement{
 			
 			// main loop
 			while (this.starting) {	
-				try {
+				try {				
+					// remove and disconnect client with problem connexion
+					this.checkClients();
+					this.actionLoop();
+					
 					// accept new client
 					Socket socketClient = this.socket.accept();
 					socketClient.setSoTimeout(this.socket.getSoTimeout());
@@ -138,9 +142,6 @@ public abstract class AnaServer implements NetworkElement{
 						this.disconnect(client);
 					}
 				}
-				// remove and disconnect client with problem connexion
-				this.checkClients();
-				this.actionLoop();
 			}
 			// close service of management threads
 			service.shutdown();
