@@ -43,7 +43,7 @@ public class UtilAnadatair {
 	 * @param value the object to decode
 	 * @return anadatair equivalent
 	 */
-	public static Anadatair encode(Object value) {
+	public static <T> Anadatair encode(T value) {
 		if (value == null) {
 			return new AnadatairNull();
 		}
@@ -73,7 +73,7 @@ public class UtilAnadatair {
 	 * @param values the collection of objects
 	 * @return anadatair equivalent
 	 */
-	public static Anadatair encode(Collection<Object> values) {
+	public static <T> Anadatair encode(Collection<T> values) {
 		if (values == null) {
 			return new AnadatairNull();
 		}
@@ -89,7 +89,7 @@ public class UtilAnadatair {
 	 * @param values the array of objects
 	 * @return anadatair equivalent
 	 */
-	public static Anadatair encode(Object...values) {
+	public static <T> Anadatair encode(T[] values) {
 		if (values == null) {
 			return new AnadatairNull();
 		}
@@ -105,7 +105,7 @@ public class UtilAnadatair {
 	 * @param values the array of objects
 	 * @return anadatair equivalent
 	 */
-	public static Anadatair encode(Map<String, Object> values) {
+	public static <T> Anadatair encode(Map<String, T> values) {
 		if (values == null) {
 			return new AnadatairNull();
 		}

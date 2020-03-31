@@ -87,7 +87,7 @@ public class TestAnadatair {
 		Anadatair testObject = UtilAnadatair.encode(map);
 		System.out.println(testObject.toJson());
 		
-		Set<Object> set = Set.of("coucou", "sava", "tres", "bien");
+		Set<String> set = Set.of("coucou", "sava", "tres", "bien");
 		testArray = UtilAnadatair.encode(set);
 		System.out.println(testArray.toJson());
 	}
