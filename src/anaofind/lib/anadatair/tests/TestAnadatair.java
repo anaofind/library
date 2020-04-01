@@ -74,6 +74,17 @@ public class TestAnadatair {
 	}
 	
 	@Test
+	public void TestEncodeJsonFile() {
+		AnadatairObject data1 = new AnadatairObject();
+		data1.add("a1", new AnadatairArray(10, "coucou", false, null));
+		data1.add("a2", true);
+		UtilAnadatair.jsonEncodeFile(data1, "test/json_encode_file.json");
+		Anadatair data2 = UtilAnadatair.jsonDecodeFile("test/json_encode_file.json");
+		assertTrue(data1.equals(data2));
+		assertTrue(data2.equals(data1));
+	}
+	
+	@Test
 	public void TestEncode() throws CompilatorException {
 		assertTrue(UtilAnadatair.encode(1).equals(new AnadatairInteger(1)));
 		assertTrue(UtilAnadatair.encode(1).equals(new AnadatairDouble(1)));
