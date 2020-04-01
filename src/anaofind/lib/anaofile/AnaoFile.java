@@ -42,6 +42,30 @@ public class AnaoFile {
 	}
 	
 	/**
+	 * delete the file
+	 */
+	public void delete() {
+		try {
+			if (! this.file.exists()) {
+				throw new Exception("file not found");
+			}
+			if (! this.file.delete()) {
+				throw new Exception("file cannot be deleted");
+			}
+		}  catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	/**
+	 * know if file exist
+	 * @return boolean : true if file exist | false else
+	 */
+	public boolean exist() {
+		return this.file.exists();
+	}
+	
+	/**
 	 * get writer of file
 	 * @return the writer
 	 */
