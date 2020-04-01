@@ -65,6 +65,15 @@ public class TestAnadatair {
 	}
 	
 	@Test
+	public void TestDecodeJsonFile() throws CompilatorException {		
+		Anadatair data1 = UtilAnadatair.jsonDecodeFile("test/json_decode_file.json");
+		System.out.println(data1.toJson().toString());
+		Anadatair data2 = UtilAnadatair.jsonDecode(data1.toJson().toString());
+		assertTrue(data1.equals(data2));
+		assertTrue(data2.equals(data1));
+	}
+	
+	@Test
 	public void TestEncode() throws CompilatorException {
 		assertTrue(UtilAnadatair.encode(1).equals(new AnadatairInteger(1)));
 		assertTrue(UtilAnadatair.encode(1).equals(new AnadatairDouble(1)));
@@ -89,6 +98,9 @@ public class TestAnadatair {
 		
 		Set<String> set = Set.of("coucou", "sava", "tres", "bien");
 		testArray = UtilAnadatair.encode(set);
+		System.out.println(testArray.toJson());
+		
+		testArray = UtilAnadatair.encode(new ArrayList<String>());
 		System.out.println(testArray.toJson());
 	}
 	

@@ -5,6 +5,7 @@ import java.util.*;
 import anaofind.lib.anadatair.*;
 import anaofind.lib.anadatair.compilator.*;
 import anaofind.lib.anadatair.compilator.Compilator.CompilatorException;
+import anaofind.lib.anadatair.reader.*;
 
 /**
  * util anadatair method
@@ -36,6 +37,21 @@ public class UtilAnadatair {
 	 */
 	public static String jsonEncode(Anadatair anadatair) {
 		return anadatair.toJson().toString();
+	}
+	
+	/**
+	 * json decode file
+	 * @param pathFile the path file
+	 * @return the anadatair equivalent
+	 */
+	public static Anadatair jsonDecodeFile(String pathFile) {
+		Reader file = new ReaderFile(pathFile);
+		String json = "";
+		while (! file.isEndReading()) {
+			file.readLine();
+			json += file.currentLine();
+		}
+		return jsonDecode(json);
 	}
 	
 	/**
