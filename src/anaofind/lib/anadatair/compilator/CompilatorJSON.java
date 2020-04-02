@@ -1,7 +1,5 @@
 package anaofind.lib.anadatair.compilator;
 
-import java.util.Objects;
-
 import anaofind.lib.anadatair.json.*;
 
 import java.io.File;
@@ -27,7 +25,9 @@ public class CompilatorJSON extends Compilator{
 	public CompilatorJSON(String jsonText) throws CompilatorException {
 		super(jsonText);
 		this.value = this.readJsonValue();
-		Objects.requireNonNull(this.value);
+		if (this.value == null) {
+			this.callException("json null");
+		}
 	}
 
 	/**
@@ -38,7 +38,9 @@ public class CompilatorJSON extends Compilator{
 	public CompilatorJSON(File jsonFile) throws CompilatorException {
 		super(jsonFile);
 		this.value = this.readJsonValue();
-		Objects.requireNonNull(this.value);
+		if (this.value == null) {
+			this.callException("json null");
+		}
 	}
 
 	/**
