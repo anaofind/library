@@ -14,7 +14,12 @@ import javafx.fxml.Initializable;
  *
  */
 public abstract class Controler implements Initializable, Listener{
-			
+		
+	/**
+	 * boolean indicate if screen is open
+	 */
+	private boolean screenOpen = true;
+	
 	/**
 	 * methode executer la boucle
 	 */
@@ -43,6 +48,13 @@ public abstract class Controler implements Initializable, Listener{
 	public abstract void finishing();
 	
 	/**
+	 * close screen -> screenOpen variable is false
+	 */
+	public void screenClose() {
+		this.screenOpen = false;
+	}
+	
+	/**
 	 * methode d'initialisation
 	 */
 	@Override
@@ -50,7 +62,7 @@ public abstract class Controler implements Initializable, Listener{
 		starting();
 		new Thread( () -> { 
 			try {
-				while (!isEndLoop()) {
+				while (screenOpen && !isEndLoop()) {
 					Platform.runLater( () -> {
 						stepLoop();
 					});

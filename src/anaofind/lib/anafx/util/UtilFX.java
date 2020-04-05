@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -36,7 +37,7 @@ public class UtilFX {
 	 * @return la fenetre
 	 */
 	public static Stage createScreen(String pathFXML) {
-		Scene scene = createSceneFXML(pathFXML);
+		Scene scene = createSceneFXML(createLoaderFXML(pathFXML));
 		Stage stage = new Stage();
 		stage.setScene(scene);
 		return stage;
@@ -53,16 +54,26 @@ public class UtilFX {
 	}
 	
 	/**
+	 * load fxml
+	 * @param pathFXML the path of fxml
+	 * @return the fxml loader
+	 */
+	public static FXMLLoader createLoaderFXML(String pathFXML) {
+		if (pathFXML != null) {
+			return new FXMLLoader(UtilFX.class.getResource(getRootPath(pathFXML)));	
+		} 
+		return null;
+	}
+	
+	/**
 	 * methode permettant de creer une scene avec un chemin fxml
 	 * @param pathFXML le chemin du fichier fxml
 	 * @return la scene
 	 */
-	public static Scene createSceneFXML(String pathFXML) {
-		if (pathFXML != null) {
-			String path = getRootPath(pathFXML);
-			Pane root;
+	public static Scene createSceneFXML(FXMLLoader fxmlLoader) {
+		if (fxmlLoader != null) {
 			try {
-				root = FXMLLoader.load(UtilFX.class.getResource(path));
+				Parent root = (Parent) fxmlLoader.load();
 				Scene scene = new Scene(root);
 				return scene;
 			} catch (IOException e) {
@@ -70,6 +81,18 @@ public class UtilFX {
 			}	
 		}
 		return createScene();
+	}
+	
+	/**
+	 * get controler of fxml loader
+	 * @param fxmlLoader the fxml loader
+	 * @return the controler
+	 */
+	public static Object getControler(FXMLLoader fxmlLoader) {
+		if (fxmlLoader != null) {
+			return fxmlLoader.getController();	
+		}
+		return null;
 	}
 	
 	/**

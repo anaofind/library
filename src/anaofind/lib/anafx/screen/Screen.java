@@ -3,9 +3,11 @@ package anaofind.lib.anafx.screen;
 import java.io.File;
 import java.util.ArrayList;
 
-
+import anaofind.lib.anafx.controler.Controler;
 import anaofind.lib.anafx.util.UtilFX;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -27,7 +29,7 @@ public abstract class Screen{
 	/**
 	 * le chemin du fichier xml
 	 */
-	private String pathFXML;
+	private FXMLLoader fxmlLoader;
 	
 	/**
 	 * le titre de la fenetre
@@ -71,7 +73,7 @@ public abstract class Screen{
 	public void create() {	
 		starting();
 		
-		Scene scene = UtilFX.createSceneFXML(pathFXML);
+		Scene scene = UtilFX.createSceneFXML(fxmlLoader);
 		stage = new Stage();
 		stage.setScene(scene);
 		if (pathIcon != null) {
@@ -81,6 +83,10 @@ public abstract class Screen{
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			public void handle(WindowEvent we) {
 				finishing();
+				Controler controler = (Controler) UtilFX.getControler(fxmlLoader);
+				if (controler != null) {
+					controler.screenClose();
+				}
 			}
 		});
 		
@@ -113,6 +119,41 @@ public abstract class Screen{
 	}
 	
 	/**
+	 * get node
+	 * @param node the node contained in stage
+	 * @return the node | null if element not found
+	 */
+	public Node node(String node) {
+		if (stage != null) {
+			Scene scene = this.stage.getScene();
+			if (scene != null) {
+				Node root = scene.getRoot();
+				if (root != null) {
+					return root.lookup("#" + node);
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * get stage
+	 * @return the stage
+	 */
+	public Stage stage() {
+		return this.stage;
+	}
+	
+	/**
+	 * get controler
+	 * @return the controler
+	 */
+	public Object controler() {
+		return UtilFX.getControler(this.fxmlLoader);
+	}
+	
+	/**
 	 * methode permettant de changer le titre
 	 * @param title le titre
 	 */
@@ -125,7 +166,7 @@ public abstract class Screen{
 	 * @param pathXML le chemin xml
 	 */
 	public void changeXML(String pathXML) {
-		this.pathFXML = pathXML;
+		this.fxmlLoader = UtilFX.createLoaderFXML(pathXML);
 	}
 	
 	/**
