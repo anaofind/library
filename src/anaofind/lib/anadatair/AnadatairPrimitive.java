@@ -26,7 +26,12 @@ public abstract class AnadatairPrimitive implements Anadatair{
 	}
 
 	@Override
-	public Long getInteger(String attribute) {
+	public Integer getInteger(String attribute) {
+		return null;
+	}
+	
+	@Override
+	public Long getLong(String attribute) {
 		return null;
 	}
 

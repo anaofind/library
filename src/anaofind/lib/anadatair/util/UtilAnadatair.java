@@ -30,7 +30,7 @@ public class UtilAnadatair {
 		}
 		return new AnadatairNull();
 	}
-	
+
 	/**
 	 * encode anadatair to json string
 	 * @param anadatair the anadatair to encode
@@ -39,7 +39,7 @@ public class UtilAnadatair {
 	public static String jsonEncode(Anadatair anadatair) {
 		return anadatair.toJson().toString();
 	}
-	
+
 	/**
 	 * json decode file
 	 * @param pathFile the path file
@@ -54,7 +54,7 @@ public class UtilAnadatair {
 		}
 		return jsonDecode(json);
 	}
-	
+
 	/**
 	 * encode anadatair to json string in file
 	 * @param anadatair the anadatair to encode
@@ -67,7 +67,7 @@ public class UtilAnadatair {
 		}
 		file.writer().write(jsonEncode(anadatair));
 	}
-	
+
 	/**
 	 * decode object to anadatair
 	 * @param value the object to decode
@@ -80,6 +80,9 @@ public class UtilAnadatair {
 		if (value.getClass().equals(Integer.class))  {
 			return new AnadatairInteger((Integer) value);
 		}
+		if (value.getClass().equals(Long.class))  {
+			return new AnadatairLong((Long) value);
+		}
 		if (value.getClass().equals(Double.class))  {
 			return new AnadatairDouble((Double) value);
 		}
@@ -89,15 +92,12 @@ public class UtilAnadatair {
 		if (value.getClass().equals(String.class))  {
 			return new AnadatairString((String) value);
 		}
-		if (value.getClass().equals(String.class))  {
-			return new AnadatairString((String) value);
-		}
 		if (value instanceof Anadatair)  {
 			return (Anadatair) value;
 		}
 		return new AnadatairNull();
 	}
-	
+
 	/**
 	 * decode collection of objects to anadatair
 	 * @param values the collection of objects
@@ -113,7 +113,7 @@ public class UtilAnadatair {
 		}
 		return array;
 	}
-	
+
 	/**
 	 * decode array of objects to anadatair
 	 * @param values the array of objects
@@ -144,5 +144,44 @@ public class UtilAnadatair {
 			object.add(attribute, values.get(attribute));
 		}
 		return object;
+	}
+	
+	/**
+	 * decode anadatair primitif
+	 * @param anadatair the anadatair
+	 * @return the data decoded
+	 */
+	public static Object decodePrimitif(Anadatair anadatair) {
+		switch(anadatair.getType()) {
+		case TypeResolver.INT : 
+			System.out.println(anadatair.toJson());
+			return anadatair.getInteger();
+		case TypeResolver.LONG : 
+			return anadatair.getLong(); 
+		case TypeResolver.DOUBLE : 
+			return anadatair.getDouble(); 
+		case TypeResolver.BOOLEAN : 
+			return anadatair.getBoolean();
+		case TypeResolver.STRING : 
+			return anadatair.getString();
+		case TypeResolver.NULL : 
+			return null;
+		}
+		return decodePrimitif(anadatair.getData());
+	}
+
+	/**
+	 * decode anadatair to array
+	 * @param anadatatair the anadatair array
+	 * @return the array decoded
+	 */
+	public static Object[] decodeArray(Anadatair anadatatair) {
+		List<Object> array = new ArrayList<Object>();
+		if (anadatatair.getType().equals(TypeResolver.ARRAY)) {
+			for (int i = 0; i<anadatatair.size(); i++) {
+				array.add(decodePrimitif(anadatatair.getData(i)));
+			}	
+		}
+		return array.toArray(new Object[array.size()]);
 	}
 }

@@ -1,26 +1,25 @@
 package anaofind.lib.anadatair;
 
-import anaofind.lib.anadatair.json.JsonBoolean;
+import anaofind.lib.anadatair.json.JsonNumber;
 import anaofind.lib.anadatair.json.JsonValue;
 import anaofind.lib.anadatair.util.TypeResolver;
 
 /**
- * anadatair boolean type
+ * anadatair long type
  * @author anaofind
- *
  */
-public class AnadatairBoolean extends AnadatairPrimitive{
+public class AnadatairLong extends AnadatairPrimitive{
 
 	/**
 	 * the value
 	 */
-	private boolean value;
+	private long value;
 	
 	/**
-	 * contruct
+	 * construct 
 	 * @param value the value
 	 */
-	public AnadatairBoolean(boolean value) {
+	public AnadatairLong(long value) {
 		this.value = value;
 	}
 	
@@ -36,6 +35,9 @@ public class AnadatairBoolean extends AnadatairPrimitive{
 
 	@Override
 	public Long getLong(int index) {
+		if (index == 0) {
+			return this.value;
+		}
 		return null;
 	}
 
@@ -46,25 +48,22 @@ public class AnadatairBoolean extends AnadatairPrimitive{
 
 	@Override
 	public Boolean getBoolean(int index) {
-		if (index == 0) {
-			return this.value;
-		}
 		return null;
 	}
 
 	@Override
 	public String getType() {
-		return TypeResolver.BOOLEAN;
-	}
-
-	@Override
-	public JsonValue toJson() {
-		return new JsonBoolean(this.value);
+		return TypeResolver.LONG;
 	}
 
 	@Override
 	public boolean equals(Anadatair other) {
-		return other.getType().equals(TypeResolver.BOOLEAN) && other.getBoolean().equals(value);
+		return other.getType().equals(TypeResolver.LONG) && other.getLong() == this.value;
+	}
+
+	@Override
+	public JsonValue toJson() {
+		return new JsonNumber(this.value);
 	}
 
 }

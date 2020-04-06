@@ -14,33 +14,34 @@ public class AnadatairInteger extends AnadatairPrimitive{
 	/**
 	 * the value
 	 */
-	private long value;
+	private int value;
 	
 	/**
 	 * construct
-	 * @param value the long value
-	 */
-	public AnadatairInteger(long value) {
-		this.value = value;
-	}
-	
-	/**
-	 * construct
-	 * @param value the integer value
+	 * @param value the value
 	 */
 	public AnadatairInteger(int value) {
 		this.value = value;
 	}
-
+	
 	@Override
 	public String getString(int index) {
 		return null;
 	}
 
 	@Override
-	public Long getInteger(int index) {
+	public Integer getInteger(int index) {
 		if (index == 0) {
 			return this.value;
+		}
+		return null;
+	}
+	
+
+	@Override
+	public Long getLong(int index) {
+		if (index == 0) {
+			return (long)this.value;
 		}
 		return null;
 	}
@@ -70,6 +71,6 @@ public class AnadatairInteger extends AnadatairPrimitive{
 
 	@Override
 	public boolean equals(Anadatair other) {
-		return other.getType().equals(TypeResolver.INT) || other.getType().equals(TypeResolver.DOUBLE) && other.getDouble() == value;
+		return other.getType().equals(TypeResolver.INT) || (other.getType().equals(TypeResolver.DOUBLE) && other.getDouble() == value) || (other.getType().equals(TypeResolver.LONG) && other.getLong() == value);
 	}
 }

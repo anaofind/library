@@ -39,6 +39,20 @@ public class AnadatairArray implements Anadatair{
 		}
 	}
 	
+	/**
+	 * method indicate if array is an array of unique type
+	 * @param type the type
+	 * @return boolean : true if array is array of type | false else
+	 */
+	public boolean isArrayOf(String type) {
+		for (Anadatair value : this.values) {
+			if (! value.getType().equals(type)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	@Override
 	public Anadatair getData(String attribute) {
 		return null;
@@ -66,14 +80,27 @@ public class AnadatairArray implements Anadatair{
 	}
 
 	@Override
-	public Long getInteger(String attribute) {
+	public Integer getInteger(String attribute) {
 		return null;
 	}
 
 	@Override
-	public Long getInteger(int index) {
+	public Integer getInteger(int index) {
 		if (this.contains(index, TypeResolver.INT)) {
 			return this.values.get(index).getInteger();
+		}
+		return null;
+	}
+	
+	@Override
+	public Long getLong(String attribute) {
+		return null;
+	}
+
+	@Override
+	public Long getLong(int index) {
+		if (this.contains(index, TypeResolver.LONG)) {
+			return this.values.get(index).getLong();
 		}
 		return null;
 	}

@@ -3,6 +3,7 @@ package anaofind.lib.anadatair.json;
 import anaofind.lib.anadatair.Anadatair;
 import anaofind.lib.anadatair.AnadatairDouble;
 import anaofind.lib.anadatair.AnadatairInteger;
+import anaofind.lib.anadatair.AnadatairLong;
 import anaofind.lib.anadatair.util.TypeResolver;
 
 /**
@@ -39,9 +40,13 @@ public class JsonNumber implements JsonValue{
 		this.type = TypeResolver.INT;
 	}
 	
+	/**
+	 * construct with value long
+	 * @param value
+	 */
 	public JsonNumber(long value) {
 		this.value = value;
-		this.type = TypeResolver.INT;
+		this.type = TypeResolver.LONG;
 	}
 	
 	/**
@@ -62,8 +67,8 @@ public class JsonNumber implements JsonValue{
 
 	@Override
 	public String toString() {
-		if (type.equals(TypeResolver.INT)) {
-			return "" + (int)value;	
+		if (type.equals(TypeResolver.INT) || type.equals(TypeResolver.LONG)) {
+			return "" + (long)value;	
 		}
 		return "" + value;
  	}
@@ -72,6 +77,9 @@ public class JsonNumber implements JsonValue{
 	public Anadatair toAnadatair() {
 		if (this.type.equals(TypeResolver.INT)) {
 			return new AnadatairInteger((int)this.value);
+		}
+		if (this.type.equals(TypeResolver.LONG)) {
+			return new AnadatairLong((long)this.value);
 		}
 		return new AnadatairDouble(this.value);
 	}

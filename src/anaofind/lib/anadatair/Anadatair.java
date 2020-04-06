@@ -97,21 +97,43 @@ public interface Anadatair {
 	 * @param attribute the attribute
 	 * @return the integer
 	 */
-	public Long getInteger(String attribute);
+	public Integer getInteger(String attribute);
 
 	/**
 	 * get integer value 
 	 * @param index the index
 	 * @return the integer
 	 */
-	public Long getInteger(int index);
+	public Integer getInteger(int index);
 
 	/**
 	 * get integer
 	 * @return the integer if only one integer
 	 */
-	default Long getInteger() {
+	default Integer getInteger() {
 		return this.getInteger(0);
+	}
+	
+	/**
+	 * get integer value
+	 * @param attribute the attribute
+	 * @return the integer
+	 */
+	public Long getLong(String attribute);
+
+	/**
+	 * get integer value 
+	 * @param index the index
+	 * @return the integer
+	 */
+	public Long getLong(int index);
+
+	/**
+	 * get integer
+	 * @return the integer if only one integer
+	 */
+	default Long getLong() {
+		return this.getLong(0);
 	}
 
 	/**

@@ -58,7 +58,7 @@ public class AnadatairObject implements Anadatair{
 	}
 
 	@Override
-	public Long getInteger(String attribute) {
+	public Integer getInteger(String attribute) {
 		if (this.contains(attribute, TypeResolver.INT)) {
 			return this.getData(attribute).getInteger();
 		}
@@ -66,7 +66,20 @@ public class AnadatairObject implements Anadatair{
 	}
 
 	@Override
-	public Long getInteger(int index) {
+	public Integer getInteger(int index) {
+		return null;
+	}
+	
+	@Override
+	public Long getLong(String attribute) {
+		if (this.contains(attribute, TypeResolver.LONG)) {
+			return this.getData(attribute).getLong();
+		}
+		return null;
+	}
+
+	@Override
+	public Long getLong(int index) {
 		return null;
 	}
 

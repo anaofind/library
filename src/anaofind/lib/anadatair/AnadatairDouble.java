@@ -29,7 +29,12 @@ public class AnadatairDouble extends AnadatairPrimitive{
 	}
 
 	@Override
-	public Long getInteger(int index) {
+	public Integer getInteger(int index) {
+		return null;
+	}
+
+	@Override
+	public Long getLong(int index) {
 		return null;
 	}
 
@@ -58,6 +63,6 @@ public class AnadatairDouble extends AnadatairPrimitive{
 
 	@Override
 	public boolean equals(Anadatair other) {
-		return (other.getType().equals(TypeResolver.DOUBLE) || other.getType().equals(TypeResolver.INT))  && other.getDouble() == value;
+		return other.getType().equals(TypeResolver.DOUBLE) || (other.getType().equals(TypeResolver.INT)  && other.getDouble() == value) || (other.getType().equals(TypeResolver.LONG)  && other.getLong() == value);
 	}
 }

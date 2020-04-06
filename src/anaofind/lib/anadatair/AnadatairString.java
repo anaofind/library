@@ -34,7 +34,12 @@ public class AnadatairString extends AnadatairPrimitive{
 	}
 
 	@Override
-	public Long getInteger(int index) {
+	public Integer getInteger(int index) {
+		return null;
+	}
+
+	@Override
+	public Long getLong(int index) {
 		return null;
 	}
 
@@ -62,6 +67,4 @@ public class AnadatairString extends AnadatairPrimitive{
 	public boolean equals(Anadatair other) {
 		return other.getType().equals(TypeResolver.STRING) && other.getString().equals(value);
 	}
-
-
 }

@@ -12,7 +12,12 @@ public class AnadatairNull extends AnadatairPrimitive {
 	}
 
 	@Override
-	public Long getInteger(int index) {
+	public Integer getInteger(int index) {
+		return null;
+	}
+
+	@Override
+	public Long getLong(int index) {
 		return null;
 	}
 

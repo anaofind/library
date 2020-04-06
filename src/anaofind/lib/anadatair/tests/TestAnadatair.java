@@ -7,6 +7,7 @@ import java.util.*;
 import org.junit.jupiter.api.Test;
 import anaofind.lib.anadatair.*;
 import anaofind.lib.anadatair.compilator.Compilator.CompilatorException;
+import anaofind.lib.anadatair.util.TypeResolver;
 import anaofind.lib.anadatair.util.UtilAnadatair;
 
 
@@ -107,9 +108,12 @@ public class TestAnadatair {
 		Anadatair testObject = UtilAnadatair.encode(map);
 		System.out.println(testObject.toJson());
 		
-		Set<String> set = Set.of("coucou", "sava", "tres", "bien");
+		List<Object> set = List.of(true, 1234567891032132132L, 4, 4.0);
 		testArray = UtilAnadatair.encode(set);
 		System.out.println(testArray.toJson());
+		for (Object object : UtilAnadatair.decodeArray(testArray)) {
+			System.out.println(object + " -> " + TypeResolver.getType(object));
+		}
 		
 		testArray = UtilAnadatair.encode(new ArrayList<String>());
 		System.out.println(testArray.toJson());
