@@ -20,6 +20,14 @@ public class AnadatairObject implements Anadatair{
 	private Map<String, Anadatair> values = new HashMap<String, Anadatair>();
 	
 	/**
+	 * get attributes
+	 * @return the list of attributes
+	 */
+	public Set<String> attributes() {
+		return Collections.unmodifiableSet(this.values.keySet());
+	}
+	
+	/**
 	 * add data
 	 * @param attribute the attribute
 	 * @param data the data
