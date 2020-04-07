@@ -69,6 +69,69 @@ public class UtilAnadatair {
 	}
 
 	/**
+	 * cast object to array object
+	 * @param value the object to cast
+	 * @return the array casted
+	 */
+	public static <T> Object[] castArrayObject(T value) {
+		if (value.getClass().isArray()) {
+			if (! (value instanceof Object[])) {
+				if (value instanceof int[]) {
+					int[] array = (int[]) value;
+					Object[] arrayInt = new Integer[array.length];
+					for (int i = 0; i<array.length; i++) {
+						arrayInt[i] = array[i];
+					}
+					return arrayInt;
+				}
+				if (value instanceof double[]) {
+					double[] array = (double[]) value;
+					Object[] arrayDouble = new Double[array.length];
+					for (int i = 0; i<array.length; i++) {
+						arrayDouble[i] = array[i];
+					}
+					return arrayDouble;
+				}
+				if (value instanceof long[]) {
+					long[] array = (long[]) value;
+					Object[] arrayLong = new Long[array.length];
+					for (int i = 0; i<array.length; i++) {
+						arrayLong[i] = array[i];
+					}
+					return arrayLong;
+				}
+				if (value instanceof boolean[]) {
+					boolean[] array = (boolean[]) value;
+					Object[] arrayBoolean = new Boolean[array.length];
+					for (int i = 0; i<array.length; i++) {
+						arrayBoolean[i] = array[i];
+					}
+					return arrayBoolean;
+				}
+			} else {
+				return (Object[]) value;	
+			}
+		}
+		return new Object[0];
+	}
+	
+	/**
+	 * cast key of map in string
+	 * @param map the map
+	 * @return the map casted
+	 */
+	public static Map<String, Object> castMapStringKey(Object object) {
+		Map<String, Object> mapCasted = new HashMap<String, Object>();
+		if (object instanceof Map<?,?>) {
+			Map<?,?> map = (Map<?,?>) object;
+			for (Object key : map.keySet()) {
+				mapCasted.put(String.valueOf(key), map.get(key));
+			}	
+		}
+		return mapCasted;
+	}
+	
+	/**
 	 * decode object to anadatair
 	 * @param value the object to decode
 	 * @return anadatair equivalent
@@ -92,7 +155,20 @@ public class UtilAnadatair {
 		if (value.getClass().equals(String.class))  {
 			return new AnadatairString((String) value);
 		}
-		if (value instanceof Anadatair)  {
+		if (value.getClass().isArray()) {
+			Object[] array = castArrayObject(value);
+			return encode(array);
+		}
+		if (value instanceof Collection<?>){
+			Collection<?> collection = (Collection<?>) value;
+			return encode(collection);
+		}
+		if (value instanceof Map<?,?>){
+			Map<String, Object> map = castMapStringKey(value);
+			
+			return encode(map);
+		}
+		if (value instanceof Anadatair) {			
 			return (Anadatair) value;
 		}
 		return new AnadatairNull();

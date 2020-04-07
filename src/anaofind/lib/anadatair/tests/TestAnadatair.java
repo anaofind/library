@@ -105,10 +105,10 @@ public class TestAnadatair {
 		map.put("a1", "coucou");
 		map.put("a2", 10);
 		map.put("a3", false);
-		Anadatair testObject = UtilAnadatair.encode(map);
+		Anadatair testObject = UtilAnadatair.encode((Object) map);
 		System.out.println(testObject.toJson());
 		
-		List<Object> set = List.of(true, 1234567891032132132L, 4, 4.0);
+		Object set = List.of(true, 1234567891032132132L, 4, 4.0);
 		testArray = UtilAnadatair.encode(set);
 		System.out.println(testArray.toJson());
 		for (Object object : UtilAnadatair.decodeArray(testArray)) {
@@ -116,6 +116,10 @@ public class TestAnadatair {
 		}
 		
 		testArray = UtilAnadatair.encode(new ArrayList<String>());
+		System.out.println(testArray.toJson());
+		
+		int[][] arrays2D = new int[][] {{1,2}, {3,4}};
+		testArray = UtilAnadatair.encode(arrays2D);
 		System.out.println(testArray.toJson());
 	}
 	
