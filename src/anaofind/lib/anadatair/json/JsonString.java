@@ -42,7 +42,4 @@ public class JsonString implements JsonValue{
 	public Anadatair toAnadatair() {
 		return new AnadatairString(this.getValue());
 	}
-
-
-
 }

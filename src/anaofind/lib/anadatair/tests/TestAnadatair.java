@@ -78,7 +78,8 @@ public class TestAnadatair {
 	public void TestEncodeJsonFile() {
 		AnadatairObject data1 = new AnadatairObject();
 		data1.add("a1", new AnadatairArray(10, "coucou", false, null));
-		data1.add("a2", true);
+		data1.add("a2", Map.of("int", new int[][] {{1,2,3}, {4,5,6,7}, {8,9,10}}));
+		data1.add("a3", Map.of("object", new Object[] {Map.of("v1", true, "v2", 0.1), 4}));
 		UtilAnadatair.jsonEncodeFile(data1, "test/json_encode_file.json");
 		Anadatair data2 = UtilAnadatair.jsonDecodeFile("test/json_encode_file.json");
 		assertTrue(data1.equals(data2));

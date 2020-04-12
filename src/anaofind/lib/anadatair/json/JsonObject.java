@@ -4,6 +4,7 @@ import java.util.*;
 
 import anaofind.lib.anadatair.Anadatair;
 import anaofind.lib.anadatair.AnadatairObject;
+import anaofind.lib.anadatair.util.Printer;
 
 /**
  * json object
@@ -66,6 +67,22 @@ public class JsonObject implements JsonValue{
 		}
 		return air;
 	}
-	
-	
+
+	@Override
+	public String prettyString(int tabulation) {
+		String tab = Printer.tabulation(tabulation);
+		String nextTab = Printer.tabulation(tabulation+1);
+		String object = "{\n";
+		int size = this.values.size();
+		int i = 0;
+		for (String key : this.values.keySet()) {
+			object += nextTab + String.format("\"%s\" : %s", key, this.values.get(key).prettyString(tabulation+1));
+			if (i<size-1) {
+				object += ",\n";
+			}
+			i++;
+		}
+		object += "\n" + tab + "}";
+		return object;
+	}
 }

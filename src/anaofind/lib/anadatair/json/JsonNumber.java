@@ -82,8 +82,5 @@ public class JsonNumber implements JsonValue{
 			return new AnadatairLong((long)this.value);
 		}
 		return new AnadatairDouble(this.value);
-	}
-	
-	
-	
+	}	
 }

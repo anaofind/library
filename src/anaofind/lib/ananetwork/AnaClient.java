@@ -49,7 +49,7 @@ public abstract class AnaClient implements NetworkElement{
 				String message = UtilNetwork.readMessage(socket);
 				if (message != null) {
 					if (! message.equals("PING")) {
-						processMessage(socket, message);	
+						new Thread(() -> processMessage(socket, message)).start();
 					}	
 				} else {
 					if (starting) {

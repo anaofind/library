@@ -18,7 +18,4 @@ public class JsonNull implements JsonValue{
 	public Anadatair toAnadatair() {
 		return new AnadatairNull();
 	}
-
-	
-	
 }

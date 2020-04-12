@@ -14,4 +14,12 @@ public interface JsonValue{
 	 */
 	public Anadatair toAnadatair();
 	
+	/**
+	 * pretty string
+	 * @param the tabulation
+	 * @return the string pretty of json value
+	 */
+	default String prettyString(int tabulation) {
+		return toString();
+	}
 }

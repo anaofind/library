@@ -39,7 +39,16 @@ public class UtilAnadatair {
 	public static String jsonEncode(Anadatair anadatair) {
 		return anadatair.toJson().toString();
 	}
-
+	
+	/**
+	 * encode anadatair to json pretty string
+	 * @param anadatair the anadatair to encode
+	 * @return the json pretty string equivalent to anadatair
+	 */
+	public static String jsonEncodePretty(Anadatair anadatair) {
+		return anadatair.toJson().prettyString(0);
+	}
+	
 	/**
 	 * json decode file
 	 * @param pathFile the path file
@@ -65,7 +74,7 @@ public class UtilAnadatair {
 		if (! file.exist()) {
 			file.create();
 		}
-		file.writer().write(jsonEncode(anadatair));
+		file.writer().write(jsonEncodePretty(anadatair));
 	}
 
 	/**
