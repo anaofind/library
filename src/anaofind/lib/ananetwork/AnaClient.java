@@ -145,7 +145,7 @@ public abstract class AnaClient implements NetworkElement{
 	 * @throws IOException 
 	 */
 	public synchronized void sendMessage(String message) throws IOException {
-		if (this.starting && this.socket != null && !this.socket.isClosed()) {
+		if (this.starting) {
 			UtilNetwork.sendMessage(this.socket, message);
 		}
 	}

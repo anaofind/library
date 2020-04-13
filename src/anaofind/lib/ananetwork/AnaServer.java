@@ -62,6 +62,11 @@ public abstract class AnaServer implements NetworkElement{
 	 * the time loop
 	 */
 	private int timeLoop;
+	
+	/**
+	 * the nb of max connexions
+	 */
+	private int maxConnexions;
 
 	/**
 	 * boolean indicate if server is close or not
@@ -72,9 +77,9 @@ public abstract class AnaServer implements NetworkElement{
 	 * construct
 	 * @param port the port of server
 	 * @param timeLoop the time of loop
-	 * @param maxConnexion the nb max of Connexions
+	 * @param maxConnexions the nb max of Connexions
 	 */
-	public AnaServer(int port, int timeLoop, int maxConnexion){
+	public AnaServer(int port, int timeLoop, int maxConnexions){
 		try {
 			if (port < 1 ) {
 				throw new Exception(String.format("the port must superior to 1 : %d", port));
@@ -82,8 +87,12 @@ public abstract class AnaServer implements NetworkElement{
 			if (timeLoop < 1) {
 				throw new Exception(String.format("the time loop must superior to 1 : %d", timeLoop));
 			}
+			if (maxConnexions < 1) {
+				throw new Exception(String.format("the nb of max connexions must superior to 1 : %d", timeLoop));
+			}
 			this.port = port;
 			this.timeLoop = timeLoop;
+			this.maxConnexions = maxConnexions;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -131,7 +140,7 @@ public abstract class AnaServer implements NetworkElement{
 			}
 			
 			// limit of 10 sockets
-			ExecutorService service = Executors.newFixedThreadPool(10);
+			ExecutorService service = Executors.newFixedThreadPool(this.maxConnexions);
 			
 			// action start
 			this.actionStart();
@@ -139,8 +148,6 @@ public abstract class AnaServer implements NetworkElement{
 			// main loop
 			while (this.starting) {	
 				try {				
-					// remove and disconnect client with problem connexion
-					this.checkClients();
 					// accept new client
 					Socket socketClient = this.socket.accept();
 					socketClient.setSoTimeout(this.socket.getSoTimeout());
@@ -164,8 +171,10 @@ public abstract class AnaServer implements NetworkElement{
 					for (Socket client : this.clients()) {
 						this.disconnect(client);
 					}
-				}
+				}					
+				// remove and disconnect client with problem connexion
 				this.checkClients();
+				// action loop
 				this.actionLoop();
 			}
 			// close service of management threads

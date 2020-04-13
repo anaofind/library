@@ -45,11 +45,13 @@ public class UtilNetwork {
 	 * @param message the message to send
 	 */
 	public static void sendMessage(Socket socket, String message) throws IOException{
-		if (socket != null && !socket.isClosed()) {
+		boolean sended = false;
+		while (!sended && socket != null && !socket.isClosed()) {
 			try {
 				PrintWriter printer = createPrinter(socket);
 				printer.println(message);
 				printer.flush();
+				sended = true;
 			}
 			catch (java.io.InterruptedIOException e) {}
 		}
