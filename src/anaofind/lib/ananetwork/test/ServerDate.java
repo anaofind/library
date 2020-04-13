@@ -29,4 +29,12 @@ public class ServerDate extends AnaServer{
 			}
 		}
 	}
+
+	@Override
+	public void actionClose() {
+	}
+
+	@Override
+	public void actionStart() {
+	}
 }

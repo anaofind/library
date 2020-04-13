@@ -72,8 +72,9 @@ public abstract class AnaServer implements NetworkElement{
 	 * construct
 	 * @param port the port of server
 	 * @param timeLoop the time of loop
+	 * @param maxConnexion the nb max of Connexions
 	 */
-	public AnaServer(int port, int timeLoop){
+	public AnaServer(int port, int timeLoop, int maxConnexion){
 		try {
 			if (port < 1 ) {
 				throw new Exception(String.format("the port must superior to 1 : %d", port));
@@ -90,9 +91,26 @@ public abstract class AnaServer implements NetworkElement{
 
 	/**
 	 * construct
+	 * @param port the port of server
+	 * @param timeLoop the time of loop
+	 */
+	public AnaServer(int port, int timeLoop) {
+		this(port, timeLoop, 10);
+	}
+	
+	/**
+	 * construct
+	 * @param port the port of server
+	 */
+	public AnaServer(int port) {
+		this(port, 1000, 10);
+	}
+	
+	/**
+	 * construct
 	 */
 	public AnaServer() {
-		this(8888, 1000);
+		this(8888, 1000, 10);
 	}
 
 	@Override
@@ -115,12 +133,14 @@ public abstract class AnaServer implements NetworkElement{
 			// limit of 10 sockets
 			ExecutorService service = Executors.newFixedThreadPool(10);
 			
+			// action start
+			this.actionStart();
+			
 			// main loop
 			while (this.starting) {	
 				try {				
 					// remove and disconnect client with problem connexion
 					this.checkClients();
-					this.actionLoop();
 					// accept new client
 					Socket socketClient = this.socket.accept();
 					socketClient.setSoTimeout(this.socket.getSoTimeout());
@@ -137,10 +157,16 @@ public abstract class AnaServer implements NetworkElement{
 				// if server close : disconnect all clients
 				if (! this.starting) {
 					System.out.println("CLOSE");
+					
+					// action close
+					this.actionClose();
+					
 					for (Socket client : this.clients()) {
 						this.disconnect(client);
 					}
 				}
+				this.checkClients();
+				this.actionLoop();
 			}
 			// close service of management threads
 			service.shutdown();
@@ -172,7 +198,17 @@ public abstract class AnaServer implements NetworkElement{
 	 * the action of loop
 	 */
 	public abstract void actionLoop();
-
+	
+	/**
+	 * the action where start
+	 */
+	public abstract void actionStart();
+	
+	/**
+	 * the action where close
+	 */
+	public abstract void actionClose();
+	
 	/**
 	 * check the good connexion of clients. if connexion not good, 
 	 * we remove the client

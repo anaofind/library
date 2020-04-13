@@ -54,7 +54,7 @@ public abstract class AnaClient implements NetworkElement{
 				} else {
 					if (starting) {
 						close();
-						connexionBroken();	
+						connexionBroken();
 					}
 				}
 			}
