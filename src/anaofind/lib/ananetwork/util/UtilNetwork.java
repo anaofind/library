@@ -46,9 +46,12 @@ public class UtilNetwork {
 	 */
 	public static void sendMessage(Socket socket, String message) throws IOException{
 		if (socket != null && !socket.isClosed()) {
-			PrintWriter printer = createPrinter(socket);
-			printer.println(message);
-			printer.flush();	
+			try {
+				PrintWriter printer = createPrinter(socket);
+				printer.println(message);
+				printer.flush();
+			}
+			catch (java.io.InterruptedIOException e) {}
 		}
 	}
 

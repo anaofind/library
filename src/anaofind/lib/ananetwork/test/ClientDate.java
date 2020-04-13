@@ -38,5 +38,13 @@ public class ClientDate extends AnaClient{
 		System.out.println("TRY TO CONNECT");
 		this.start();
 	}
+
+	@Override
+	public void actionStart() {
+	}
+
+	@Override
+	public void actionClose() {
+	}
 }
 

@@ -31,7 +31,11 @@ public class Web {
 	 * @param baseUrl l'adresse du serveur
 	 */
 	public static void setBase(String basePath) {
-		base = "http://" + basePath;
+		if (! basePath.contains("https://")) {
+			base = "http://" + basePath;
+		} else {
+			base = basePath;	
+		}
 		clean();
 	}
 	
