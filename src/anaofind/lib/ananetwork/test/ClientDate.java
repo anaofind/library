@@ -17,9 +17,7 @@ public class ClientDate extends AnaClient{
 
 	@Override
 	public void processMessage(Socket socket, String message) {
-		if (! message.equals("PING")) {
-			System.out.println(String.format("DATE = %s", message));
-		}
+		System.out.println(String.format("DATE = %s", message));
 	}
 	
 	@Override

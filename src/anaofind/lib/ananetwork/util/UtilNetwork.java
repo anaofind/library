@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.InterruptedIOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -45,23 +46,18 @@ public class UtilNetwork {
 	 * @param message the message to send
 	 */
 	public static void sendMessage(Socket socket, String message) throws IOException{
-		boolean sended = false;
-		while (!sended && socket != null && !socket.isClosed()) {
-			try {
-				PrintWriter printer = createPrinter(socket);
-				printer.println(message);
-				printer.flush();
-				sended = true;
-			}
-			catch (java.io.InterruptedIOException e) {}
+		if (socket != null && !socket.isClosed()) {
+			PrintWriter printer = createPrinter(socket);
+			printer.println(message);
+			printer.flush();	
 		}
 	}
+
 
 
 	/**
 	 * read message 
 	 * @param socket the author of message
-	 * @param message the message to sen
 	 */
 	public static String readMessage(Socket socket){
 		while (socket != null && ! socket.isClosed()) {
@@ -69,10 +65,10 @@ public class UtilNetwork {
 				BufferedReader reader = createReader(socket);
 				return reader.readLine();
 			} 
-			catch (java.io.InterruptedIOException e) {}
+			catch (InterruptedIOException e) {}
 			catch (IOException e) {
 				return null;
-			}	
+			}
 		}
 		return null;
 	}

@@ -135,55 +135,59 @@ public abstract class AnaServer implements NetworkElement{
 				
 				// starting is true only if socket create success
 				this.starting = true;
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
-			// limit of 10 sockets
-			ExecutorService service = Executors.newFixedThreadPool(this.maxConnexions);
-			
-			// action start
-			this.actionStart();
-			
-			// main loop
-			while (this.starting) {	
-				try {				
-					// accept new client
-					Socket socketClient = this.socket.accept();
-					socketClient.setSoTimeout(this.socket.getSoTimeout());
-					this.listClient.add(socketClient);
+			if (this.starting) {
+				// action start
+				this.actionStart();
+				
+				// limit of connexions sockets
+				ExecutorService service = Executors.newFixedThreadPool(this.maxConnexions);	
+				
+				// main loop
+				while (this.starting) {					
+					try {			
+						// accept new client
+						Socket socketClient = this.socket.accept();
+						socketClient.setSoTimeout(this.socket.getSoTimeout());
+						this.listClient.add(socketClient);
+						
+						// start processing client
+						service.execute(new ProcessingClient(socketClient));
+					} 
+					// continue if not client during loop time
+					catch (java.io.InterruptedIOException e){} 
+					catch (IOException e) {
+						System.out.println(e.getMessage());
+					}
+					// if server close : disconnect all clients
+					if (! this.starting) {
+						System.out.println("CLOSE");
+						
+						// action close
+						this.actionClose();
+						
+						for (Socket client : this.clients()) {
+							this.disconnect(client);
+						}
+					}
+					// remove and disconnect client with problem connexion
+					this.checkClients();
 					
-					// start processing client
-					service.execute(new ProcessingClient(socketClient));
-				} 
-				// continue if not client during loop time
-				catch (java.io.InterruptedIOException e){} 
-				catch (IOException e) {
+					// action loop
+					this.actionLoop();
+				}
+				// close service of management threads
+				service.shutdown();
+				// close the server socket
+				try {
+					this.socket.close();
+				} catch (IOException e) {
 					System.out.println(e.getMessage());
 				}
-				// if server close : disconnect all clients
-				if (! this.starting) {
-					System.out.println("CLOSE");
-					
-					// action close
-					this.actionClose();
-					
-					for (Socket client : this.clients()) {
-						this.disconnect(client);
-					}
-				}					
-				// remove and disconnect client with problem connexion
-				this.checkClients();
-				// action loop
-				this.actionLoop();
-			}
-			// close service of management threads
-			service.shutdown();
-			// close the server socket
-			try {
-				this.socket.close();
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
 			}
 		} else {
 			System.out.println("ALREADY START"); 
@@ -253,7 +257,7 @@ public abstract class AnaServer implements NetworkElement{
 	 */
 	public void processClient(Socket client) {
 		System.out.println(String.format("LOGIN : %s", client.getInetAddress()));
-		while (! client.isClosed()) {
+		while (client != null && ! client.isClosed()) {
 			String message = UtilNetwork.readMessage(client);
 			if (message  != null) {
 				new Thread(() -> this.processMessage(client, message)).start();	

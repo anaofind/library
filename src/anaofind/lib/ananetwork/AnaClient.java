@@ -33,36 +33,6 @@ public abstract class AnaClient implements NetworkElement{
 	private boolean starting = false;
 
 	/**
-	 * boolean indicate if client is already work in thread
-	 */
-	private boolean workedThread = false;
-
-	/**
-	 * class to get message in threading
-	 * @author anaofind
-	 */
-	private class GetMessage implements Runnable {
-		@Override
-		public void run() {
-			workedThread = true;
-			while (starting) {
-				String message = UtilNetwork.readMessage(socket);
-				if (message != null) {
-					if (! message.equals("PING")) {
-						new Thread(() -> processMessage(socket, message)).start();
-					}	
-				} else {
-					if (starting) {
-						close();
-						connexionBroken();
-					}
-				}
-			}
-			workedThread = false;
-		}
-	}
-
-	/**
 	 * construct by default
 	 */
 	public AnaClient() {
@@ -93,29 +63,49 @@ public abstract class AnaClient implements NetworkElement{
 	 * action where client is started
 	 */
 	public abstract void actionStart();
-	
+
 	/**
 	 * action where client is closed
 	 */
 	public abstract void actionClose();
-	
+
+
+	/**
+	 * process messages
+	 */
+	private synchronized void processMessages() {
+		this.starting = true;
+		try {
+			this.socket = new Socket(addressServer, portServer);
+			this.actionStart();
+			while (starting) {
+				String message = UtilNetwork.readMessage(socket);
+				if (message != null) {
+					if (! message.equals("PING")) {
+						new Thread(() -> processMessage(socket, message)).start();
+					}	
+				} else {
+					if (this.starting) {
+						close();
+						connexionBroken();	
+					}
+				}
+			}
+		} catch (UnknownHostException e) {
+			this.close();
+			this.hostNotFound();
+		} catch (IOException e) {
+			this.close();
+			this.cannotConnect();
+		}
+	}
+
 	@Override
 	public void start() {
 		if (!this.starting) {
-			try {
-				this.starting = true;
-				this.socket = new Socket(addressServer, portServer);
-				this.actionStart();
-				if (! this.workedThread) {
-					new Thread(new GetMessage()).start();	
-				}
-			} catch (UnknownHostException e) {
-				this.close();
-				this.hostNotFound();
-			} catch (IOException e) {
-				this.close();
-				this.cannotConnect();
-			}
+			new Thread(() -> this.processMessages()).start();
+		} else {
+			System.out.println("ALREADY START");
 		}
 	}
 
@@ -144,7 +134,7 @@ public abstract class AnaClient implements NetworkElement{
 	 * @param message the message to send
 	 * @throws IOException 
 	 */
-	public synchronized void sendMessage(String message) throws IOException {
+	public void sendMessage(String message) throws IOException {
 		if (this.starting) {
 			UtilNetwork.sendMessage(this.socket, message);
 		}
