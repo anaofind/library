@@ -1,7 +1,8 @@
 package anaofind.lib.anafx.screen;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.net.URL;
+import java.util.*;
 
 import anaofind.lib.anafx.controler.Controler;
 import anaofind.lib.anafx.util.UtilFX;
@@ -37,9 +38,9 @@ public abstract class Screen{
 	private String title = "Screen AnaFX";
 	
 	/**
-	 * liste de chemins des fichiers css
+	 * list url of css
 	 */
-	private ArrayList<String> listPathCSS = new ArrayList<String>();
+	private List<URL> listCSS = new ArrayList<URL>();
 	
 	/**
 	 * le chemin de l'image icone
@@ -90,8 +91,8 @@ public abstract class Screen{
 			}
 		});
 		
-		for (String pathCSS : listPathCSS) {
-			UtilFX.addCSS(stage, pathCSS);
+		for (URL urlCSS : listCSS) {
+			UtilFX.addCSS(stage, urlCSS);
 		}
 		
 		stage.setTitle(title);
@@ -162,11 +163,11 @@ public abstract class Screen{
 	}
 	
 	/**
-	 * methode permettant de changer le chemin xml
-	 * @param pathXML le chemin xml
+	 * change path of file fxml
+	 * @param urlFXML the url of fxml file
 	 */
-	public void changeXML(String pathXML) {
-		this.fxmlLoader = UtilFX.createLoaderFXML(pathXML);
+	public void changeFXML(URL urlFXML) {
+		this.fxmlLoader = UtilFX.createLoaderFXML(urlFXML);
 	}
 	
 	/**
@@ -190,30 +191,20 @@ public abstract class Screen{
 	}
 	
 	/**
-	 * methode permettant d'ajouter un chemin css
-	 * @param pathCSS le chemin css
+	 * add css style to screen
+	 * @param urlCSS the url of css
 	 */
-	public void addCSS(String pathCSS) {
-		if (!this.listPathCSS.contains(pathCSS)) {
-			this.listPathCSS.add(pathCSS);	
+	public void addCSS(URL urlCSS) {
+		if (!this.listCSS.contains(urlCSS)) {
+			this.listCSS.add(urlCSS);	
 		}
 	}
-	
-	/**
-	 * methode permettant de supprimer un chemin css
-	 * @param pathCSS le chemin css
-	 */
-	public void removeCSS(String pathCSS) {
-		if (this.listPathCSS.contains(pathCSS)) {
-			this.listPathCSS.remove(pathCSS);	
-		}
-	}
-	
+		
 	/**
 	 * methode permettant de vider les chemin css
 	 */
 	public void clearCSS() {
-		this.listPathCSS.clear();
+		this.listCSS.clear();
 	}
 	
 	/**

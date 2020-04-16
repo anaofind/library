@@ -1,6 +1,6 @@
-package anaofind.lib.anadatair.tests;
+package tests.anadatair;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import anaofind.lib.anadatair.reader.*;
 

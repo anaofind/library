@@ -3,6 +3,7 @@ package anaofind.lib.anafx.util;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -33,11 +34,11 @@ public class UtilFX {
 	
 	/**
 	 * methode permettant de creer une fenetre
-	 * @param pathFXML le chemin du fichier fxml
-	 * @return la fenetre
+	 * @param urlFXML url of fmxl file
+	 * @return the screen
 	 */
-	public static Stage createScreen(String pathFXML) {
-		Scene scene = createSceneFXML(createLoaderFXML(pathFXML));
+	public static Stage createScreen(URL urlFXML) {
+		Scene scene = createSceneFXML(createLoaderFXML(urlFXML));
 		Stage stage = new Stage();
 		stage.setScene(scene);
 		return stage;
@@ -55,20 +56,20 @@ public class UtilFX {
 	
 	/**
 	 * load fxml
-	 * @param pathFXML the path of fxml
+	 * @param urlFXML the url of fxml file
 	 * @return the fxml loader
 	 */
-	public static FXMLLoader createLoaderFXML(String pathFXML) {
-		if (pathFXML != null) {
-			return new FXMLLoader(UtilFX.class.getResource(getRootPath(pathFXML)));	
+	public static FXMLLoader createLoaderFXML(URL urlFXML) {
+		if (urlFXML != null) {
+			return new FXMLLoader(urlFXML);	
 		} 
 		return null;
 	}
 	
 	/**
-	 * methode permettant de creer une scene avec un chemin fxml
-	 * @param pathFXML le chemin du fichier fxml
-	 * @return la scene
+	 * screate scene fxml
+	 * @param fxmlLoader the fxml loader
+	 * @return the scene
 	 */
 	public static Scene createSceneFXML(FXMLLoader fxmlLoader) {
 		if (fxmlLoader != null) {
@@ -132,13 +133,12 @@ public class UtilFX {
 	}
 	
 	/**
-	 * methode permettant d'ajouter du css dans un stage
-	 * @param stage le stage
-	 * @param pathCSS le chemin du fichier css
+	 * add style css to stage
+	 * @param stage the stage
+	 * @param urlCSS the url of css file
 	 */
-	public static void addCSS(Stage stage, String pathCSS) {
-		String path = getRootPath(pathCSS);
-		String css = UtilFX.class.getResource(path).toExternalForm(); 
+	public static void addCSS(Stage stage, URL urlCSS) {
+		String css = urlCSS.toExternalForm(); 
 		stage.getScene().getStylesheets().add(css);
 	}
 
@@ -206,14 +206,5 @@ public class UtilFX {
 		}
 		
 		return reponse;
-	}
-	
-	/**
-	 * methode permettant de recuperer le chemin à partir de la racine du projet 
-	 * @param path le path à partir de la racine du projet
-	 * @return le chemin à partir de la racine du projet
-	 */
-	private static String getRootPath(String path) {
-		return "/" + path;
 	}
 }

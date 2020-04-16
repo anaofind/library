@@ -1,4 +1,4 @@
-package anaofind.lib.anadatair.tests;
+package tests.anadatair;
 
 import static org.junit.jupiter.api.Assertions.*;
 
