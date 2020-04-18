@@ -37,4 +37,19 @@ public class ServerDate extends AnaServer{
 	@Override
 	public void actionStart() {
 	}
+
+	@Override
+	public int timeout() {
+		return 100;
+	}
+
+	@Override
+	public int portServer() {
+		return 8888;
+	}
+
+	@Override
+	public int timeWaitPong() {
+		return 1000;
+	}
 }

@@ -16,7 +16,25 @@ public interface NetworkElement {
 	/**
 	 * close
 	 */
-	public void close();	
+	public void close();
+	
+	/**
+	 * get timeout
+	 * @return the timeout
+	 */
+	public int timeout();
+	
+	/**
+	 * get port
+	 * @return the port
+	 */
+	public int portServer();
+	
+	/**
+	 * get the time of wait for pong
+	 * @return the time of wait for pong
+	 */
+	public int timeWaitPong();
 	
 	/**
 	 * process a message

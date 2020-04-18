@@ -2,6 +2,7 @@ package anaofind.lib.ananetwork;
 
 import java.io.IOException;
 import java.net.*;
+import java.time.Instant;
 
 import anaofind.lib.ananetwork.util.UtilNetwork;
 
@@ -18,45 +19,56 @@ public abstract class AnaClient implements NetworkElement{
 	private String addressServer;
 
 	/**
-	 * the port of server
-	 */
-	private int portServer;
-
-	/**
-	 * the socket
-	 */
-	private Socket socket;
-
-	/**
 	 * boolean indicate if client is start or not
 	 */
 	private boolean starting = false;
 
 	/**
+	 * during since last ping
+	 */
+	private long timeLastPing = 0;
+	
+	/**
+	 * the socket of server
+	 */ 
+	private Socket server;
+	
+	/**
 	 * construct by default
 	 */
 	public AnaClient() {
-		this("127.0.0.1", 8888);
-	}
-
-	/**
-	 * choice address of server and port of server
-	 * @param addressServer the address of server
-	 * @param port the port of server
-	 */
-	public void bind(String addressServer, int portServer) {
-		this.addressServer = addressServer;
-		this.portServer = portServer;
+		this("127.0.0.1");
 	}
 
 	/**
 	 * construct
 	 * @param addressServer the address of server
 	 * @param portServer the port of server
+	 * @param timeout the timeout of server
 	 */
-	public AnaClient(String addressServer, int portServer) {
+	public AnaClient(String addressServer) {
 		this.addressServer = addressServer;
-		this.portServer = portServer;
+		try {
+			if (this.portServer() < 1 ) {
+				throw new Exception(String.format("the port must superior to 1 : %d", this.portServer()));
+			}
+			if (this.timeout() < 1) {
+				throw new Exception(String.format("the time loop must superior to 1 : %d", this.timeout()));
+			}
+			if (this.timeWaitPong() < 1) {
+				throw new Exception(String.format("the time wait for pong must superior to 1 : %d", this.timeWaitPong()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * choice address of server and port of server
+	 * @param addressServer the address of server
+	 */
+	public void bind(String addressServer) {
+		this.addressServer = addressServer;
 	}
 
 	/**
@@ -69,41 +81,74 @@ public abstract class AnaClient implements NetworkElement{
 	 */
 	public abstract void actionClose();
 
-
 	/**
 	 * process messages
 	 */
 	private synchronized void processMessages() {
-		this.starting = true;
-		try {
-			this.socket = new Socket(addressServer, portServer);
-			this.actionStart();
-			while (starting) {
-				String message = UtilNetwork.readMessage(socket);
+		this.actionStart();
+		while (this.server != null && !this.server.isClosed()) {
+			try {
+				String message = UtilNetwork.readMessage(this.server);
 				if (message != null) {
-					if (! message.equals("PING")) {
-						new Thread(() -> processMessage(socket, message)).start();
-					}	
-				} else {
-					if (this.starting) {
-						close();
-						connexionBroken();	
+					this.timeLastPing = 0;
+					switch (message) {
+					case Ping.PING :
+						UtilNetwork.sendMessage(this.server, Ping.PONG);
+						break;
+					case Ping.PONG : 
+						break;
+					default :
+						this.processMessage(this.server, message);
 					}
+				} else {
+					this.checkConnection();
+				}	
+
+			} catch (IOException e) {
+				this.checkConnection();
+			}
+		}
+	}
+
+	/**
+	 * check connection
+	 */
+	public void checkConnection() {
+		try {
+			long currentSecond = Instant.now().getEpochSecond();
+			if (this.timeLastPing == 0) {
+				UtilNetwork.sendMessage(this.server, Ping.PING);
+				this.timeLastPing = currentSecond;
+			} else {
+				if (currentSecond - this.timeLastPing > this.timeWaitPong() / 1000) {
+					this.close();
+					this.connexionBroken();
 				}
 			}
-		} catch (UnknownHostException e) {
-			this.close();
-			this.hostNotFound();
 		} catch (IOException e) {
 			this.close();
-			this.cannotConnect();
+			this.connexionBroken();
 		}
 	}
 
 	@Override
 	public void start() {
-		if (!this.starting) {
-			new Thread(() -> this.processMessages()).start();
+		if (this.server == null || this.server.isClosed()) {
+			try {				
+				this.starting = true;
+				this.server = new Socket();
+				this.server.setSoTimeout(this.timeout());
+				this.server.connect(new InetSocketAddress(this.addressServer, this.portServer()), this.timeout());	
+
+				this.processMessages();
+
+			} catch (UnknownHostException e) {
+				this.close();
+				this.hostNotFound();
+			} catch (IOException e) {
+				this.close();
+				this.cannotConnect();
+			}
 		} else {
 			System.out.println("ALREADY START");
 		}
@@ -120,9 +165,9 @@ public abstract class AnaClient implements NetworkElement{
 	public void close() {
 		this.starting = false;
 		try {
-			if (this.socket != null) {
+			if (this.server != null) {
 				this.actionClose();
-				this.socket.close();	
+				this.server.close();	
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -136,7 +181,7 @@ public abstract class AnaClient implements NetworkElement{
 	 */
 	public void sendMessage(String message) throws IOException {
 		if (this.starting) {
-			UtilNetwork.sendMessage(this.socket, message);
+			UtilNetwork.sendMessage(this.server, message);
 		}
 	}
 
@@ -160,16 +205,6 @@ public abstract class AnaClient implements NetworkElement{
 	 * @return the address of server
 	 */
 	public String addressServer() {
-		return addressServer;
+		return this.addressServer;
 	}
-
-	/**
-	 * get port of server
-	 * @return the port of server
-	 */
-	public int portServer() {
-		return portServer;
-	}
-
-
 }

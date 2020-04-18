@@ -53,14 +53,13 @@ public class UtilNetwork {
 		}
 	}
 
-
-
 	/**
 	 * read message 
 	 * @param socket the author of message
+	 * @throws IOException 
 	 */
-	public static String readMessage(Socket socket){
-		while (socket != null && ! socket.isClosed()) {
+	public static String readMessage(Socket socket) {
+		if (socket != null && ! socket.isClosed()) {
 			try {
 				BufferedReader reader = createReader(socket);
 				return reader.readLine();

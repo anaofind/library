@@ -12,14 +12,14 @@ import anaofind.lib.ananetwork.AnaClient;
 public class ClientDate extends AnaClient{
 
 	public ClientDate() {
-		super("127.0.0.1", 8888);
+		super("127.0.0.1");
 	}
 
 	@Override
 	public void processMessage(Socket socket, String message) {
 		System.out.println(String.format("DATE = %s", message));
 	}
-	
+
 	@Override
 	public void connexionBroken() {
 		System.out.println("CONNEXION BROKEN");
@@ -43,6 +43,21 @@ public class ClientDate extends AnaClient{
 
 	@Override
 	public void actionClose() {
+	}
+
+	@Override
+	public int timeout() {
+		return 100;
+	}
+
+	@Override
+	public int timeWaitPong() {
+		return 1000;
+	}
+
+	@Override
+	public int portServer() {
+		return 8888;
 	}
 }
 
