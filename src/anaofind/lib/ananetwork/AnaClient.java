@@ -103,9 +103,9 @@ public abstract class AnaClient implements NetworkElement{
 				} else {
 					this.checkConnection();
 				}	
-
 			} catch (IOException e) {
-				this.checkConnection();
+				this.close();
+				this.connexionBroken();
 			}
 		}
 	}

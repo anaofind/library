@@ -208,7 +208,6 @@ public abstract class AnaServer implements NetworkElement{
 			if (client != null && ! client.isClosed()) {
 				client.close();
 			}
-			this.listClient.remove(client);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -238,9 +237,10 @@ public abstract class AnaServer implements NetworkElement{
 					this.checkClient(client);	
 				}
 			} catch (IOException e) {
-				this.checkClient(client);
+				this.disconnect(client);
 			}
 		}
+		this.listClient.remove(client);
 		System.out.println(String.format("LOGOUT : %s", client.getInetAddress()));
 	}
 	

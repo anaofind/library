@@ -46,11 +46,9 @@ public class UtilNetwork {
 	 * @param message the message to send
 	 */
 	public static void sendMessage(Socket socket, String message) throws IOException{
-		if (socket != null && !socket.isClosed()) {
-			PrintWriter printer = createPrinter(socket);
-			printer.println(message);
-			printer.flush();	
-		}
+		PrintWriter printer = createPrinter(socket);
+		printer.println(message);
+		printer.flush();
 	}
 
 	/**
@@ -58,17 +56,13 @@ public class UtilNetwork {
 	 * @param socket the author of message
 	 * @throws IOException 
 	 */
-	public static String readMessage(Socket socket) {
-		if (socket != null && ! socket.isClosed()) {
-			try {
-				BufferedReader reader = createReader(socket);
-				return reader.readLine();
-			} 
-			catch (InterruptedIOException e) {}
-			catch (IOException e) {
-				return null;
-			}
+	public static String readMessage(Socket socket) throws IOException {
+		try {
+			BufferedReader reader = createReader(socket);
+			return reader.readLine();
+		} 
+		catch (InterruptedIOException e) {
+			return null;
 		}
-		return null;
 	}
 }
