@@ -88,17 +88,19 @@ public abstract class AnaClient implements NetworkElement{
 		this.actionStart();
 		while (this.server != null && !this.server.isClosed()) {
 			try {
-				String message = UtilNetwork.readMessage(this.server);
-				if (message != null) {
+				String[] messages = UtilNetwork.readMessage(this.server, 50);
+				if (messages.length > 0) {
 					this.timeLastPing = 0;
-					switch (message) {
-					case Ping.PING :
-						UtilNetwork.sendMessage(this.server, Ping.PONG);
-						break;
-					case Ping.PONG : 
-						break;
-					default :
-						this.processMessage(this.server, message);
+					for (String message : messages) {
+						switch (message) {
+						case Ping.PING :
+							UtilNetwork.sendMessage(this.server, Ping.PONG);
+							break;
+						case Ping.PONG : 
+							break;
+						default :
+							this.processMessage(this.server, message);
+						}	
 					}
 				} else {
 					this.checkConnection();

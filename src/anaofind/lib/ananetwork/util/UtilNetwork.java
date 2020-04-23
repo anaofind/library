@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.*;
 
 /**
  * the network
@@ -56,13 +57,20 @@ public class UtilNetwork {
 	 * @param socket the author of message
 	 * @throws IOException 
 	 */
-	public static String readMessage(Socket socket) throws IOException {
+	public static String[] readMessage(Socket socket, int timeout) throws IOException {
+		List<String> messages = new ArrayList<String>();
+		int timeoutSocket = socket.getSoTimeout();
 		try {
 			BufferedReader reader = createReader(socket);
-			return reader.readLine();
+			socket.setSoTimeout(timeout);
+			String line = reader.readLine();
+			while (line != null) {
+				messages.add(line);
+				line = reader.readLine();
+			}
 		} 
-		catch (InterruptedIOException e) {
-			return null;
-		}
+		catch (InterruptedIOException e) { }
+		socket.setSoTimeout(timeoutSocket);
+		return messages.toArray(new String[messages.size()]);
 	}
 }
