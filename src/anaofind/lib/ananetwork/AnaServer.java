@@ -221,7 +221,7 @@ public abstract class AnaServer implements NetworkElement{
 		System.out.println(String.format("LOGIN : %s", client.getInetAddress()));
 		while (client != null && ! client.isClosed()) {
 			try { 
-				String[] messages = UtilNetwork.readMessage(client, 50);
+				String[] messages = UtilNetwork.readMessage(client, 10);
 				if (messages.length > 0) {
 					for (String message : messages) {
 						this.timeLastPing = 0;

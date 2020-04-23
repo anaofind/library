@@ -88,7 +88,7 @@ public abstract class AnaClient implements NetworkElement{
 		this.actionStart();
 		while (this.server != null && !this.server.isClosed()) {
 			try {
-				String[] messages = UtilNetwork.readMessage(this.server, 50);
+				String[] messages = UtilNetwork.readMessage(this.server, 10);
 				if (messages.length > 0) {
 					this.timeLastPing = 0;
 					for (String message : messages) {
