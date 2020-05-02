@@ -1,10 +1,10 @@
 package anaofind.lib.ananetwork.test;
 
-import java.io.IOException;
 import java.net.Socket;
 import java.util.Date;
 
 import anaofind.lib.ananetwork.AnaServer;
+import anaofind.lib.ananetwork.ConnectionException;
 import anaofind.lib.ananetwork.util.UtilNetwork;
 
 public class ServerDate extends AnaServer{
@@ -24,7 +24,7 @@ public class ServerDate extends AnaServer{
 		for (Socket client : this.clients()) {
 			try {
 				UtilNetwork.sendMessage(client, new Date().toString());
-			} catch (IOException e) {
+			} catch (ConnectionException e) {
 				System.err.println("SERVER : " + e.getMessage());
 			}
 		}

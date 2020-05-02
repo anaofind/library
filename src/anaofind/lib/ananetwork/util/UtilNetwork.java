@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
 
+import anaofind.lib.ananetwork.ConnectionException;
+
 /**
  * the network
  * anaofind
@@ -46,10 +48,15 @@ public class UtilNetwork {
 	 * @param socket the destinatory of message
 	 * @param message the message to send
 	 */
-	public static void sendMessage(Socket socket, String message) throws IOException{
-		PrintWriter printer = createPrinter(socket);
-		printer.println(message);
-		printer.flush();
+	public static void sendMessage(Socket socket, String message) throws ConnectionException{
+		PrintWriter printer;
+		try {
+			printer = createPrinter(socket);
+			printer.println(message);
+			printer.flush();
+		} catch (IOException e) {
+			throw new ConnectionException();
+		}
 	}
 
 	/**
@@ -57,10 +64,10 @@ public class UtilNetwork {
 	 * @param socket the author of message
 	 * @throws IOException 
 	 */
-	public static String[] readMessage(Socket socket, int timeout) throws IOException {
+	public static String[] readMessage(Socket socket, int timeout) throws ConnectionException {
 		List<String> messages = new ArrayList<String>();
-		int timeoutSocket = socket.getSoTimeout();
 		try {
+			int timeoutSocket = socket.getSoTimeout();
 			BufferedReader reader = createReader(socket);
 			socket.setSoTimeout(timeout);
 			String line = reader.readLine();
@@ -68,9 +75,13 @@ public class UtilNetwork {
 				messages.add(line);
 				line = reader.readLine();
 			}
+			socket.setSoTimeout(timeoutSocket);
 		} 
 		catch (InterruptedIOException e) { }
-		socket.setSoTimeout(timeoutSocket);
+		catch (IOException e) {
+			throw new ConnectionException();
+		}
+		
 		return messages.toArray(new String[messages.size()]);
 	}
 }

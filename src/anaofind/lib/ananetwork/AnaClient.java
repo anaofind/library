@@ -26,13 +26,13 @@ public abstract class AnaClient implements NetworkElement{
 	/**
 	 * during since last ping
 	 */
-	private long timeLastPing = 0;
-	
+	private long timeLastPing;
+
 	/**
 	 * the socket of server
 	 */ 
 	private Socket server;
-	
+
 	/**
 	 * construct by default
 	 */
@@ -83,66 +83,59 @@ public abstract class AnaClient implements NetworkElement{
 
 	/**
 	 * process messages
+	 * @throws ConnectionException 
 	 */
-	private synchronized void processMessages() {
-		this.actionStart();
+	private synchronized void processMessages() throws ConnectionException {
+		this.timeLastPing = 0;
+		this.actionStart();		
 		while (this.server != null && !this.server.isClosed()) {
-			try {
-				String[] messages = UtilNetwork.readMessage(this.server, 10);
-				if (messages.length > 0) {
-					this.timeLastPing = 0;
-					for (String message : messages) {
-						switch (message) {
-						case Ping.PING :
-							UtilNetwork.sendMessage(this.server, Ping.PONG);
-							break;
-						case Ping.PONG : 
-							break;
-						default :
-							this.processMessage(this.server, message);
-						}	
-					}
-				} else {
-					this.checkConnection();
-				}	
-			} catch (IOException e) {
-				this.close();
-				this.connexionBroken();
-			}
-		}
+			String[] messages = UtilNetwork.readMessage(this.server, 10);
+			if (messages.length > 0) {
+				this.timeLastPing = 0;
+				for (String message : messages) {
+					switch (message) {
+					case Ping.PING :
+						UtilNetwork.sendMessage(this.server, Ping.PONG);
+						break;
+					case Ping.PONG : 
+						break;
+					default :
+						this.processMessage(this.server, message);
+					}	
+				}
+			} else {
+				this.checkConnection();
+			}	
+		}	
 	}
 
 	/**
 	 * check connection
+	 * @throws ConnectionException 
 	 */
-	public void checkConnection() {
-		try {
-			long currentSecond = Instant.now().getEpochSecond();
-			if (this.timeLastPing == 0) {
-				UtilNetwork.sendMessage(this.server, Ping.PING);
-				this.timeLastPing = currentSecond;
-			} else {
-				if (currentSecond - this.timeLastPing > this.timeWaitPong() / 1000) {
-					this.close();
-					this.connexionBroken();
-				}
+	public void checkConnection() throws ConnectionException {
+		long currentSecond = Instant.now().getEpochSecond();
+		if (this.timeLastPing == 0) {
+			UtilNetwork.sendMessage(this.server, Ping.PING);
+			this.timeLastPing = currentSecond;
+		} else {
+			if (currentSecond - this.timeLastPing > this.timeWaitPong() / 1000) {
+				throw new ConnectionException();
 			}
-		} catch (IOException e) {
-			this.close();
-			this.connexionBroken();
 		}
 	}
 
 	@Override
 	public void start() {
-		if (this.server == null || this.server.isClosed()) {
+		if (! this.starting) {
 			try {				
 				this.starting = true;
 				this.server = new Socket();
 				this.server.setSoTimeout(this.timeout());
 				this.server.connect(new InetSocketAddress(this.addressServer, this.portServer()), this.timeout());	
-
+				
 				this.processMessages();
+				this.close();
 
 			} catch (UnknownHostException e) {
 				this.close();
@@ -150,6 +143,9 @@ public abstract class AnaClient implements NetworkElement{
 			} catch (IOException e) {
 				this.close();
 				this.cannotConnect();
+			} catch (ConnectionException e) {
+				this.close();
+				this.connexionBroken();
 			}
 		} else {
 			System.out.println("ALREADY START");
@@ -165,15 +161,16 @@ public abstract class AnaClient implements NetworkElement{
 
 	@Override
 	public void close() {
-		this.starting = false;
 		try {
 			if (this.server != null) {
 				this.actionClose();
-				this.server.close();	
+				this.server.close();
+				this.server = null;
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
+		this.starting = false;
 	}
 
 	/**
@@ -181,7 +178,7 @@ public abstract class AnaClient implements NetworkElement{
 	 * @param message the message to send
 	 * @throws IOException 
 	 */
-	public void sendMessage(String message) throws IOException {
+	public void sendMessage(String message) throws ConnectionException {
 		if (this.starting) {
 			UtilNetwork.sendMessage(this.server, message);
 		}

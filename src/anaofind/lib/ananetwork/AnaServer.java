@@ -51,7 +51,7 @@ public abstract class AnaServer implements NetworkElement{
 	 * the socket server
 	 */
 	private ServerSocket socket;
-	
+
 	/**
 	 * time of last ping
 	 */
@@ -87,7 +87,7 @@ public abstract class AnaServer implements NetworkElement{
 			if (maxConnexions < 1) {
 				throw new Exception(String.format("the nb of max connexions must superior to 1 : %d", maxConnexions));
 			}
-			
+
 			this.maxConnexions = maxConnexions;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -219,8 +219,8 @@ public abstract class AnaServer implements NetworkElement{
 	 */
 	public void processClient(Socket client) {
 		System.out.println(String.format("LOGIN : %s", client.getInetAddress()));
-		while (client != null && ! client.isClosed()) {
-			try { 
+		try { 
+			while (client != null && ! client.isClosed()) {
 				String[] messages = UtilNetwork.readMessage(client, 10);
 				if (messages.length > 0) {
 					for (String message : messages) {
@@ -238,31 +238,28 @@ public abstract class AnaServer implements NetworkElement{
 				} else {
 					this.checkClient(client);	
 				}
-			} catch (IOException e) {
-				this.disconnect(client);
-			}
+			}	
+		} catch (ConnectionException e) {
+			this.disconnect(client);
 		}
 		this.listClient.remove(client);
 		System.out.println(String.format("LOGOUT : %s", client.getInetAddress()));
 	}
-	
+
 	/**
 	 * check connexion of client
 	 * @param client the socket of client
+	 * @throws ConnectionException 
 	 */
-	public void checkClient(Socket client) {
-		try {
-			long currentSecond = Instant.now().getEpochSecond();
-			if (this.timeLastPing == 0) {
-				UtilNetwork.sendMessage(client, Ping.PING);
-				this.timeLastPing = currentSecond;
-			} else {
-				if (currentSecond - this.timeLastPing > this.timeWaitPong() / 1000) {
-					this.disconnect(client);
-				}
+	public void checkClient(Socket client) throws ConnectionException {
+		long currentSecond = Instant.now().getEpochSecond();
+		if (this.timeLastPing == 0) {
+			UtilNetwork.sendMessage(client, Ping.PING);
+			this.timeLastPing = currentSecond;
+		} else {
+			if (currentSecond - this.timeLastPing > this.timeWaitPong() / 1000) {
+				throw new ConnectionException();
 			}
-		} catch (IOException e) {
-			this.disconnect(client);
 		}
 	}
 
@@ -272,12 +269,20 @@ public abstract class AnaServer implements NetworkElement{
 	 * @param message the message to send
 	 * @throws IOException 
 	 */
-	public void sendMessage(Socket client, String message) throws IOException {
+	public void sendMessage(Socket client, String message) throws ConnectionException {
 		if (this.starting) {
 			UtilNetwork.sendMessage(client, message);
 		}
 	}
 
+	/**
+	 * get nb of clients
+	 * @return the nb of clients
+	 */
+	public int nbClients() {
+		return this.listClient.size();
+	}
+	
 	/**
 	 * get clients
 	 * @return the list of client (unmodifiable)
