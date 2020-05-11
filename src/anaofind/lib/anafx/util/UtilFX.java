@@ -1,9 +1,11 @@
 package anaofind.lib.anafx.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +16,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -23,6 +27,21 @@ import javafx.stage.Stage;
  */
 public class UtilFX {
 
+	/**
+	 * primary stage of javafx application
+	 */
+	private static Stage primaryStage;
+	
+	/**
+	 * setter primary stage
+	 * @param stage the primary stage
+	 */
+	public static void setPrimaryStage(Stage stage) {
+		if (primaryStage == null) {
+			primaryStage = stage;	
+		}
+	}
+	
 	/**
 	 * methode permettant de fermer l'appliquation
 	 * @param code le code de fermeture
@@ -206,5 +225,65 @@ public class UtilFX {
 		}
 		
 		return reponse;
+	}
+	
+	/**
+	 * create file chooser
+	 * @param title the title
+	 * @param initial factory
+	 * @param formats the formats accepted
+	 * @return the file chooser
+	 */
+	private static FileChooser createFileChooser(String title, String initialDirecoty, String...formats) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle(title);
+		for (String format : formats) {
+			fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(format.toUpperCase(), "*." + format));
+		}
+		
+		if (initialDirecoty != null) {
+			File fileInitialDirectory = new File(initialDirecoty);
+			if (fileInitialDirectory.isDirectory()) {
+				fileChooser.setInitialDirectory(new File(initialDirecoty));	
+			}	
+		}
+		
+		return fileChooser;
+	}
+	
+	/**
+	 * open choice file
+	 * @param title the title
+	 * @param initial factory
+	 * @param formats the formats accepted
+	 * @return the file choice
+	 */
+	public static File openChoiceFile(String title, String initialDirecoty, String...formats) {
+		return createFileChooser(title, initialDirecoty, formats).showOpenDialog(primaryStage);
+	}
+	
+	/**
+	 * open choice multiple file
+	 * @param title the title
+	 * @param initial factory
+	 * @param formats the formats accepted
+	 * @return the list of files choice
+	 */
+	public static List<File> openChoiceMultipleFile(String title, String initialDirecoty, String...formats) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle(title);
+		return createFileChooser(title, initialDirecoty, formats).showOpenMultipleDialog(primaryStage);
+	}
+	
+	/**
+	 * open choice file
+	 * @param title the title
+	 * @param formats the formats accepted
+	 * @return the file choice
+	 */
+	public static File openChoiceDirectory(String title) {
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		directoryChooser.setTitle(title);
+		return directoryChooser.showDialog(primaryStage);
 	}
 }

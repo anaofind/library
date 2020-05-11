@@ -1,6 +1,5 @@
 package anaofind.lib.anafx.screen;
 
-import java.io.File;
 import java.net.URL;
 import java.util.*;
 
@@ -10,7 +9,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -56,7 +54,6 @@ public abstract class Screen{
 	 * boolean decoration
 	 */
 	private boolean decorating = true;
-	
 	
 	/**
 	 * methode permettant de realiser les actions d'ouverture
@@ -240,17 +237,5 @@ public abstract class Screen{
 	 */
 	public void setDecorating(boolean decorating) {
 		this.decorating = decorating;
-	}
-	
-	/**
-	 * methode permettant d'ouvir un choix de fichier
-	 * @param title le titre
-	 * @return le chemin du fichier
-	 */
-	public File openChoiceFile(String title) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle(title);
-		return fileChooser.showOpenDialog(stage);
-	}
-	
+	}	
 }
