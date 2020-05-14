@@ -158,7 +158,7 @@ public class UtilFX {
 	 */
 	public static void addCSS(Stage stage, URL urlCSS) {
 		String css = urlCSS.toExternalForm(); 
-		stage.getScene().getStylesheets().add(css);
+		stage.getScene().getStylesheets().add(css);	
 	}
 
 	/**

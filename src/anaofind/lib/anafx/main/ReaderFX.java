@@ -1,5 +1,7 @@
 package anaofind.lib.anafx.main;
 
+import java.util.List;
+
 /**
  * classe permettant d'executer une application fx
  * @author anaofind
@@ -10,7 +12,7 @@ public abstract class ReaderFX {
 	/**
 	 * methode permettant de definir les actions de lancement
 	 */
-	public abstract void action();
+	public abstract void action(List<String> args);
 	
 	/**
 	 * methode permettant de lancer le support

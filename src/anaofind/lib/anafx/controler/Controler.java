@@ -3,6 +3,7 @@ package anaofind.lib.anafx.controler;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import anaofind.lib.anafx.screen.Screen;
 import anaofind.lib.analistener.Listenable;
 import anaofind.lib.analistener.Listener;
 import javafx.application.Platform;
@@ -15,6 +16,11 @@ import javafx.fxml.Initializable;
  */
 public abstract class Controler implements Initializable, Listener{
 		
+	/**
+	 * screen of controler
+	 */
+	protected Screen screen;
+	
 	/**
 	 * boolean indicate if screen is open
 	 */
@@ -54,6 +60,14 @@ public abstract class Controler implements Initializable, Listener{
 		this.screenOpen = false;
 	}
 	
+	/**
+	 * setter screen
+	 * @param screen the screen
+	 */
+	public void setScreen(Screen screen) {
+		this.screen = screen;
+	}
+	 
 	/**
 	 * methode d'initialisation
 	 */

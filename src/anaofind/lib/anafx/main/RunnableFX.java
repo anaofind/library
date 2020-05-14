@@ -1,5 +1,7 @@
 package anaofind.lib.anafx.main;
 
+import java.util.List;
+
 import anaofind.lib.anafx.util.UtilFX;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -20,7 +22,8 @@ public class RunnableFX extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		if (reader != null) {
-			reader.action();
+			List<String> args = this.getParameters().getRaw();
+			reader.action(args);
 			UtilFX.setPrimaryStage(primaryStage);
 		}
 	}

@@ -71,14 +71,14 @@ public abstract class Screen{
 	public void create() {	
 		starting();
 		
-		Scene scene = UtilFX.createSceneFXML(fxmlLoader);
-		stage = new Stage();
-		stage.setScene(scene);
-		if (pathIcon != null) {
-			stage.getIcons().add(UtilFX.createImage(pathIcon));
+		Scene scene = UtilFX.createSceneFXML(this.fxmlLoader);
+		this.stage = new Stage();
+		this.stage.setScene(scene);
+		if (this.pathIcon != null) {
+			this.stage.getIcons().add(UtilFX.createImage(this.pathIcon));
 		}
 		
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		this.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			public void handle(WindowEvent we) {
 				finishing();
 				Controler controler = (Controler) UtilFX.getControler(fxmlLoader);
@@ -88,13 +88,18 @@ public abstract class Screen{
 			}
 		});
 		
-		for (URL urlCSS : listCSS) {
-			UtilFX.addCSS(stage, urlCSS);
+		for (URL urlCSS : this.listCSS) {
+			UtilFX.addCSS(this.stage, urlCSS);
 		}
 		
-		stage.setTitle(title);
-		resizable(this.resizable);
-		decorating(this.decorating);
+		this.stage.setTitle(this.title);
+		this.changeResizable(this.resizable);
+		this.changeDecorating(this.decorating);
+		
+		Controler controler = (Controler) UtilFX.getControler(this.fxmlLoader);
+		if (controler != null) {
+			controler.setScreen(this);
+		}
 	}
 	
 	/**
@@ -104,25 +109,36 @@ public abstract class Screen{
 		if (! isOpen()) {
 			create();
 		}
-		stage.show();
+		this.stage.show();
 	}
 	
 	/**
 	 * methode permettant de fermer la fenetre
 	 */
 	public void close() {
-		if (stage != null) {
-			stage.close();
+		if (this.stage != null) {
+			this.stage.close();
 		}
 	}
 	
+	/**
+	 * methode permettant de savoir si la fenetre est ouverte
+	 * @return boolean
+	 */
+	public boolean isOpen() {
+		if (stage != null) {
+			return stage.isShowing();
+		}
+		return false;
+	}
+
 	/**
 	 * get node
 	 * @param node the node contained in stage
 	 * @return the node | null if element not found
 	 */
 	public Node node(String node) {
-		if (stage != null) {
+		if (this.stage != null) {
 			Scene scene = this.stage.getScene();
 			if (scene != null) {
 				Node root = scene.getRoot();
@@ -157,13 +173,27 @@ public abstract class Screen{
 	 */
 	public void changeTitle(String title) {
 		this.title = title;
+		if (this.stage != null) {
+			this.stage.setTitle(title);
+		}
 	}
 	
+	/**
+	 * methode permettant de changer le chemin icon
+	 * @param pathIcon le chemin icon
+	 */
+	public void changeIcon(String pathIcon) {
+		this.pathIcon = pathIcon;
+		if (this.stage != null) {
+			this.stage.getIcons().add(UtilFX.createImage(pathIcon));
+		}
+	}
+
 	/**
 	 * change path of file fxml
 	 * @param urlFXML the url of fxml file
 	 */
-	public void changeFXML(URL urlFXML) {
+	protected void changeFXML(URL urlFXML) {
 		this.fxmlLoader = UtilFX.createLoaderFXML(urlFXML);
 	}
 	
@@ -171,19 +201,25 @@ public abstract class Screen{
 	 * methode permettant de choisir si on veut que la fenetre d'application soit redimensionnable
 	 * @param b boolean indiquant notre choix
 	 */
-	private void resizable(boolean b) {
-		stage.setResizable(b);
+	public void changeResizable(boolean b) {
+		this.resizable = b;
+		if (this.stage != null) {
+			this.stage.setResizable(b);	
+		}
 	}
 	
 	/**
 	 * methode permettant de choisir si on veut que la fenetre soit décoré
 	 * @param b boolean indiquant notre choix
 	 */
-	private void decorating(boolean b) {
-		if (! b) {
-			stage.initStyle(StageStyle.UNDECORATED);	
-		} else {
-			stage.initStyle(StageStyle.DECORATED);
+	public void changeDecorating(boolean b) {
+		this.decorating = b;
+		if (this.stage != null) {
+			if (! b) {
+				this.stage.initStyle(StageStyle.UNDECORATED);	
+			} else {
+				this.stage.initStyle(StageStyle.DECORATED);
+			}	
 		}
 	}
 	
@@ -193,49 +229,10 @@ public abstract class Screen{
 	 */
 	public void addCSS(URL urlCSS) {
 		if (!this.listCSS.contains(urlCSS)) {
-			this.listCSS.add(urlCSS);	
+			this.listCSS.add(urlCSS);
+			if (this.stage != null) {
+				UtilFX.addCSS(this.stage, urlCSS);
+			}
 		}
 	}
-		
-	/**
-	 * methode permettant de vider les chemin css
-	 */
-	public void clearCSS() {
-		this.listCSS.clear();
-	}
-	
-	/**
-	 * methode permettant de changer le chemin icon
-	 * @param pathIcon le chemin icon
-	 */
-	public void changeIcon(String pathIcon) {
-		this.pathIcon = pathIcon;
-	}
-	
-	/**
-	 * methode permettant de savoir si la fenetre est ouverte
-	 * @return boolean
-	 */
-	public boolean isOpen() {
-		if (stage != null) {
-			return stage.isShowing();
-		}
-		return false;
-	}
-
-	/**
-	 * setter redimensionnable
-	 * @param resizable boolean
-	 */
-	public void setResizable(boolean resizable) {
-		this.resizable = resizable;
-	}
-
-	/**
-	 * setter decoration
-	 * @param decorating boolean
-	 */
-	public void setDecorating(boolean decorating) {
-		this.decorating = decorating;
-	}	
 }
