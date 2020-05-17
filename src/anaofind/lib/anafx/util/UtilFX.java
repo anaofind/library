@@ -286,4 +286,17 @@ public class UtilFX {
 		directoryChooser.setTitle(title);
 		return directoryChooser.showDialog(primaryStage);
 	}
+	
+	/**
+	 * get size window
+	 * @return the size of window
+	 */
+	public static int[] sizeWindow() {
+		if (primaryStage != null) {
+			int width = (int) primaryStage.getMaxWidth();
+			int height = (int) primaryStage.getMaxHeight();
+			return new int[] {width, height};
+		}
+		return new int[] {-1,-1};
+	}
 }

@@ -56,6 +56,11 @@ public abstract class Screen{
 	private boolean decorating = true;
 	
 	/**
+	 * list of screen listener
+	 */
+	public List<ScreenListener> screenListeners = new ArrayList<ScreenListener>();
+	
+	/**
 	 * methode permettant de realiser les actions d'ouverture
 	 */
 	public abstract void starting();
@@ -64,7 +69,7 @@ public abstract class Screen{
 	 * methode permettant de realiser les actions de fermeture
 	 */
 	public abstract void finishing();
-		
+			
 	/**
 	 * methode permettant de creer la fenetre
 	 */
@@ -98,8 +103,16 @@ public abstract class Screen{
 		
 		Controler controler = (Controler) UtilFX.getControler(this.fxmlLoader);
 		if (controler != null) {
-			controler.setScreen(this);
+			controler.screenFounded(this);
 		}
+	}
+	
+	/**
+	 * add screen listener
+	 * @param screenListener the screen listener
+	 */
+	public void addScreenListener(ScreenListener screenListener) {
+		this.screenListeners.add(screenListener);
 	}
 	
 	/**
@@ -110,6 +123,9 @@ public abstract class Screen{
 			create();
 		}
 		this.stage.show();
+		for (ScreenListener screenListener : this.screenListeners) {
+			screenListener.showed();
+		}
 	}
 	
 	/**
@@ -118,6 +134,9 @@ public abstract class Screen{
 	public void close() {
 		if (this.stage != null) {
 			this.stage.close();
+		}
+		for (ScreenListener screenListener : this.screenListeners) {
+			screenListener.closed();
 		}
 	}
 	
@@ -234,5 +253,32 @@ public abstract class Screen{
 				UtilFX.addCSS(this.stage, urlCSS);
 			}
 		}
+	}
+	
+	/**
+	 * set fullscreen
+	 * @param fullscreen the fullscreen
+	 */
+	public void setFullscreen(boolean fullscreen) {
+		if (this.isFullscreen() != fullscreen) {
+			this.stage.setFullScreen(fullscreen);
+			if (fullscreen) {
+				for (ScreenListener screenListener : this.screenListeners) {
+					screenListener.beenFullscreen();
+				}	
+			} else {
+				for (ScreenListener screenListener : this.screenListeners) {
+					screenListener.beenWindowed();
+				}
+			}	
+		}
+	}
+	
+	/**
+	 * is fullscreen
+	 * @return boolean : true if fullscreen | false else
+	 */
+	public boolean isFullscreen() {
+		return this.stage.isFullScreen();
 	}
 }

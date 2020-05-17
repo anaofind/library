@@ -15,12 +15,7 @@ import javafx.fxml.Initializable;
  *
  */
 public abstract class Controler implements Initializable, Listener{
-		
-	/**
-	 * screen of controler
-	 */
-	protected Screen screen;
-	
+			
 	/**
 	 * boolean indicate if screen is open
 	 */
@@ -64,9 +59,7 @@ public abstract class Controler implements Initializable, Listener{
 	 * setter screen
 	 * @param screen the screen
 	 */
-	public void setScreen(Screen screen) {
-		this.screen = screen;
-	}
+	public abstract void screenFounded(Screen screen);
 	 
 	/**
 	 * methode d'initialisation
@@ -86,7 +79,6 @@ public abstract class Controler implements Initializable, Listener{
 					finishing();
 				});
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} ).start(); 
