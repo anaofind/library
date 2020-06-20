@@ -86,10 +86,10 @@ public abstract class Screen{
 		this.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			public void handle(WindowEvent we) {
 				finishing();
-				Controler controler = (Controler) UtilFX.getControler(fxmlLoader);
-				if (controler != null) {
-					controler.screenClose();
+				for (ScreenListener screenListener : screenListeners) {
+					screenListener.screenClosed();
 				}
+				screenListeners.clear();
 			}
 		});
 		
@@ -103,6 +103,7 @@ public abstract class Screen{
 		
 		Controler controler = (Controler) UtilFX.getControler(this.fxmlLoader);
 		if (controler != null) {
+			this.addScreenListener(controler);
 			controler.screenFounded(this);
 		}
 	}
@@ -124,7 +125,7 @@ public abstract class Screen{
 		}
 		this.stage.show();
 		for (ScreenListener screenListener : this.screenListeners) {
-			screenListener.showed();
+			screenListener.screenShowed();
 		}
 	}
 	
@@ -136,7 +137,7 @@ public abstract class Screen{
 			this.stage.close();
 		}
 		for (ScreenListener screenListener : this.screenListeners) {
-			screenListener.closed();
+			screenListener.screenClosed();
 		}
 	}
 	
@@ -264,11 +265,11 @@ public abstract class Screen{
 			this.stage.setFullScreen(fullscreen);
 			if (fullscreen) {
 				for (ScreenListener screenListener : this.screenListeners) {
-					screenListener.beenFullscreen();
+					screenListener.screenBeenFullscreen();
 				}	
 			} else {
 				for (ScreenListener screenListener : this.screenListeners) {
-					screenListener.beenWindowed();
+					screenListener.screenBeenWindowed();
 				}
 			}	
 		}
@@ -280,5 +281,18 @@ public abstract class Screen{
 	 */
 	public boolean isFullscreen() {
 		return this.stage.isFullScreen();
+	}
+	
+	/**
+	 * get size of screen [width, height] 
+	 * @return the size of screen [width, height] 
+	 */
+	public double[] size() {
+		if (this.stage != null) {
+			double width = this.stage.getWidth();
+			double height = this.stage.getHeight();
+			return new double[] {width, height};
+		}
+		return new double[] {-1, -1};
 	}
 }

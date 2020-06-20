@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import anaofind.lib.anafx.screen.Screen;
+import anaofind.lib.anafx.screen.ScreenListener;
 import anaofind.lib.analistener.Listenable;
 import anaofind.lib.analistener.Listener;
 import javafx.application.Platform;
@@ -14,13 +15,8 @@ import javafx.fxml.Initializable;
  * @author anaofind
  *
  */
-public abstract class Controler implements Initializable, Listener{
-			
-	/**
-	 * boolean indicate if screen is open
-	 */
-	private boolean screenOpen = true;
-	
+public abstract class Controler implements Initializable, Listener, ScreenListener{
+				
 	/**
 	 * methode executer la boucle
 	 */
@@ -47,36 +43,29 @@ public abstract class Controler implements Initializable, Listener{
 	 * methode permettant de finir le controleur
 	 */
 	public abstract void finishing();
-	
-	/**
-	 * close screen -> screenOpen variable is false
-	 */
-	public void screenClose() {
-		this.screenOpen = false;
-	}
-	
+			
 	/**
 	 * setter screen
 	 * @param screen the screen
 	 */
 	public abstract void screenFounded(Screen screen);
-	 
+	
 	/**
 	 * methode d'initialisation
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		starting();
+		this.starting();
 		new Thread( () -> { 
 			try {
-				while (screenOpen && !isEndLoop()) {
+				while (! this.isEndLoop()) {
 					Platform.runLater( () -> {
-						stepLoop();
+						this.stepLoop();
 					});
 					Thread.sleep(1000/getFps());
 				}
 				Platform.runLater( () -> {
-					finishing();
+					this.finishing();
 				});
 			} catch (InterruptedException e) {
 				e.printStackTrace();

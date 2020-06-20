@@ -9,20 +9,20 @@ public interface ScreenListener {
 	/**
 	 * been show
 	 */
-	public void showed();
+	public void screenShowed();
 	
 	/**
 	 * closed
 	 */
-	public void closed();
+	public void screenClosed();
 	
 	/***
 	 * been fullscreen
 	 */
-	public void beenFullscreen();
+	public void screenBeenFullscreen();
 	
 	/**
 	 * been windowed
 	 */
-	public void beenWindowed();
+	public void screenBeenWindowed();
 }
