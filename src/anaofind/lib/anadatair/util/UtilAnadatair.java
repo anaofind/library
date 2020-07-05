@@ -1,5 +1,8 @@
 package anaofind.lib.anadatair.util;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 import anaofind.lib.anadatair.*;
@@ -32,6 +35,17 @@ public class UtilAnadatair {
 	}
 
 	/**
+	 * decode json to java object
+	 * @param json the json string
+	 * @param model the class model
+	 * @return the object java equivalent to json string
+	 */
+	public static <T> Object jsonDecodeObject(String json, Class<T> model) {
+		return decode(jsonDecode(json), model);
+	}
+
+
+	/**
 	 * encode anadatair to json string
 	 * @param anadatair the anadatair to encode
 	 * @return the json string equivalent to anadatair
@@ -39,7 +53,7 @@ public class UtilAnadatair {
 	public static String jsonEncode(Anadatair anadatair) {
 		return anadatair.toJson().toString();
 	}
-	
+
 	/**
 	 * encode anadatair to json pretty string
 	 * @param anadatair the anadatair to encode
@@ -48,7 +62,7 @@ public class UtilAnadatair {
 	public static String jsonEncodePretty(Anadatair anadatair) {
 		return anadatair.toJson().prettyString(0);
 	}
-	
+
 	/**
 	 * json decode file
 	 * @param pathFile the path file
@@ -82,7 +96,7 @@ public class UtilAnadatair {
 	 * @param value the object to cast
 	 * @return the array casted
 	 */
-	public static <T> Object[] castArrayObject(T value) {
+	public static <T> Object[] castObjectInArray(T value) {
 		if (value.getClass().isArray()) {
 			if (! (value instanceof Object[])) {
 				if (value instanceof int[]) {
@@ -118,30 +132,38 @@ public class UtilAnadatair {
 					return arrayBoolean;
 				}
 			} else {
-				return (Object[]) value;	
+				return (Object[]) value;
 			}
 		}
 		return new Object[0];
 	}
-	
+
 	/**
 	 * cast key of map in string
 	 * @param map the map
 	 * @return the map casted
 	 */
-	public static Map<String, Object> castMapStringKey(Object object) {
+	public static Map<String, Object> castObjectInMapStringKey(Object object) {
 		Map<String, Object> mapCasted = new HashMap<String, Object>();
 		if (object instanceof Map<?,?>) {
 			Map<?,?> map = (Map<?,?>) object;
 			for (Object key : map.keySet()) {
 				mapCasted.put(String.valueOf(key), map.get(key));
 			}	
+		} else {
+			for (Field field : object.getClass().getFields()) {
+				try {
+					mapCasted.put(field.getName(), field.get(object));
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return mapCasted;
 	}
-	
+
 	/**
-	 * decode object to anadatair
+	 * encode object to anadatair
 	 * @param value the object to decode
 	 * @return anadatair equivalent
 	 */
@@ -165,22 +187,19 @@ public class UtilAnadatair {
 			return new AnadatairString((String) value);
 		}
 		if (value.getClass().isArray()) {
-			Object[] array = castArrayObject(value);
+			Object[] array = castObjectInArray(value);
 			return encode(array);
 		}
 		if (value instanceof Collection<?>){
 			Collection<?> collection = (Collection<?>) value;
 			return encode(collection);
 		}
-		if (value instanceof Map<?,?>){
-			Map<String, Object> map = castMapStringKey(value);
-			
-			return encode(map);
-		}
 		if (value instanceof Anadatair) {			
 			return (Anadatair) value;
 		}
-		return new AnadatairNull();
+		
+		Map<String, Object> map = castObjectInMapStringKey(value);
+		return encode(map);
 	}
 
 	/**
@@ -230,43 +249,92 @@ public class UtilAnadatair {
 		}
 		return object;
 	}
-	
+
 	/**
-	 * decode anadatair primitif
+	 * decode anadatair to object java
 	 * @param anadatair the anadatair
-	 * @return the data decoded
+	 * @param model the class model
+	 * @return the object java equivalent to anadatair
 	 */
-	public static Object decodePrimitif(Anadatair anadatair) {
-		switch(anadatair.getType()) {
-		case TypeResolver.INT : 
-			System.out.println(anadatair.toJson());
-			return anadatair.getInteger();
-		case TypeResolver.LONG : 
-			return anadatair.getLong(); 
-		case TypeResolver.DOUBLE : 
-			return anadatair.getDouble(); 
-		case TypeResolver.BOOLEAN : 
-			return anadatair.getBoolean();
-		case TypeResolver.STRING : 
-			return anadatair.getString();
-		case TypeResolver.NULL : 
-			return null;
+	@SuppressWarnings("unchecked")
+	public static <T> T decode(Anadatair anadatair, Class<T> model) {
+		if (anadatair != null) {	
+			switch(anadatair.getType()) {
+			case TypeResolver.ARRAY : 
+				return decode((AnadatairArray) anadatair, model);
+			case TypeResolver.OBJECT : 
+				return decode((AnadatairObject) anadatair, model);
+			}
+			return (T) anadatair.getValue();
 		}
-		return decodePrimitif(anadatair.getData());
+		return null;
 	}
 
 	/**
-	 * decode anadatair to array
-	 * @param anadatatair the anadatair array
-	 * @return the array decoded
+	 * decode anadatair array
+	 * @param <T> the type of array
+	 * @param anadatair the anadatair array
+	 * @param model the model array
+	 * @return the array equivalent
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public static Object[] decodeArray(Anadatair anadatatair) {
-		List<Object> array = new ArrayList<Object>();
-		if (anadatatair.getType().equals(TypeResolver.ARRAY)) {
-			for (int i = 0; i<anadatatair.size(); i++) {
-				array.add(decodePrimitif(anadatatair.getData(i)));
-			}	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static <T> T decode(AnadatairArray anadatair, Class<T> model) {
+		if (model.isArray()) {
+			Object array = Array.newInstance(model.getComponentType(), anadatair.size());
+
+			for (int i = 0; i < anadatair.size(); i++) {
+				Array.set(array, i, decode(anadatair.getData(i), model.getComponentType()));
+			}
+
+			return (T) array;	
 		}
-		return array.toArray(new Object[array.size()]);
+
+		if (Collection.class.isAssignableFrom(model)) {
+			Collection collection = null;
+			if (List.class.isAssignableFrom(model)) {
+				collection = new ArrayList<Object>();	
+			}
+			if (Set.class.isAssignableFrom(model)) {
+				collection = new HashSet<Object>();
+			}
+			if (collection != null) {
+				for (int i = 0; i < anadatair.size(); i++) {
+					collection.add(anadatair.getData(i).getValue());
+				}	
+				return (T) collection;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * decode anadatair array
+	 * @param <T> the type of array
+	 * @param anadatair the anadatair array
+	 * @param model the model array
+	 * @return the array equivalent
+	 */
+	public static <T> T decode(AnadatairObject anadatair, Class<T> model) {
+		try {
+			System.out.println(model.getName());
+			T instance = model.getConstructor().newInstance();
+			for(Field field : model.getFields()) {
+				if (anadatair.contains(field.getName())) {
+					Object valueField = decode(anadatair.getData(field.getName()), field.getType());
+					field.set(instance, valueField);	
+				}
+			}
+			return (T) instance;
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

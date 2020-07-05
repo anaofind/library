@@ -21,32 +21,12 @@ public abstract class AnadatairPrimitive implements Anadatair{
 	}
 	
 	@Override
-	public String getString(String attribute) {
-		return null;
-	}
-
-	@Override
-	public Integer getInteger(String attribute) {
-		return null;
+	public int size() {
+		return 1;
 	}
 	
 	@Override
-	public Long getLong(String attribute) {
-		return null;
-	}
-
-	@Override
-	public Double getDouble(String attribute) {
-		return null;
-	}
-
-	@Override
-	public Boolean getBoolean(String attribute) {
-		return null;
-	}
-
-	@Override
-	public int size() {
-		return 1;
+	public boolean equals(Anadatair other) {
+		return other.getValue().equals(this.getValue());
 	}
 }

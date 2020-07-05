@@ -18,7 +18,7 @@ public class AnadatairObject implements Anadatair{
 	 * the values
 	 */
 	private Map<String, Anadatair> values = new HashMap<String, Anadatair>();
-	
+				
 	/**
 	 * get attributes
 	 * @return the list of attributes
@@ -53,73 +53,17 @@ public class AnadatairObject implements Anadatair{
 	}
 
 	@Override
-	public String getString(String attribute) {
-		if (this.contains(attribute, TypeResolver.STRING)) {
-			return this.getData(attribute).getString();
-		}
-		return null;
-	}
-
-	@Override
-	public String getString(int index) {
-		return null;
-	}
-
-	@Override
-	public Integer getInteger(String attribute) {
-		if (this.contains(attribute, TypeResolver.INT)) {
-			return this.getData(attribute).getInteger();
-		}
-		return null;
-	}
-
-	@Override
-	public Integer getInteger(int index) {
-		return null;
+	public int size() {
+		return this.values.size();
 	}
 	
 	@Override
-	public Long getLong(String attribute) {
-		if (this.contains(attribute, TypeResolver.LONG)) {
-			return this.getData(attribute).getLong();
+	public Object getValue() {
+		Map<String, Object> value = new HashMap<String, Object>();
+		for (String attribute : this.values.keySet()) {
+			value.put(attribute, this.values.get(attribute).getValue());
 		}
-		return null;
-	}
-
-	@Override
-	public Long getLong(int index) {
-		return null;
-	}
-
-	@Override
-	public Double getDouble(String attribute) {
-		if (this.contains(attribute, TypeResolver.DOUBLE) || this.contains(attribute, TypeResolver.INT)) {
-			return this.getData(attribute).getDouble();
-		}
-		return null;
-	}
-
-	@Override
-	public Double getDouble(int index) {
-		return null;
-	}
-
-	@Override
-	public Boolean getBoolean(String attribute) {
-		if (this.contains(attribute, TypeResolver.BOOLEAN)) {
-			return this.getData(attribute).getBoolean();
-		}
-		return null;
-	}
-
-	@Override
-	public Boolean getBoolean(int index) {
-		return null;
-	}
-
-	@Override
-	public int size() {
-		return this.values.size();
+		return value;
 	}
 
 	@Override

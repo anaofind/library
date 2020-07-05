@@ -53,6 +53,47 @@ public class AnadatairArray implements Anadatair{
 		return true;
 	}
 	
+	/**
+	 * method indicate the type of array
+	 * @return the type of array
+	 */
+	public String getTypeOfArray() {
+		List<String> allTypeInArray = new ArrayList<String>();
+		if (this.values.size() > 0) {
+			for (Anadatair value : this.values) {
+				String type = value.getType();
+				if (type.equals(TypeResolver.ARRAY)) {
+					type = ((AnadatairArray) value).getTypeOfArray();
+				}
+				if (! allTypeInArray.contains(type)) {
+					allTypeInArray.add(type);
+				}
+			}
+			if (allTypeInArray.size() == 1) {
+				return allTypeInArray.get(0);	
+			}
+		}
+		return TypeResolver.OBJECT;
+	}
+	
+	/**
+	 * get dimension of array
+	 * @return the dimension of array
+	 */
+	public int getDimension() {
+		int dimension = 1;
+		if (this.isArrayOf(TypeResolver.ARRAY) && this.values.size() > 0) {
+			List<Integer> dimensionChildrens = new ArrayList<Integer>();
+			for (Anadatair value : this.values) {
+				int dc = ((AnadatairArray) value).getDimension();
+				dimensionChildrens.add(dc);
+			}
+			Collections.sort(dimensionChildrens);
+			dimension += dimensionChildrens.get(0);
+		}
+		return dimension;
+	}
+	
 	@Override
 	public Anadatair getData(String attribute) {
 		return null;
@@ -67,70 +108,15 @@ public class AnadatairArray implements Anadatair{
 	}
 
 	@Override
-	public String getString(String attribute) {
-		return null;
-	}
-
-	@Override
-	public String getString(int index) {
-		if (this.contains(index, TypeResolver.STRING)) {
-			return this.values.get(index).getString();
+	public Object getValue() {
+		List<Object> valueList = new ArrayList<Object>();
+		for (int i = 0; i<this.values.size(); i++) {
+			Object valueI = this.values.get(i).getValue();
+			valueList.add(valueI);
 		}
-		return null;
-	}
-
-	@Override
-	public Integer getInteger(String attribute) {
-		return null;
-	}
-
-	@Override
-	public Integer getInteger(int index) {
-		if (this.contains(index, TypeResolver.INT)) {
-			return this.values.get(index).getInteger();
-		}
-		return null;
+		return valueList.toArray();
 	}
 	
-	@Override
-	public Long getLong(String attribute) {
-		return null;
-	}
-
-	@Override
-	public Long getLong(int index) {
-		if (this.contains(index, TypeResolver.LONG)) {
-			return this.values.get(index).getLong();
-		}
-		return null;
-	}
-
-	@Override
-	public Double getDouble(String attribute) {
-		return null;
-	}
-
-	@Override
-	public Double getDouble(int index) {
-		if (this.contains(index, TypeResolver.DOUBLE) || this.contains(index, TypeResolver.INT)) {
-			return this.values.get(index).getDouble();
-		}
-		return null;
-	}
-
-	@Override
-	public Boolean getBoolean(String attribute) {
-		return null;
-	}
-
-	@Override
-	public Boolean getBoolean(int index) {
-		if (this.contains(index, TypeResolver.BOOLEAN)) {
-			return this.values.get(index).getBoolean();
-		}
-		return null;
-	}
-
 	@Override
 	public int size() {
 		return this.values.size();

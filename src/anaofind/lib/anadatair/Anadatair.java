@@ -71,115 +71,11 @@ public interface Anadatair {
 	}
 
 	/**
-	 * get string value
-	 * @param attribute the attribute
-	 * @return the string
+	 * get value of data
+	 * @return the value of data
 	 */
-	public String getString(String attribute);
-
-	/**
-	 * get string value 
-	 * @param index the index
-	 * @return the string
-	 */
-	public String getString(int index);
-
-	/**
-	 * get string
-	 * @return the string if only one string
-	 */
-	default String getString() {
-		return this.getString(0);
-	}
-
-	/**
-	 * get integer value
-	 * @param attribute the attribute
-	 * @return the integer
-	 */
-	public Integer getInteger(String attribute);
-
-	/**
-	 * get integer value 
-	 * @param index the index
-	 * @return the integer
-	 */
-	public Integer getInteger(int index);
-
-	/**
-	 * get integer
-	 * @return the integer if only one integer
-	 */
-	default Integer getInteger() {
-		return this.getInteger(0);
-	}
-	
-	/**
-	 * get integer value
-	 * @param attribute the attribute
-	 * @return the integer
-	 */
-	public Long getLong(String attribute);
-
-	/**
-	 * get integer value 
-	 * @param index the index
-	 * @return the integer
-	 */
-	public Long getLong(int index);
-
-	/**
-	 * get integer
-	 * @return the integer if only one integer
-	 */
-	default Long getLong() {
-		return this.getLong(0);
-	}
-
-	/**
-	 * get double value
-	 * @param attribute the attribute
-	 * @return the double
-	 */
-	public Double getDouble(String attribute);
-
-	/**
-	 * get double value 
-	 * @param index the index
-	 * @return the double
-	 */
-	public Double getDouble(int index);
-
-	/**
-	 * get double value
-	 * @return the double if only one double
-	 */
-	default Double getDouble() {
-		return this.getDouble(0);
-	}
-
-	/**
-	 * get boolean value
-	 * @param attribute the attribute
-	 * @return the boolean
-	 */
-	public Boolean getBoolean(String attribute);
-
-	/**
-	 * get boolean value 
-	 * @param index the index
-	 * @return the boolean
-	 */
-	public Boolean getBoolean(int index);
-
-	/**
-	 * get boolean
-	 * @return the boolean if only one boolean
-	 */
-	default Boolean getBoolean() {
-		return this.getBoolean(0);
-	}
-
+	public Object getValue();
+		
 	/**
 	 * get size
 	 */
@@ -190,7 +86,7 @@ public interface Anadatair {
 	 * @return the type of data
 	 */
 	public String getType();
-
+	
 	/**
 	 * equals method
 	 * @param other the other anadatair

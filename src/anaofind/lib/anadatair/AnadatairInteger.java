@@ -25,41 +25,6 @@ public class AnadatairInteger extends AnadatairPrimitive{
 	}
 	
 	@Override
-	public String getString(int index) {
-		return null;
-	}
-
-	@Override
-	public Integer getInteger(int index) {
-		if (index == 0) {
-			return this.value;
-		}
-		return null;
-	}
-	
-
-	@Override
-	public Long getLong(int index) {
-		if (index == 0) {
-			return (long)this.value;
-		}
-		return null;
-	}
-
-	@Override
-	public Double getDouble(int index) {
-		if (index == 0) {
-			return (double)this.value;
-		}
-		return null;
-	}
-
-	@Override
-	public Boolean getBoolean(int index) {
-		return null;
-	}
-
-	@Override
 	public String getType() {
 		return TypeResolver.INT;
 	}
@@ -68,9 +33,20 @@ public class AnadatairInteger extends AnadatairPrimitive{
 	public JsonValue toJson() {
 		return new JsonNumber(this.value);
 	}
-
+	
 	@Override
 	public boolean equals(Anadatair other) {
-		return other.getType().equals(TypeResolver.INT) || (other.getType().equals(TypeResolver.DOUBLE) && other.getDouble() == value) || (other.getType().equals(TypeResolver.LONG) && other.getLong() == value);
+		switch (other.getType()) {
+		case TypeResolver.DOUBLE : 
+			return ((double) other.getValue()) == this.value;
+		case TypeResolver.LONG : 
+			return ((long) other.getValue() == this.value);
+		}
+		return other.getValue().equals(this.getValue());
+	}
+
+	@Override
+	public Object getValue() {
+		return this.value;
 	}
 }

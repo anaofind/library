@@ -196,6 +196,74 @@ public class TypeResolver {
 		
 		return OBJECT;
 	}
+	
+	/**
+	 * get class
+	 * @param <T> the type of class
+	 * @param type the type string
+	 * @return the class
+	 */
+	public static Class<?> getClass(String type) {
+		switch (type) {
+		case LONG : 
+			return Long.class;
+		case INT : 
+			return Integer.class;
+		case FLOAT : 
+			return Float.class;
+		case DOUBLE : 
+			return Double.class;
+		case CHAR :
+			return String.class;
+		case BOOLEAN : 
+			return Boolean.class;
+		case SHORT : 
+			return Short.class;
+		case BYTE : 
+			return Byte.class;
+		case STRING : 
+			return String.class;
+		case ARRAY : 
+			return Object[].class;
+		case OBJECT :
+			return Object.class;
+		}
+		return null;
+	}
+	
+	/**
+	 * get class
+	 * @param <T> the type of class
+	 * @param type the type string
+	 * @return the class
+	 */
+	public static Class<?> getClassArray(String type) {
+		switch (type) {
+		case LONG : 
+			return Long[].class;
+		case INT : 
+			return Integer[].class;
+		case FLOAT : 
+			return Float[].class;
+		case DOUBLE : 
+			return Double[].class;
+		case CHAR :
+			return String[].class;
+		case BOOLEAN : 
+			return Boolean[].class;
+		case SHORT : 
+			return Short[].class;
+		case BYTE : 
+			return Byte[].class;
+		case STRING : 
+			return String[].class;
+		case OBJECT :
+			return Object[].class;
+		}
+		return null;
+	}
 }
+
+
 
 
