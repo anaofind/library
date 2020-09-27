@@ -1,10 +1,11 @@
-package tests.anadatair;
+package anaofind.anadatair;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 import anaofind.lib.anadatair.*;
 import anaofind.lib.anadatair.compilator.Compilator.CompilatorException;
 import anaofind.lib.anadatair.util.TypeResolver;
@@ -152,6 +153,7 @@ public class TestAnadatair {
 		System.out.println(testArray.toJson());
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void TestDecode() throws CompilatorException {
 		Integer[] aie = UtilAnadatair.decode(UtilAnadatair.encode(new int[] {}), Integer[].class);
@@ -165,15 +167,17 @@ public class TestAnadatair {
 		Long[] al = UtilAnadatair.decode(UtilAnadatair.encode(new long[] {2L, 1L}), Long[].class);
 		Double[] ad = UtilAnadatair.decode(UtilAnadatair.encode(new double[] {10.5,5.2,5.3,3.4}), Double[].class);
 		Boolean[] ab = UtilAnadatair.decode(UtilAnadatair.encode(new boolean[] {true, false}), Boolean[].class);
-		String[] as = UtilAnadatair.decode(UtilAnadatair.encode(new String[] {"coucou", "comment", "çava", "?"}), String[].class);
+		String[] as = UtilAnadatair.decode(UtilAnadatair.encode(new String[] {"coucou", "comment", "ï¿½ava", "?"}), String[].class);
 		Object[] ao = UtilAnadatair.decode(UtilAnadatair.encode(new Object[] {"coucou", 4, 4.0, 4L, false}), Object[].class);
 		
 		Integer[][] ai2 = UtilAnadatair.decode(UtilAnadatair.encode(new int[][] {{10,5},{5,3}}), Integer[][].class);
 		Long[][] al2 = UtilAnadatair.decode(UtilAnadatair.encode(new long[][] {{10L,5L},{5L,3L}}), Long[][].class);
 		Double[][] ad2 = UtilAnadatair.decode(UtilAnadatair.encode(new double[][] {{10.2,5.2},{5.2,3.2}}), Double[][].class);
 		Boolean[][] ab2 = UtilAnadatair.decode(UtilAnadatair.encode(new boolean[][] {{true,false},{false,true}}), Boolean[][].class);
-		String[][] as2 = UtilAnadatair.decode(UtilAnadatair.encode(new String[][] {{"coucou","ça va"},{"oui","tres bien"}}), String[][].class);
+		String[][] as2 = UtilAnadatair.decode(UtilAnadatair.encode(new String[][] {{"coucou","ï¿½a va"},{"oui","tres bien"}}), String[][].class);
 		Object[][] ao2 = UtilAnadatair.decode(UtilAnadatair.encode(new Object[][] {{"coucou", 4}, {4.0}, {4L}, {false}}), Object[][].class);
+		
+		Map<String, Integer> am = UtilAnadatair.decode(UtilAnadatair.encode(new HashMap<String, Integer>()), Map.class);
 		
 		assertTrue(Arrays.deepEquals(aie, new Integer[] {}));
 		assertTrue(Arrays.deepEquals(ale, new Long[] {}));
@@ -182,18 +186,21 @@ public class TestAnadatair {
 		assertTrue(Arrays.deepEquals(ase, new String[] {}));
 		assertTrue(Arrays.deepEquals(aoe, new Object[] {}));
 		
+		assertEquals(am, new HashMap<String, Integer>());
+		
 		assertTrue(Arrays.deepEquals(ai, new Integer[] {10,5,5,3}));
 		assertTrue(Arrays.deepEquals(al, new Long[] {2L,1L}));
 		assertTrue(Arrays.deepEquals(ad, new Double[] {10.5,5.2,5.3,3.4}));
 		assertTrue(Arrays.deepEquals(ab, new Boolean[] {true, false}));
-		assertTrue(Arrays.deepEquals(as, new String[] {"coucou", "comment", "çava", "?"}));
+		assertTrue(Arrays.deepEquals(as, new String[] {"coucou", "comment", "ï¿½ava", "?"}));
+		System.out.println(Arrays.toString(ao));
 		assertTrue(Arrays.deepEquals(ao, new Object[] {"coucou", 4, 4.0, 4L, false}));
 		
 		assertTrue(Arrays.deepEquals(ai2, new Integer[][] {{10,5},{5,3}}));
 		assertTrue(Arrays.deepEquals(al2, new Long[][] {{10L,5L},{5L,3L}}));
 		assertTrue(Arrays.deepEquals(ad2, new Double[][] {{10.2,5.2},{5.2,3.2}}));
 		assertTrue(Arrays.deepEquals(ab2, new Boolean[][] {{true,false},{false,true}}));
-		assertTrue(Arrays.deepEquals(as2, new String[][] {{"coucou","ça va"},{"oui","tres bien"}}));
+		assertTrue(Arrays.deepEquals(as2, new String[][] {{"coucou","ï¿½a va"},{"oui","tres bien"}}));
 		assertTrue(Arrays.deepEquals(ao2, new Object[][] {{"coucou", 4}, {4.0}, {4L}, {false}}));
 		
 		

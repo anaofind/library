@@ -1,9 +1,9 @@
-package tests.anadatair;
+package anaofind.anadatair;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import anaofind.lib.anadatair.compilator.Compilator.CompilatorException;
 import anaofind.lib.anadatair.compilator.CompilatorJSON;
@@ -22,7 +22,7 @@ public class TestCompilator {
 	 */
 	private JsonObject objectJSON;
 
-	@BeforeEach
+	@Before
 	public void before() {
 		this.createData();
 	}

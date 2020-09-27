@@ -1,6 +1,6 @@
-package tests.anadatair;
+package anaofind.anadatair;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import anaofind.lib.anadatair.reader.*;
 
@@ -16,7 +16,7 @@ public class TestReader {
 		Reader r = new ReaderFile("C:\\Users\\leo_r\\Desktop\\tps\\tips.txt");
 		// on lit la premiere ligne
 		r.readLine();
-		// tant que le fichier n'a pas été lu entirement
+		// tant que le fichier n'a pas ï¿½tï¿½ lu entirement
 		while (! r.isEndReading()) {
 			// on affiche la ligne courrante
 			System.out.println(r.currentLine());

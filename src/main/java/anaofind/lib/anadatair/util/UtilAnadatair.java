@@ -40,7 +40,7 @@ public class UtilAnadatair {
 	 * @param model the class model
 	 * @return the object java equivalent to json string
 	 */
-	public static <T> Object jsonDecodeObject(String json, Class<T> model) {
+	public static <T> T jsonDecode(String json, Class<T> model) {
 		return decode(jsonDecode(json), model);
 	}
 
@@ -258,7 +258,10 @@ public class UtilAnadatair {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T decode(Anadatair anadatair, Class<T> model) {
-		if (anadatair != null) {	
+		if (anadatair != null && !anadatair.getType().equals(TypeResolver.NULL)) {
+			if (model != Object.class && model.isAssignableFrom(Anadatair.class)) {
+				return (T) anadatair;
+			}
 			switch(anadatair.getType()) {
 			case TypeResolver.ARRAY : 
 				return decode((AnadatairArray) anadatair, model);
@@ -287,11 +290,9 @@ public class UtilAnadatair {
 	public static <T> T decode(AnadatairArray anadatair, Class<T> model) {
 		if (model.isArray()) {
 			Object array = Array.newInstance(model.getComponentType(), anadatair.size());
-
 			for (int i = 0; i < anadatair.size(); i++) {
 				Array.set(array, i, decode(anadatair.getData(i), model.getComponentType()));
 			}
-
 			return (T) array;	
 		}
 
@@ -321,9 +322,12 @@ public class UtilAnadatair {
 	 * @param model the model array
 	 * @return the array equivalent
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T decode(AnadatairObject anadatair, Class<T> model) {
 		try {
-			System.out.println(model.getName());
+			if (model.isAssignableFrom(Map.class)) {
+				return (T) anadatair.getValue();
+			}
 			T instance = model.getConstructor().newInstance();
 			for(Field field : model.getFields()) {
 				if (anadatair.contains(field.getName())) {
@@ -333,7 +337,7 @@ public class UtilAnadatair {
 			}
 			return (T) instance;
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage() + " " + e.getCause());
 		}
 		return null;
 	}
