@@ -135,6 +135,7 @@ public abstract class Screen{
 	public void close() {
 		if (this.stage != null) {
 			this.stage.close();
+			this.stage = null;
 		}
 		for (ScreenListener screenListener : this.screenListeners) {
 			screenListener.screenClosed();
@@ -229,12 +230,12 @@ public abstract class Screen{
 	}
 	
 	/**
-	 * methode permettant de choisir si on veut que la fenetre soit décoré
+	 * methode permettant de choisir si on veut que la fenetre soit dï¿½corï¿½
 	 * @param b boolean indiquant notre choix
 	 */
 	public void changeDecorating(boolean b) {
 		this.decorating = b;
-		if (this.stage != null) {
+		if (this.stage != null && !this.isOpen()) {
 			if (! b) {
 				this.stage.initStyle(StageStyle.UNDECORATED);	
 			} else {

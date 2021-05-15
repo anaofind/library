@@ -174,10 +174,7 @@ public class CompilatorJSON extends Compilator{
 		if (value.equals("null")) {
 			return new JsonNull();
 		}
-		
-		System.out.println("NULL BASE");
-		this.callException("value not accepted");
-		return null;
+		return new JsonString(value);
 	}
 	
 	/**
@@ -214,7 +211,8 @@ public class CompilatorJSON extends Compilator{
 			string += this.currentChar();
 			this.readChar();
 		}
-		System.out.println("NULL VALUE");
-		return null;
+		return string;
+//		System.out.println("NULL VALUE");
+//		return null;
 	}
 }

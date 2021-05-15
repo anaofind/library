@@ -1,16 +1,16 @@
 package anaofind.lib.analistener;
 
 /**
- * interface ecouteur
+ * interface listener
  * @author anaofind
  *
  */
 public interface Listener {
 
 	/**
-	 * methode permettant de realiser les actions sur un écoutable
-	 * @param listenable l'écoutable
-	 * @param code le code de l'action
+	 * listen
+	 * @param listenable the listenable
+	 * @param code the code of action
 	 */
 	public void listen(Listenable listenable, int code);
 	

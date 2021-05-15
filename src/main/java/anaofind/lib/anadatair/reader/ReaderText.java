@@ -40,7 +40,7 @@ public class ReaderText extends ReaderImpl{
 	}
 	
 	public static void main (String[] args) {
-		String text = "coucou\r\ncomment çava ?";
+		String text = "coucou\r\ncomment ï¿½ava ?";
 		Reader r = new ReaderText(text.replace("\r", ""));
 		r.readLine();
 		System.out.println("debut " + r.currentLine());

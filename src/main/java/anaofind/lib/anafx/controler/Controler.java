@@ -31,7 +31,7 @@ public abstract class Controler implements Initializable, Listener, ScreenListen
 	 * methode permettant de recuperer les fps
 	 * @return les fps
 	 */
-	public abstract int getFps();
+	public abstract long getMilliTimeToRefresh();
 	
 	/**
 	 * methode permettant de savoir si c'est la fin de la boucle
@@ -58,15 +58,17 @@ public abstract class Controler implements Initializable, Listener, ScreenListen
 		this.starting();
 		new Thread( () -> { 
 			try {
-				while (! this.isEndLoop()) {
+				if (getMilliTimeToRefresh() > 0) {
+					while (! this.isEndLoop()) {
+						Platform.runLater( () -> {
+							this.stepLoop();
+						});
+						Thread.sleep(getMilliTimeToRefresh());
+					}
 					Platform.runLater( () -> {
-						this.stepLoop();
-					});
-					Thread.sleep(1000/getFps());
+						this.finishing();
+					});	
 				}
-				Platform.runLater( () -> {
-					this.finishing();
-				});
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -75,7 +77,7 @@ public abstract class Controler implements Initializable, Listener, ScreenListen
 	
 	/**
 	 * permettant d'actualiser l'observable
-	 * @param listenable l'écoutable
+	 * @param listenable l'ï¿½coutable
 	 * @param code le code de l'action
 	 */
 	public abstract void updateListenable(Listenable listenable, int code);

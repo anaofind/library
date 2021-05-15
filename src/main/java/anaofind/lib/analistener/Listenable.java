@@ -3,25 +3,25 @@ package anaofind.lib.analistener;
 import java.util.ArrayList;
 
 /**
- * classe ecoutable
+ * listenable
  * @author anaofind
  *
  */
 public abstract class Listenable {
 
 	/**
-	 * liste d'écouteur
+	 * the listeners
 	 */
 	private ArrayList<Listener> listeners = new ArrayList<Listener>();
 	
 	/**
-	 * la liste des codes d'actions réaliser
+	 * the code of actions to execute
 	 */
 	private ArrayList<Action> actions = new ArrayList<Action>();
 	
 	/**
-	 * methode permettant d'ajouter un écouteur
-	 * @param listener l'écouteur à ajouter
+	 * add listener
+	 * @param listener the listener to added
 	 */
 	public void addListener(Listener listener) {
 		if (! listeners.contains(listener)) {
@@ -30,16 +30,16 @@ public abstract class Listenable {
 	}
 	
 	/**
-	 * methode permettant d'enlever un écouteur
-	 * @param listener l'écouteur à enlever
+	 * remove listener
+	 * @param listener the listener to removed
 	 */
 	public void removeListener(Listener listener) {
 		listeners.remove(listener);
 	}
 	
 	/**
-	 * methode permettant d'ajouter une action qui a été réalisé
-	 * @param code le code de l'action
+	 * add action code
+	 * @param code the code of action to added
 	 */
 	public void addAction(int code) {
 		Action a = new Action(code);
@@ -50,8 +50,8 @@ public abstract class Listenable {
 	}
 	
 	/**
-	 * methode permettant d'enlever une action
-	 * @param code le code de l'action
+	 * remove action code
+	 * @param code the code of action to removed
 	 */
 	public void removeAction(int code) {
 		Action a = new Action(code);
@@ -59,10 +59,9 @@ public abstract class Listenable {
 	}
 	
 	/**
-	 * methode permettant d'actualiser les écoutables
+	 * update listenable
 	 */
 	public void updateListenable() {
-		
 		Listener[] te = listeners.toArray(new Listener[listeners.size()]);
 		Action[] ta = actions.toArray(new Action[actions.size()]);
 		for (Listener ecouteur: te) {

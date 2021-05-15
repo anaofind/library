@@ -115,6 +115,11 @@ public class TestAnadatair {
 	}
 	
 	@Test
+	public void TestArraySize() {
+		assertEquals(0, new AnadatairArray().size());
+	}
+	
+	@Test
 	public void TestEncode() throws CompilatorException {
 		assertTrue(UtilAnadatair.encode(1).equals(new AnadatairInteger(1)));
 		assertTrue(UtilAnadatair.encode(1).equals(new AnadatairDouble(1)));

@@ -1,20 +1,20 @@
 package anaofind.lib.analistener;
 
 /**
- * classe action
+ * the action
  * @author anaofind
  *
  */
 public class Action {
 
 	/**
-	 * le code de l'action
+	 * the code 
 	 */
 	private int code;
 	
 	/**
-	 * constrcteur
-	 * @param code le code de l'action
+	 * constructor
+	 * @param code the code
 	 */
 	public Action(int code) {
 		this.code = code;
@@ -22,7 +22,7 @@ public class Action {
 
 	/**
 	 * getter code
-	 * @return le code de l'action
+	 * @return the code
 	 */
 	public int getCode() {
 		return code;
@@ -36,7 +36,4 @@ public class Action {
 		}
 		return false;
 	}
-	
-	
-	
 }

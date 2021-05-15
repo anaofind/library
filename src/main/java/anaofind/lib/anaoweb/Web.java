@@ -1,119 +1,61 @@
 package anaofind.lib.anaoweb;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import java.io.IOException;
+import anaofind.lib.anadatair.Anadatair;
 
 /**
- * classe permettant d'interagire avec le web
+ * web class
  * @author anaofind
- *
  */
 public class Web {
-
-	/**
-	 * la base de l'url
-	 */
-	private static String base;
 	
 	/**
 	 * le chemin de l'url
 	 */
-	private static ArrayList<String> paths = new ArrayList<String>();
+	private String url = "";
 	
 	/**
-	 * les parametres avec les valeurs
+	 * the body
 	 */
-	private static HashMap<String, String> parameters = new HashMap<String, String>();
+	private Anadatair body;
 	
-	/**
-	 * methode permettant de changer l'url base du site
-	 * @param baseUrl l'adresse du serveur
-	 */
-	public static void setBase(String basePath) {
-		if (! basePath.contains("https://")) {
-			base = "http://" + basePath;
-		} else {
-			base = basePath;	
-		}
-		clean();
-	}
-	
-	/**
-	 * methode permettant d'ajouter un chemins
-	 * @param arrayPath le tableau du chemin
-	 */
-	public static void addPath(String...arrayPath) {
-		for (String c: arrayPath) {
-			paths.add(c);
-		}
-	}
 
 	/**
-	 * methode permettant d'ajouter un paramètres 
-	 * @param id l'id
-	 * @param value la valeur
+	 * set url
+	 * @param url the url
 	 */
-	public static void addParameters(String id, String value) {
-		parameters.put(id, value);
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 	/**
-	 * methode permettant de netoyer l'url des paramètres et du chemin 
-	 */
-	public static void clean() {
-		paths.clear();
-		parameters.clear();
-	}
-	
-	/**
-	 * methode permettant de netoyer seulement les parametres
-	 */
-	public static void cleanParameters() {
-		parameters.clear();	
-	}
-	
-	/**
-	 * methode permettant de creer une url avec le chemin et les paramètres
-	 * @return l'url complet du site
-	 */
-	private static String getFullUrl() {	
-		String url = base;
-		
-		if (paths != null) {
-			for (String c: paths) {
-				url += "/" + c;
-			}	
-		}
-		
-		String[] ids = parameters.keySet().toArray(new String[parameters.size()]);
-		if (ids.length > 0 ) {
-			url += "?";
-		}
-		for (String id: ids) {
-			url += id + "=" + parameters.get(id) + "&";
-		}
-		if (ids.length > 0) {
-			url = url.substring(0, url.length() - 1);	
-		}
-		return url;
+	 * set body
+	 * @param body the body
+	 */ 
+	public void setBody(Anadatair body) {
+		this.body = body;
 	}
 		
 	/**
-	 * methode permettant d'ouvire un page internet
+	 * open on nagitator
 	 */
-	public static void openUrlInDefaultNavigator() {
-		UtilWeb.openSite(getFullUrl());
-		clean();
+	public void openInNavigator() {
+		UtilWeb.openInNavigator(this.url);
 	}
 	
 	/**
-	 * methode permettant d'evnoyer requete post
-	 * @return le retour du post
+	 * send post
+	 * @return the response
 	 */
-	public static String sendPost() {
-		String res = UtilWeb.sendQueryPost(getFullUrl(), parameters);
-		return res;
+	public String sendPost() {
+		try {
+			return UtilWeb.sendRequestPost(this.url, this.body);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	
@@ -121,9 +63,15 @@ public class Web {
 	 * methode permettant d'evnoyer requete get
 	 * @return le retour du post
 	 */
-	public static String sendGet() {
-		String res = UtilWeb.sendQueryGet(getFullUrl());
-		return res;
+	public String sendGet() {
+		try {
+			return UtilWeb.sendRequestGet(this.url);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

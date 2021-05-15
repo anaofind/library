@@ -105,5 +105,5 @@ public interface Reader {
 	 */
 	default double getProgressReading() {
 		return ((double)this.indexChar() / (double)this.length());
-	}	
+	}
 }
